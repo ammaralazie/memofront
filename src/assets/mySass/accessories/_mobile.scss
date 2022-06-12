@@ -1,0 +1,18 @@
+@mixin mobile {
+    @media screen and (max-width:724px){
+        @content;
+    }
+};
+
+@mixin m576 {
+    @media screen and (max-width:576px) {
+        @content;
+    }   
+};/* /m576 */
+
+
+@mixin m420 {
+    @media screen and (max-width:576px) {
+        @content;
+    }   
+};/* /m576 */

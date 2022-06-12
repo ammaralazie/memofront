@@ -1,0 +1,75 @@
+
+:root{
+    --brd:#D8D8D8;
+    --dbrd:#afabab;
+    --err:#b97777;
+    --placeholderColor:#707070;
+    --bgbar:#e8e6e6;
+    --bgSearch:#f6f6f6;
+    --bg:#FFFFFF;
+    --logo:#3cab44;
+    --fntClr:rgb(73, 73, 73);
+    --bgw:#F8F8F8;
+    --cShadow: #a9a1a1;
+    --cMsg: #74da7c;
+    --brdList:#e3e3e3;
+    --phone:#9e1b12;
+    --cphone:#fff;
+    --navMsgC:#fff;
+    --cfooter:#0B0618;
+    --fontLight:#B9B9B9;
+    --backdateWpperChat:#48545B;
+    --greenLine:#19A15F;
+    --scrollColor:#EBEBEB;
+    --colorCycle:#E1E9EB;
+    --backGroundPhoneObject:#F6F6F6;
+    --navProfileCover:#00A79D;
+    --cscrollWepperChat:#acaaaa;
+    --cmessageShadow:#cccccc;
+    --formColor:#eee;
+    --notifictionMsg:#76a18f;
+    --myReplayBgColor:#d9ece4;
+    --youBeplayBgColor:#f4f4f4;
+    --fntReplyMsg:#00000069;
+
+    --fullmainLoder:#d8d8d8;
+    --partmainLoder:#19A15F;
+    --cdevelopmetTtile:#878787;
+    
+}
+
+$brd:var(--brd);
+$dbrd:var(--dbrd);
+$err:var(--err);
+$placeholderColor:var(--placeholderColor);
+$bgbar:var( --bgbar);
+$bgSearch:var(--bgSearch);
+$bg:var(--bg);
+$logo:var(--logo);
+$fntClr:var(--fntClr);
+$bgw:var(--bgw);
+$cShadow:var(--cShadow);
+$cMsg:var(--cMsg);
+$brdList:var(--brdList);
+$phone:var(--phone);
+$cphone:var(--cphone);
+$fullmainLoder:var(--fullmainLoder);
+$partmainLoder:var(--partmainLoder);
+$cdevelopmetTtile:var(--cdevelopmetTtile);
+$navMsgC:var(--navMsgC);
+$cfooter:var(--cfooter);
+$fontLight:var(--fontLight);
+$backdateWpperChat:var(--backdateWpperChat);
+$greenLine:var(--greenLine);
+$scrollColor:var(--scrollColor);
+$colorCycle:var(--colorCycle);
+$backGroundPhoneObject:var(--backGroundPhoneObject);
+$navProfileCover:var(--navProfileCover);
+$cscrollWepperChat:var(--cscrollWepperChat);
+$cmessageShadow:var(--cmessageShadow);
+$formColor:var(--formColor);
+$notifictionMsg:var(--notifictionMsg);
+$myReplayBgColor:var(--myReplayBgColor);
+$fntReplyMsg:var(--fntReplyMsg);
+$youBeplayBgColor:var(--youBeplayBgColor)
+
