@@ -19,9 +19,11 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
 body {
   min-height: 100vh;
 }
+
 .mainapp {
   .screenDisplay {
     position: absolute;
@@ -34,6 +36,7 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
+
     .logoPageWidthAndHeight {
       width: 80%;
       height: 80%;
@@ -41,6 +44,7 @@ body {
       justify-content: center;
       align-items: center;
       flex-direction: column;
+
       .logoImge {
         width: 80%;
         height: 150px;
@@ -48,35 +52,53 @@ body {
         justify-content: center;
         align-items: center;
         margin-bottom: 150px;
+
         img {
           width: 100%;
           height: 100%;
           margin: auto;
-        } /* /img */
-      } /* /logoImge */
+        }
+
+        /* /img */
+      }
+
+      /* /logoImge */
       .meeageScreen {
         width: 100%;
         height: 100%;
         word-wrap: break-word;
         color: $fntClr;
         text-align: center;
-      } /* /meeageScreen */
-    } /* /logoPageWidthAndHeight */
-  } /* /screenDisplay */
-} /* /mainapp */
+      }
+
+      /* /meeageScreen */
+    }
+
+    /* /logoPageWidthAndHeight */
+  }
+
+  /* /screenDisplay */
+}
+
+/* /mainapp */
 
 .signup {
   height: 100vh;
   width: 60%;
   margin: auto;
   position: relative;
+
   @include mobile {
     width: 85%;
-  } /* /include */
+  }
+
+  /* /include */
 
   @include m576 {
     width: 97%;
-  } /* /include */
+  }
+
+  /* /include */
 
   .checkUserAuth {
     position: fixed;
@@ -87,34 +109,47 @@ body {
     z-index: 3;
     @extend %flx;
     justify-content: center;
+
     .coverCheck {
       width: 60%;
+
       @include m576 {
         width: 100%;
       }
+
       height: 70%;
       display: flex;
       flex-direction: column;
       align-items: center;
+
       .checklogo {
         position: relative;
         width: 100%;
         height: 200px;
         display: flex;
         justify-content: center;
+
         img {
           width: 15%;
           height: 40px;
-        } /* /img */
-      } /* /checklogo */
-    } /* /coverCheck */
+        }
+
+        /* /img */
+      }
+
+      /* /checklogo */
+    }
+
+    /* /coverCheck */
     .checkLoader {
       position: relative;
       margin: 20px;
       width: 100%;
+
       @include m576 {
         width: 80%;
       }
+
       span {
         &:nth-child(1) {
           width: 100%;
@@ -122,7 +157,9 @@ body {
           position: absolute;
           background-color: $fullmainLoder;
           border-radius: 3px;
-        } /* /child 1 */
+        }
+
+        /* /child 1 */
 
         &:nth-child(2) {
           width: 0%;
@@ -133,31 +170,44 @@ body {
           animation-name: loading;
           animation-duration: 8s;
           animation-iteration-count: 1;
-        } /* /child 2 */
+        }
+
+        /* /child 2 */
         @keyframes loading {
           0% {
             width: 0%;
           }
+
           50% {
             width: 50%;
           }
+
           100% {
             width: 100%;
           }
-        } /* end of keyframes */
-      } /* /span */
-    } /* /checkLoader */
+        }
+
+        /* end of keyframes */
+      }
+
+      /* /span */
+    }
+
+    /* /checkLoader */
     .texts {
       width: 100%;
       height: 100%;
       display: grid;
       grid-template-rows: 1fr 1fr;
+
       .checkTitle {
         margin-top: 20px;
         position: relative;
         display: grid;
         grid-template-rows: 50px 50px;
+
         span {
+
           &:nth-child(1),
           &:nth-child(2) {
             display: flex;
@@ -171,18 +221,29 @@ body {
             justify-content: center;
             align-items: center;
             font-family: "sf ui  text";
-          } /* child 1 */
+          }
+
+          /* child 1 */
           &:nth-child(2) {
             font-size: 20px;
+
             @include m576 {
               font-size: 15px;
             }
+
             color: $cdevelopmetTtile;
-          } /* /&:nth-child(2) */
-        } /* /span */
-      } /* /checkTitle */
+          }
+
+          /* /&:nth-child(2) */
+        }
+
+        /* /span */
+      }
+
+      /* /checkTitle */
       .developmentItemsTitle {
         position: relative;
+
         span {
           font-size: 20px;
 
@@ -195,26 +256,42 @@ body {
           bottom: 0px;
           width: 100%;
           text-align: center;
-        } /* /span */
-      } /* /developmentItemsTitle */
-    } /* /texts */
-  } /* /checkUserAuth */
+        }
+
+        /* /span */
+      }
+
+      /* /developmentItemsTitle */
+    }
+
+    /* /texts */
+  }
+
+  /* /checkUserAuth */
   .container {
     @include m576 {
       height: 100vh;
     }
+
     h2 {
       text-align: center;
+
       .memo-signup {
         color: #3cab44;
         font-weight: 900;
-      } /* /memo-logo */
-    } /* /h2 */
+      }
+
+      /* /memo-logo */
+    }
+
+    /* /h2 */
     .paly-display-form {
       position: relative;
+
       @include m576 {
         height: 40%;
       }
+
       .disabled {
         position: absolute;
         width: 100%;
@@ -224,30 +301,42 @@ body {
         background-color: #f7f7f7;
         opacity: 0.7;
         display: none;
-      } /* /disabled */
+      }
+
+      /* /disabled */
       form {
         padding: 10px;
 
         @include m576 {
           height: 100%;
         }
+
         .container {
           .seralPhoneNumber {
             .select {
               p {
                 .custom-select {
-                  select {
-                  } /* /select */
-                } /* /custom-select */
-              } /* /p */
-            } /* /select */
+                  select {}
+
+                  /* /select */
+                }
+
+                /* /custom-select */
+              }
+
+              /* /p */
+            }
+
+            /* /select */
             .errorMessage-input {
               height: 82px;
               position: relative;
+
               input {
                 position: absolute;
                 left: 0px;
               }
+
               span {
                 position: absolute;
                 left: 5px;
@@ -255,15 +344,21 @@ body {
                 font-size: 14px;
                 color: #cc5836;
               }
-            } /* /errorMessage-input */
-          } /* /seralPhoneNumber */
+            }
+
+            /* /errorMessage-input */
+          }
+
+          /* /seralPhoneNumber */
           .errorMessage-input {
             height: 82px;
             position: relative;
+
             input {
               position: absolute;
               left: 0px;
             }
+
             span {
               position: absolute;
               left: 5px;
@@ -271,8 +366,12 @@ body {
               font-size: 14px;
               color: #cc5836;
             }
-          } /* /errorMessage-input */
-        } /* /container */
+          }
+
+          /* /errorMessage-input */
+        }
+
+        /* /container */
 
         .inputNumber,
         .inputEmphasis {
@@ -284,34 +383,46 @@ body {
           width: 90%;
           margin: 5px auto;
           justify-content: center;
+
           .selector {
             @extend %flx;
             justify-content: center;
             height: 100%;
             border-right: 1px solid $brd;
+
             @include m576 {
               width: 65%;
             }
+
             .countryCode {
               width: 100%;
               height: 100%;
               outline: none;
               border: none;
               background-color: $bg;
-            } /* /countryCode */
-          } /* /selector */
+            }
+
+            /* /countryCode */
+          }
+
+          /* /selector */
           input:focus {
             & {
               height: 100%;
               border: 1px solid $brd;
               border-radius: 4px;
             }
-          } /* end of focus */
+          }
+
+          /* end of focus */
           ::placeholder {
             /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: $placeholderColor;
-            opacity: 1; /* Firefox */
-          } /* /placeholder */
+            opacity: 1;
+            /* Firefox */
+          }
+
+          /* /placeholder */
           span {
             position: absolute;
             bottom: -25px;
@@ -323,33 +434,52 @@ body {
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 100%;
-          } /* /span */
-        } /* /inputNumber */
+          }
+
+          /* /span */
+        }
+
+        /* /inputNumber */
         .inputEmphasis {
           margin: 20px;
           @extend %flx;
           justify-content: space-between;
+
           button {
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
-          } /* /button */
-        } /* /inputEmphasis */
+          }
+
+          /* /button */
+        }
+
+        /* /inputEmphasis */
 
         .button-recapcha {
-          #recaptcha-container {
-          } /* /recaptcha-container */
+          #recaptcha-container {}
+
+          /* /recaptcha-container */
           width: 100%;
           @extend %flx;
           justify-content: center;
           flex-direction: column;
           margin-top: 20px;
+
           .sendCode {
             width: 40%;
             margin: 22px auto;
-          } /* /sendCode */
-        } /* /button-recapcha */
-      } /* /form */
-    } /* /paly-display-form */
+          }
+
+          /* /sendCode */
+        }
+
+        /* /button-recapcha */
+      }
+
+      /* /form */
+    }
+
+    /* /paly-display-form */
     .goToLoginQr {
       width: 100%;
       border: 3px solid #f1f1f1;
@@ -357,6 +487,7 @@ body {
       position: absolute;
       left: 0px;
       height: 50px;
+
       div {
         @include m576 {
           font-size: 15px;
@@ -372,20 +503,28 @@ body {
         transform-style: preserve-3d;
         perspective: 500px;
         width: 230px;
+
         &:hover {
           transition: all 0.3s ease;
           color: #284c2087;
           transform: scale(1.02) translateX(5px);
-        } /* /goToLoginQr hover */
+        }
+
+        /* /goToLoginQr hover */
       }
-    } /* /goToLoginQr */
-  } /* /container */
+    }
+
+    /* /goToLoginQr */
+  }
+
+  /* /container */
 
   .verifyCode {
     position: absolute;
     opacity: 0;
     top: -5000px;
     transition: opacity 2s ease;
+
     &.showVerifyCode {
       opacity: 1;
       top: 360px;
@@ -393,10 +532,15 @@ body {
       @include m576 {
         top: 445px;
       }
+
       .emphesesCode {
         height: 140px;
-      } /* /emphesesCode */
-    } /* showVerifyCode */
+      }
+
+      /* /emphesesCode */
+    }
+
+    /* showVerifyCode */
     .inputEmphasis {
       height: 50px;
       position: relative;
@@ -409,16 +553,21 @@ body {
       margin: 20px;
       @extend %flx;
       justify-content: space-between;
+
       button {
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
-      } /* /button */
+      }
+
+      /* /button */
       .selector {
         @extend %flx;
         justify-content: center;
         height: 100%;
         border-right: 1px solid $brd;
-      } /* /phoneId */
+      }
+
+      /* /phoneId */
       input:focus {
         & {
           height: 100%;
@@ -426,31 +575,47 @@ body {
           border-radius: 4px;
           border-right: none;
         }
-      } /* end of focus */
+      }
+
+      /* end of focus */
       ::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: $placeholderColor;
-        opacity: 1; /* Firefox */
-      } /* /placeholder */
+        opacity: 1;
+        /* Firefox */
+      }
+
+      /* /placeholder */
       span {
         @include m576 {
           top: 55px;
         }
+
         position: absolute;
         bottom: -36px;
         color: #b97777;
         left: 2px;
         font-size: 11px;
-      } /* /span */
-    } /* /inputEmphasis */
+      }
+
+      /* /span */
+    }
+
+    /* /inputEmphasis */
   }
-} /* /login */
+}
+
+/* /login */
 body {
   font-family: Arial, Helvetica, sans-serif;
-} /* end of body */
+}
+
+/* end of body */
 form {
   border: 3px solid #f1f1f1;
-} /* end of form */
+}
+
+/* end of form */
 
 input[type="text"],
 input[type="password"] {
@@ -460,7 +625,9 @@ input[type="password"] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
-} /* /input[password] */
+}
+
+/* /input[password] */
 
 button {
   background-color: #3cab44;
@@ -470,45 +637,62 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-} /* /button */
+}
+
+/* /button */
 
 button:hover {
   opacity: 0.8;
-} /* end of hover */
+}
+
+/* end of hover */
 
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
   background-color: #f44336;
-} /* /cancelbtn */
+}
+
+/* /cancelbtn */
 
 .imgcontainer {
   text-align: center;
   margin: 24px 0 12px 0;
-} /* /imgcontainer */
+}
+
+/* /imgcontainer */
 
 img.avatar {
   width: 15%;
   border-radius: 50%;
-} /* /imgcontainer */
+}
+
+/* /imgcontainer */
 
 .container {
   padding: 16px;
-} /* /container */
+}
+
+/* /container */
 
 span.psw {
   float: right;
   padding-top: 16px;
+
   a {
     color: #3cab44;
   }
-} /* /span.psw */
+}
+
+/* /span.psw */
 
 .loader,
 .sendVrefiyCode {
   width: 120px;
   height: 120px;
-} /* /loader , sendVrefiyCode*/
+}
+
+/* /loader , sendVrefiyCode*/
 
 .loader {
   -webkit-animation: spin 2s linear infinite;
@@ -516,7 +700,9 @@ span.psw {
   border: 7px solid #f3f3f3;
   border-top: 7px solid $cMsg;
   border-radius: 50%;
-} /* /loader */
+}
+
+/* /loader */
 
 .loader2 {
   -webkit-animation: spin 2s linear infinite;
@@ -526,23 +712,31 @@ span.psw {
   border-bottom: 3px solid #817d7d;
   border-top: 3px solid $logo;
   border-radius: 50%;
-} /* /loader */
+}
+
+/* /loader */
 
 #app {
   text-align: start;
-} /* /#app */
+}
+
+/* /#app */
 
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
-} /* /spin animation */
+}
+
+/* /spin animation */
 
 .sendVrefiyCode {
   position: relative;
+
   div {
     width: 5.5px;
     height: 15.5px;
@@ -551,39 +745,59 @@ span.psw {
     border-radius: 4px;
     opacity: 0.6;
     top: 35%;
+
     @for $i from 1 through 3 {
       &:nth-child(#{$i}) {
         animation-name: verifyCode;
         animation-timing-function: ease;
         animation-iteration-count: infinite;
         animation-duration: 1.5s;
+
         @if $i==1 {
           animation-delay: 0.6s;
           transition: all 0.3s ease;
           right: 13px;
-        } @else if $i==2 {
+        }
+
+        @else if $i==2 {
           right: 23px;
           animation-delay: 0.3s;
           transition: all 0.3s ease;
-        } /* end of else if */
+        }
+
+        /* end of else if */
         @else {
           animation-delay: 0.1s;
           right: 33px;
-        } /* end of else */
-      } /* end of span child */
-    } /* end of for loop */
-  } /* /span */
-} /* /sendVrefiyCode */
+        }
+
+        /* end of else */
+      }
+
+      /* end of span child */
+    }
+
+    /* end of for loop */
+  }
+
+  /* /span */
+}
+
+/* /sendVrefiyCode */
 
 @keyframes verifyCode {
+
   0%,
   100% {
     transform: scale(1.3);
   }
+
   50% {
     transform: scale(0.8);
   }
-} /* /verifyCode animation */
+}
+
+/* /verifyCode animation */
 
 /* complateSignUp section */
 .complateSignUp,
@@ -592,20 +806,27 @@ span.psw {
 .home {
   width: 60%;
   margin: auto;
+
   @include mobile {
     width: 80%;
-  } /* /include */
+  }
+
+  /* /include */
 
   @include m576 {
     width: 95%;
     height: 100vh;
-  } /* /include */
+  }
+
+  /* /include */
 
   .container {
     @include m576 {
       width: 100%;
       height: 90%;
-    } /* /include */
+    }
+
+    /* /include */
     form {
       width: 100%;
       height: 100%;
@@ -616,7 +837,9 @@ span.psw {
       @include m576 {
         width: 100%;
         height: auto;
-      } /* /include */
+      }
+
+      /* /include */
 
       .image {
         width: 100%;
@@ -633,64 +856,98 @@ span.psw {
 
           @include m576 {
             margin-top: 25px;
-          } /* /include */
+          }
+
+          /* /include */
 
           img {
             @include m576 {
               width: 140px;
               height: 140px;
               margin-bottom: 35px;
-            } /* /include */
+            }
+
+            /* /include */
 
             height: 100%;
             width: 170px;
             border-radius: 50%;
             border: 1px solid #f1eeee;
             cursor: pointer;
-          } /* /img */
-        } /* /label */
+          }
+
+          /* /img */
+        }
+
+        /* /label */
         input[type="file"],
         input[type="password"] {
           display: none;
-        } /* /input */
-      } /* /image */
+        }
+
+        /* /input */
+      }
+
+      /* /image */
 
       .names {
         ::placeholder {
           color: rgb(163, 157, 157);
-        } /* /placeholder */
+        }
+
+        /* /placeholder */
 
         @include m576 {
           width: 100%;
           height: 100%;
-        } /* /include */
+        }
+
+        /* /include */
 
         input {
           @include m576 {
             width: 96%;
             margin: 40px 3px 2px 5px;
-          } /* /include */
+          }
+
+          /* /include */
 
           border-radius: 3px;
           width: 95%;
           margin: auto;
           border: 1px solid $brd;
           margin-bottom: 5px;
+
           &:focus {
             border: 2px solid $brd;
-          } /* /foucs */
-        } /* /inputs */
+          }
+
+          /* /foucs */
+        }
+
+        /* /inputs */
         input[type="email"] {
           padding: 12px 19px;
-        } /* /input email */
+        }
+
+        /* /input email */
         width: 100%;
         height: 200px;
-      } /* /names */
-      .complate {
-      } /* /complate */
-    } /* /form */
-  } /* /container */
-} /* /complateSignUp */
+      }
+
+      /* /names */
+      .complate {}
+
+      /* /complate */
+    }
+
+    /* /form */
+  }
+
+  /* /container */
+}
+
+/* /complateSignUp */
 
 /* confirmationPassword */
 .password,
@@ -698,13 +955,17 @@ span.psw {
   display: flex;
   justify-content: center;
   align-items: center;
+
   .containerrrr {
     width: 100vw;
+
     .memoLogo {
       width: 100%;
       height: 250px;
       background-color: $logo;
-    } /* /memoLogo */
+    }
+
+    /* /memoLogo */
 
     .memoLogo {
       width: 100%;
@@ -721,30 +982,48 @@ span.psw {
         width: 100%;
         height: 80px;
         padding: 20px;
+
         .singUpQr {
           float: right;
+
           a {
             text-decoration: none;
             color: $bg;
-          } /* /a */
-        } /* /singUpQr */
-      } /* /navQr */
+          }
+
+          /* /a */
+        }
+
+        /* /singUpQr */
+      }
+
+      /* /navQr */
       .memoLogoQr {
         width: 100%;
         display: grid;
         justify-content: center;
         align-items: center;
+
         img {
           width: 400px;
           height: 200px;
           transform: translateX(-30px);
+
           @include m576 {
             width: 200px;
             height: 100px;
-          } /* /mobile */
-        } /* /img */
-      } /* /memoLogoQr */
-    } /* /memoLogo */
+          }
+
+          /* /mobile */
+        }
+
+        /* /img */
+      }
+
+      /* /memoLogoQr */
+    }
+
+    /* /memoLogo */
 
     .connetYourDivece {
       margin-top: 60px;
@@ -758,12 +1037,18 @@ span.psw {
       @include m420 {
         width: 190px;
       }
+
       cursor: pointer;
+
       a {
         color: $bg;
         text-decoration: none;
-      } /* /a */
-    } /* /connetYourDivece */
+      }
+
+      /* /a */
+    }
+
+    /* /connetYourDivece */
 
     .arrowDown {
       width: 100%;
@@ -774,14 +1059,22 @@ span.psw {
       margin-top: 40px;
       opacity: 0.5;
       font-size: 25px;
+
       a {
         text-decoration: none;
         color: $bg;
+
         svg {
           cursor: pointer;
-        } /* /svg */
-      } /* /a */
-    } /* /arrowDown */
+        }
+
+        /* /svg */
+      }
+
+      /* /a */
+    }
+
+    /* /arrowDown */
 
     .qrCode {
       display: flex;
@@ -790,23 +1083,32 @@ span.psw {
       flex-direction: column;
       width: 60%;
       margin: 0 auto;
+
       @include mobile {
         width: 100%;
-      } /* /mobile */
+      }
+
+      /* /mobile */
       .toConnect {
         @include mobile {
           display: flex;
           justify-content: center;
           font-size: 35px;
-        } /* /mobile */
+        }
+
+        /* /mobile */
 
         @include m576 {
           font-size: 30px;
-        } /* /mobile */
+        }
+
+        /* /mobile */
 
         @include m576 {
           font-size: 20px;
-        } /* /mobile */
+        }
+
+        /* /mobile */
 
         width: 100%;
         height: 40%;
@@ -814,7 +1116,9 @@ span.psw {
         font-size: 70px;
         color: $fntClr;
         margin-bottom: 50px;
-      } /* /toConnect */
+      }
+
+      /* /toConnect */
       .notesQRcode {
         width: 100%;
         height: 100%;
@@ -823,12 +1127,14 @@ span.psw {
         justify-content: center;
         align-items: center;
         margin-bottom: 20px;
+
         div {
           width: 80%;
           font-size: 150%;
           display: flex;
           align-items: center;
           margin-bottom: 1rem;
+
           div {
             width: 15px;
             height: 15px;
@@ -837,24 +1143,42 @@ span.psw {
             margin-right: 5px;
             border-radius: 90%;
             margin-top: 10px;
+
             @include m576 {
               width: 10px;
               height: 10px;
-            } /* /mobile */
-          } /* /span */
+            }
+
+            /* /mobile */
+          }
+
+          /* /span */
           p {
             margin: 0px;
+
             @include m576 {
               font-size: 18px;
-            } /* /mobile */
+            }
+
+            /* /mobile */
 
             @include m420 {
               font-size: 14px;
-            } /* /mobile */
-          } /* /p */
-        } /* /div */
-      } /* /notesQRcode */
-    } /* /qrCode */
+            }
+
+            /* /mobile */
+          }
+
+          /* /p */
+        }
+
+        /* /div */
+      }
+
+      /* /notesQRcode */
+    }
+
+    /* /qrCode */
 
     .footer {
       width: 100%;
@@ -865,6 +1189,7 @@ span.psw {
       justify-content: center;
       align-items: center;
       margin-top: 20px;
+
       .containerrw {
         width: 90%;
         height: 90%;
@@ -876,63 +1201,97 @@ span.psw {
         }
 
         align-items: center;
+
         .contactLeader {
           p {
             @include m420 {
               font-size: 12px;
             }
+
             &:not(:last-child) {
               margin-bottom: 40px;
+
               @include m420 {
                 margin-bottom: 30px;
                 font-size: 12px;
               }
-            } /* /not */
+            }
+
+            /* /not */
             span {
               cursor: default;
+
               @include m576 {
                 display: flex;
                 align-items: center;
               }
+
               span {
                 border-radius: 50%;
                 padding: 15px;
                 background-color: #1a142a;
+
                 @include m420 {
                   padding: 10px;
                   font-size: 12px;
                 }
-              } /* /span */
-            } /* /span */
-          } /* /p */
-        } /* /contactLeader */
+              }
+
+              /* /span */
+            }
+
+            /* /span */
+          }
+
+          /* /p */
+        }
+
+        /* /contactLeader */
         .leaderLogo {
           width: 100%;
           height: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
+
           .memoLogoQr {
             width: 80%;
             height: 80%;
+
             @include m576 {
               width: 70%;
               height: 40%;
             }
+
             @include m420 {
               width: 60%;
               height: 29%;
             }
+
             img {
               width: 100%;
               height: 100%;
-            } /* /img */
-          } /* /memoLogoQr */
-        } /* /leaderLogo */
-      } /* /containerrw */
-    } /* /footer */
-  } /* /container */
-} /* /password */
+            }
+
+            /* /img */
+          }
+
+          /* /memoLogoQr */
+        }
+
+        /* /leaderLogo */
+      }
+
+      /* /containerrw */
+    }
+
+    /* /footer */
+  }
+
+  /* /container */
+}
+
+/* /password */
 
 /* home page */
 .home {
@@ -940,12 +1299,14 @@ span.psw {
   position: fixed;
   width: 100%;
   transition: all 0.3s ease;
+
   .containerr {
     height: 100%;
     box-shadow: 2px 2px 4px $dbrd;
     padding: 0px;
     position: absolute;
     width: 100%;
+
     .navbar {
       width: 100%;
       height: 40px;
@@ -953,25 +1314,32 @@ span.psw {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .logo {
         float: right;
         font-size: 20px;
         font-weight: 700;
+
         a {
           text-decoration: none;
           color: $logo;
         }
-      } /* /logo */
+      }
+
+      /* /logo */
       .darkMod {
         width: 45px;
         height: 80%;
         position: relative;
+
         label {
           width: 100%;
           height: 100%;
         }
       }
-    } /* /navbar */
+    }
+
+    /* /navbar */
 
     .sidebar {
       width: 100%;
@@ -984,6 +1352,7 @@ span.psw {
         display: block;
         position: relative;
       }
+
       .leftSideBar {
         width: 100%;
         height: 100%;
@@ -995,6 +1364,7 @@ span.psw {
           position: absolute;
           background-color: $bg;
         }
+
         .mynav {
           width: 100%;
           height: 70px;
@@ -1003,32 +1373,43 @@ span.psw {
           overflow: hidden;
           background-color: $bgSearch;
           border: 1px solid $brd;
+
           .imgProfile {
             width: 100%;
             height: 100%;
+
             a {
               width: 90px;
               height: 100%;
               @extend %flx;
               margin: 0px 7px;
               cursor: default;
+
               img {
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
                 cursor: pointer;
-              } /* /img */
-            } /* /a */
-          } /* /imgProfile */
+              }
+
+              /* /img */
+            }
+
+            /* /a */
+          }
+
+          /* /imgProfile */
           .listOptionProfile {
             height: 100%;
             color: $fntClr;
             margin-left: 8px;
             margin-right: 8px;
             width: auto;
+
             ul {
               @extend %flx;
               height: 100%;
+
               li {
                 width: 25px;
                 height: 100%;
@@ -1036,6 +1417,7 @@ span.psw {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
                 #settingButton {
                   background: transparent;
                   color: $fntClr;
@@ -1046,6 +1428,7 @@ span.psw {
                   width: 100%;
                   height: 100%;
                   margin: 5px;
+
                   span {
                     position: absolute;
                     width: 3px;
@@ -1054,45 +1437,68 @@ span.psw {
                     border-radius: 4px;
                     background-color: var(--fntClr);
                     left: 0px;
+
                     &:nth-child(1) {
                       top: 30px;
                     }
+
                     &:nth-child(2) {
                       top: 38px;
                     }
+
                     &:nth-child(3) {
                       top: 46px;
                     }
-                  } /* /span */
-                } /* /settingButton */
+                  }
+
+                  /* /span */
+                }
+
+                /* /settingButton */
                 cursor: pointer;
                 width: 100%;
                 height: 100%;
+
                 .chatIcon,
                 .storyIcon {
                   width: 16px;
                   height: 16px;
+
                   svg {
                     width: 100%;
                     height: 100%;
-                  } /* /svg */
-                } /* /chatIcon */
+                  }
+
+                  /* /svg */
+                }
+
+                /* /chatIcon */
                 .chatIcon #Rectangle_280,
                 .chatIcon #Rectangle_281 {
                   fill: $bgw;
                 }
-              } /* /li */
-            } /* /ul */
-          } /* /listOptionProfile */
-        } /* /mynav */
+              }
+
+              /* /li */
+            }
+
+            /* /ul */
+          }
+
+          /* /listOptionProfile */
+        }
+
+        /* /mynav */
         .serachBar {
           border: 1px solid $brd;
+
           @include m576 {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 55px;
           }
+
           height: 8%;
           padding: 3px;
           background-color: $bg;
@@ -1107,10 +1513,13 @@ span.psw {
             color: #afabab;
             width: 20px;
             top: 26%;
-          } /* /fa */
+          }
+
+          /* /fa */
           ::placeholder {
             color: $dbrd;
           }
+
           input[type="text"] {
             color: $fntClr;
             padding: 0px;
@@ -1122,11 +1531,16 @@ span.psw {
             border-radius: 20px;
             background-color: $bgSearch;
             margin-left: 3px;
-          } /* /input */
-        } /* /serachBar */
+          }
+
+          /* /input */
+        }
+
+        /* /serachBar */
         .wepperContactList {
           border-left: 1px solid $brd;
           border-right: 1px solid $brd;
+
           ::-webkit-scrollbar {
             width: 2px;
             background-color: $bg;
@@ -1182,15 +1596,19 @@ span.psw {
             background-color: $bg;
             overflow-y: auto;
             overflow-x: hidden;
+
             /*  position: relative; */
             .wepper-card {
               width: 100%;
               padding: 2px;
+
               &.notFounChats {
                 margin-top: 15px;
                 text-align: center;
                 color: $placeholderColor;
-              } /* /notFounChats */
+              }
+
+              /* /notFounChats */
               /* position: absolute; */
               .carad {
                 width: 100%;
@@ -1200,39 +1618,55 @@ span.psw {
                 display: flex;
                 padding: 2px;
                 border-bottom: 1px solid $brd;
+
                 &:hover {
                   .dateAndOptions {
                     .aroow {
                       visibility: visible;
                       transition: all 0.4s ease;
-                    } /* /aroow */
-                  } /* /dateAndOptions */
-                } /* /hover */
+                    }
+
+                    /* /aroow */
+                  }
+
+                  /* /dateAndOptions */
+                }
+
+                /* /hover */
                 /* this section to make card in cunter  */
                 @include m576 {
                   width: 95;
                   margin: 0 auto;
                   justify-content: space-between;
                 }
+
                 &:hover {
                   background: $bgw;
                   transition: background 0.3s ease;
-                } /* /hover */
+                }
+
+                /* /hover */
                 a {
                   text-decoration: none;
                   width: 70%;
                   height: 100%;
                   @extend %flx;
                   border-radius: 6px;
+
                   .imgContactProfile {
                     margin-left: 5px;
                     margin-right: 5px;
+
                     img {
                       width: 45px;
                       height: 45px;
                       border-radius: 80px;
-                    } /* /img */
-                  } /* /imgContactProfile */
+                    }
+
+                    /* /img */
+                  }
+
+                  /* /imgContactProfile */
                   .user-lastMsg {
                     width: 70%;
                     margin-left: 3px;
@@ -1241,6 +1675,7 @@ span.psw {
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+
                     .user {
                       width: 100%;
                       font-size: 13px;
@@ -1250,7 +1685,9 @@ span.psw {
                       white-space: nowrap;
                       font-weight: 900;
                       margin-bottom: 5px;
-                    } /* /user */
+                    }
+
+                    /* /user */
                     .lastMessage {
                       width: 100%;
                       font-size: 10px;
@@ -1259,9 +1696,15 @@ span.psw {
                       overflow: hidden;
                       white-space: nowrap;
                       /* font-weight: 700; */
-                    } /* /lastMessage */
-                  } /* /user-lastMsg */
-                } /* /a */
+                    }
+
+                    /* /lastMessage */
+                  }
+
+                  /* /user-lastMsg */
+                }
+
+                /* /a */
                 .dateAndOptions {
                   right: 0px;
                   font-size: 10px;
@@ -1274,6 +1717,7 @@ span.psw {
                   justify-content: center;
                   align-items: center;
                   overflow: hidden;
+
                   @include m576 {
                     max-width: 80px;
                   }
@@ -1288,9 +1732,11 @@ span.psw {
                     position: absolute;
                     top: 3px;
                   }
+
                   .aroow {
                     visibility: hidden;
                     transform: translate(-20px, 4px);
+
                     button {
                       background-color: transparent;
                       padding: 0px;
@@ -1301,13 +1747,47 @@ span.psw {
                       width: auto;
                       opacity: 1;
                       outline: none;
-                    } /* /button */
-                  } /* /aroow */
-                } /* /dateAndOptions */
-              } /* /li */
-            } /* /ul */
-          } /* /contactList */
-        } /* /wepperContactList */
+                    }
+
+                    /* /button */
+                  }
+
+                  /* /aroow */
+                }
+
+                /* /dateAndOptions */
+              }
+
+              /* /li */
+            }
+
+            /* /ul */
+          }
+
+          /* /contactList */
+          .loaderForGetData {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .loader {
+              animation: spin 1s cubic-bezier(0.25, 0.49, 0.44, 0.68) infinite;
+              border: 4px solid #f3f3f3;
+              border-top: 4px solid #70c19f;
+              border-radius: 50%;
+              width: 40px;
+              height: 40px;
+            }
+
+            /* /loader */
+          }
+
+          /* /loaderForGetData */
+        }
+
+        /* /wepperContactList */
         .myProfile,
         .archiveWepper {
           width: 0%;
@@ -1316,6 +1796,7 @@ span.psw {
           /* border-left: 1px solid #000;
           border-right: 1px solid #000; */
           height: 100%;
+
           .navProfile {
             width: 100%;
             @extend %flx;
@@ -1323,6 +1804,7 @@ span.psw {
             /* justify-content: space-between; */
             height: 100px;
             background-color: $navProfileCover;
+
             p {
               margin: 0px;
               color: $fntClr;
@@ -1330,25 +1812,37 @@ span.psw {
               &:nth-child(1) {
                 margin: 0px 10px;
                 cursor: pointer;
+
                 #exitProfile {
                   width: 10px;
-                } /* /exitProfile */
-              } /* /&:nth-child(2) */
+                }
+
+                /* /exitProfile */
+              }
+
+              /* /&:nth-child(2) */
 
               &:nth-child(2) {
                 cursor: pointer;
                 padding-left: 5px;
                 padding-right: 5px;
                 color: #fff;
-              } /* /child */
-            } /* /p */
-          } /* /navProfile */
+              }
+
+              /* /child */
+            }
+
+            /* /p */
+          }
+
+          /* /navProfile */
 
           .wepperProfile {
             width: 100%;
             height: 76%;
             overflow-x: hidden;
             background-color: $bg;
+
             .imagePro {
               overflow: hidden;
               width: 100%;
@@ -1358,6 +1852,7 @@ span.psw {
               position: relative;
               background-color: $bg;
               transition: all 0.2s ease;
+
               /* box-shadow: 0px 2px 3px $cShadow; */
               #desplayProfileImage,
               label {
@@ -1366,10 +1861,13 @@ span.psw {
                 height: 170px;
                 border-radius: 50%;
                 cursor: pointer;
-              } /* /myImg */
+              }
+
+              /* /myImg */
               &:hover label {
                 z-index: 2;
               }
+
               label {
                 z-index: -2;
                 background-color: $bg;
@@ -1381,8 +1879,12 @@ span.psw {
                 flex-direction: column;
                 text-align: center;
                 box-sizing: border-box;
-              } /* /label */
-            } /* /imagePro */
+              }
+
+              /* /label */
+            }
+
+            /* /imagePro */
             .profileNmae,
             .profileSate {
               overflow: hidden;
@@ -1393,6 +1895,7 @@ span.psw {
               /* padding: 8px; */
               display: grid;
               grid-template-rows: 1fr 2fr;
+
               .name,
               .status {
                 margin: 0px;
@@ -1401,7 +1904,9 @@ span.psw {
                 color: $navProfileCover;
                 cursor: default;
                 padding: 6px;
-              } /* /p */
+              }
+
+              /* /p */
               .yourName,
               .yourStatus {
                 width: 100%;
@@ -1413,19 +1918,23 @@ span.psw {
                 background-color: $bgw;
                 @extend %flx;
                 padding: 6px;
+
                 div {
                   color: $fntClr;
                   width: 100%;
+
                   .inputFirstNameLstName,
                   .inputStatus {
                     width: 90%;
                     margin: 0 auto;
                     height: 100%;
                     display: flex;
+
                     @include m576 {
                       position: fixed;
                       height: 10%;
                     }
+
                     input,
                     #inputStatus {
                       width: 90%;
@@ -1436,11 +1945,15 @@ span.psw {
                       padding: 0px 8px;
                       background-color: $bgw;
                       color: $fntClr;
-                    } /* /input */
+                    }
+
+                    /* /input */
                     #inputStatus {
                       resize: none;
                       padding: 8px;
-                    } /* /#inputStatus */
+                    }
+
+                    /* /#inputStatus */
                     ::-webkit-scrollbar {
                       display: none;
                     }
@@ -1469,42 +1982,64 @@ span.psw {
                       background-color: $bgw;
                       /*  padding-left: 5px; */
                       padding: 5px;
-                    } /* /savFLname */
-                  } /* /inputFirstNameLstName */
-                } /* /div */
+                    }
+
+                    /* /savFLname */
+                  }
+
+                  /* /inputFirstNameLstName */
+                }
+
+                /* /div */
                 .pen {
                   margin: 0px;
                   cursor: pointer;
                   color: $fntClr;
                   color: $navProfileCover;
-                } /* /pen */
-              } /* /yourName */
-            } /* /profileNmae */
+                }
+
+                /* /pen */
+              }
+
+              /* /yourName */
+            }
+
+            /* /profileNmae */
             .profileSate {
               height: auto;
               display: flex;
               flex-direction: column;
+
               .status {
                 height: 40px;
                 margin-top: 10px;
-              } /* /status */
+              }
+
+              /* /status */
               .yourStatus {
                 /* height: 120px; */
                 padding: 10px;
                 margin-bottom: 25px;
-              } /* /yourStatus */
-            } /* /profileSate */
+              }
+
+              /* /yourStatus */
+            }
+
+            /* /profileSate */
             .Memoidentifier {
               width: 100%;
               height: 90px;
               margin: 10px 0px 10px 0px;
               padding: 10px 0px 10px 0px;
+
               .memoEdentifire {
                 margin: 0px 5px;
                 color: $navProfileCover;
                 background-color: $bg;
                 padding: 0px 0px 6px 0px;
-              } /* /memoEdentifire */
+              }
+
+              /* /memoEdentifire */
               .serialNumber {
                 display: flex;
                 margin: 0px 4px;
@@ -1514,14 +2049,19 @@ span.psw {
                 color: $fntClr;
                 background-color: $bgw;
                 padding: 6px;
-              } /* /serialNumber */
-            } /* /warring */
+              }
+
+              /* /serialNumber */
+            }
+
+            /* /warring */
             .deleteAccount {
               width: 100%;
               height: auto;
               margin-top: 1.8px;
               background-color: $bgw;
               padding: 5px;
+
               button {
                 background-color: transparent;
                 display: flex;
@@ -1529,17 +2069,25 @@ span.psw {
                 margin: 0px;
                 cursor: pointer;
                 color: $phone;
+
                 &:focus {
                   border: none;
                   outline: none;
                 }
+
                 &:active {
                   border: none;
                   outline: none;
                 }
-              } /* /p */
-            } /* /deleteAccount */
-          } /* /wepperProfile */
+              }
+
+              /* /p */
+            }
+
+            /* /deleteAccount */
+          }
+
+          /* /wepperProfile */
 
           ::-webkit-scrollbar {
             width: 2px;
@@ -1576,9 +2124,12 @@ span.psw {
           ::-o-scrollbar-thumb {
             background-color: $scrollColor;
           }
-        } /* /.myProfile */
+        }
+
+        /* /.myProfile */
         .archiveWepper {
           width: 100%;
+
           .contactList {
             width: 100%;
             max-height: 72.5%;
@@ -1586,10 +2137,12 @@ span.psw {
             background-color: $bg;
             overflow-y: scroll;
             overflow-x: hidden;
+
             /*  position: relative; */
             .wepper-card {
               width: 100%;
               padding: 2px;
+
               /* position: absolute; */
               .carad {
                 width: 100%;
@@ -1606,22 +2159,30 @@ span.psw {
                 &:hover {
                   background: $bgw;
                   transition: background 0.3s ease;
-                } /* /hover */
+                }
+
+                /* /hover */
                 a {
                   text-decoration: none;
                   width: 70%;
                   height: 100%;
                   @extend %flx;
                   border-radius: 6px;
+
                   .imgContactProfile {
                     margin-left: 5px;
                     margin-right: 5px;
+
                     img {
                       width: 45px;
                       height: 45px;
                       border-radius: 80px;
-                    } /* /img */
-                  } /* /imgContactProfile */
+                    }
+
+                    /* /img */
+                  }
+
+                  /* /imgContactProfile */
                   .user-lastMsg {
                     width: 70%;
                     margin-left: 3px;
@@ -1630,6 +2191,7 @@ span.psw {
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+
                     .user {
                       width: 100%;
                       font-size: 13px;
@@ -1639,7 +2201,9 @@ span.psw {
                       white-space: nowrap;
                       font-weight: 900;
                       margin-bottom: 5px;
-                    } /* /user */
+                    }
+
+                    /* /user */
                     .lastMessage {
                       width: 100%;
                       font-size: 10px;
@@ -1648,9 +2212,15 @@ span.psw {
                       overflow: hidden;
                       white-space: nowrap;
                       /* font-weight: 700; */
-                    } /* /lastMessage */
-                  } /* /user-lastMsg */
-                } /* /a */
+                    }
+
+                    /* /lastMessage */
+                  }
+
+                  /* /user-lastMsg */
+                }
+
+                /* /a */
                 .dateAndOptions {
                   right: 0px;
                   font-size: 10px;
@@ -1678,8 +2248,10 @@ span.psw {
                     position: absolute;
                     top: 3px;
                   }
+
                   .aroow {
                     transform: translate(-20px, 4px);
+
                     button {
                       background-color: transparent;
                       padding: 0px;
@@ -1690,13 +2262,27 @@ span.psw {
                       width: auto;
                       opacity: 1;
                       outline: none;
-                    } /* /button */
-                  } /* /aroow */
-                } /* /dateAndOptions */
-              } /* /li */
-            } /* /ul */
-          } /* /contactList */
-        } /* /archiveWepper */
+                    }
+
+                    /* /button */
+                  }
+
+                  /* /aroow */
+                }
+
+                /* /dateAndOptions */
+              }
+
+              /* /li */
+            }
+
+            /* /ul */
+          }
+
+          /* /contactList */
+        }
+
+        /* /archiveWepper */
         .blockList {
           position: relative;
           height: 100%;
@@ -1704,6 +2290,7 @@ span.psw {
           max-height: 100%;
           background-color: $bg;
           display: none;
+
           .navBlockList {
             position: absolute;
             width: 100%;
@@ -1714,9 +2301,11 @@ span.psw {
             padding: 5px;
             background-color: $logo;
             color: $fntClr;
+
             p {
               margin: 0px;
             }
+
             .closeBlockList {
               position: relative;
               height: 100%;
@@ -1725,21 +2314,30 @@ span.psw {
               align-items: center;
               justify-content: center;
               cursor: pointer;
+
               span {
                 position: absolute;
                 width: 1.7px;
                 height: 25px;
                 background-color: $fntClr;
                 border-radius: 10px;
+
                 &:nth-child(1) {
                   transform: rotate(45deg);
                 }
+
                 &:nth-child(2) {
                   transform: rotate(-45deg);
                 }
-              } /* /span */
-            } /* /closeBlockList */
-          } /* /navBlockList */
+              }
+
+              /* /span */
+            }
+
+            /* /closeBlockList */
+          }
+
+          /* /navBlockList */
           .wreapperBlockList {
             top: 10%;
             position: absolute;
@@ -1747,9 +2345,11 @@ span.psw {
             padding: 10px;
             max-height: 83%;
             overflow-y: auto;
+
             .wepperCard {
               width: 100%;
               height: auto;
+
               .cardBlockList {
                 width: 100%;
                 height: 60px;
@@ -1757,11 +2357,14 @@ span.psw {
                 grid-template-columns: 75% 25%;
                 border-radius: 5px;
                 cursor: pointer;
+
                 &:hover {
                   transition: all 0.3s ease;
                   background-color: $bgw;
                 }
+
                 margin-bottom: 5px;
+
                 .mainInfo {
                   display: flex;
                   width: 100%;
@@ -1769,14 +2372,19 @@ span.psw {
                   align-items: center;
                   padding: 5px;
                   color: $fntClr;
+
                   .avatarUser {
                     width: 50px;
                     height: 50px;
                     border-radius: 50%;
                     margin-right: 5px;
                     margin-left: 5px;
-                  } /* /avatarUser */
-                } /* /mainInfo */
+                  }
+
+                  /* /avatarUser */
+                }
+
+                /* /mainInfo */
                 .unblockUser {
                   width: 100%;
                   height: 100%;
@@ -1784,14 +2392,23 @@ span.psw {
                   align-items: center;
                   justify-content: center;
                   color: $fntClr;
-                } /* /unblockUser */
-              } /* /cardBlockList */
-            } /* /wepperCard */
-          } /* /wreapperBlockList */
+                }
+
+                /* /unblockUser */
+              }
+
+              /* /cardBlockList */
+            }
+
+            /* /wepperCard */
+          }
+
+          /* /wreapperBlockList */
 
           ::-webkit-scrollbar {
             width: 7px;
             background-color: $bgw;
+
             @include m576 {
               width: 3px;
             }
@@ -1800,6 +2417,7 @@ span.psw {
           ::-ms-scrollbar {
             width: 7px;
             background-color: $bgw;
+
             @include m576 {
               width: 3px;
             }
@@ -1808,6 +2426,7 @@ span.psw {
           ::-o-scrollbar {
             width: 7px;
             background-color: $bgw;
+
             @include m576 {
               width: 3px;
             }
@@ -1816,6 +2435,7 @@ span.psw {
           ::-ms-scrollbar {
             width: 7px;
             background-color: $bgw;
+
             @include m576 {
               width: 3px;
             }
@@ -1844,9 +2464,14 @@ span.psw {
             opacity: 0.6;
             border-radius: 10px;
           }
-        } /* /blockList */
-      } /* end of leftSideBar */
+        }
+
+        /* /blockList */
+      }
+
+      /* end of leftSideBar */
       .rightSidebar {
+
         /* this setion to controll in left and right side */
         @include m576 {
           position: absolute;
@@ -1864,6 +2489,7 @@ span.psw {
         ::-webkit-scrollbar {
           width: 3px;
           background-color: $bgw;
+
           @include m576 {
             width: 2px;
           }
@@ -1872,6 +2498,7 @@ span.psw {
         ::-ms-scrollbar {
           width: 3px;
           background-color: $bgw;
+
           @include m576 {
             width: 2px;
           }
@@ -1880,6 +2507,7 @@ span.psw {
         ::-o-scrollbar {
           width: 3px;
           background-color: $bgw;
+
           @include m576 {
             width: 2px;
           }
@@ -1888,6 +2516,7 @@ span.psw {
         ::-ms-scrollbar {
           width: 3px;
           background-color: $bgw;
+
           @include m576 {
             width: 2px;
           }
@@ -1912,6 +2541,7 @@ span.psw {
           background-color: $cscrollWepperChat;
           border-radius: 10px;
         }
+
         .memologo {
           cursor: default;
           position: absolute;
@@ -1921,10 +2551,12 @@ span.psw {
           justify-content: center;
           background-color: $bg;
           flex-direction: column;
+
           .imgLogo {
             @include m576 {
               width: 90%;
             }
+
             @include mobile {
               width: 65%;
             }
@@ -1934,13 +2566,19 @@ span.psw {
             position: relative;
             @extend %flx;
             justify-content: center;
+
             #mainCycle {
               width: 100%;
               height: 100%;
+
               & circle {
                 fill: $colorCycle;
-              } /* /circle */
-            } /* /svg */
+              }
+
+              /* /circle */
+            }
+
+            /* /svg */
             .wifiPhone {
               flex-direction: column;
               position: absolute;
@@ -1948,6 +2586,7 @@ span.psw {
               height: 80%;
               @extend %flx;
               justify-content: center;
+
               .memoPhoneIcon {
                 position: relative;
                 /* width: 100%; */
@@ -1960,48 +2599,74 @@ span.psw {
                   position: absolute;
                   width: 70%;
                   height: 60%;
-                } /* /memIcon */
+                }
+
+                /* /memIcon */
                 #phoneObject {
                   width: 100%;
                   height: 100%;
+
                   & #Rectangle_217 {
                     fill: $backGroundPhoneObject;
                   }
-                } /* /phoneObject */
-              } /* /memoPhoneIcon */
+                }
+
+                /* /phoneObject */
+              }
+
+              /* /memoPhoneIcon */
               #wifiIcon {
                 margin-bottom: 10px;
                 width: 50%;
                 height: 35%;
-              } /* /wifiIcon */
-            } /* /wifiPhone */
-          } /* /imgLogo */
+              }
+
+              /* /wifiIcon */
+            }
+
+            /* /wifiPhone */
+          }
+
+          /* /imgLogo */
           .headerp {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+
             p {
               color: $fntClr;
+
               &:nth-child(1) {
                 margin-top: 60px;
                 opacity: 0.7;
                 font-size: 30px;
+
                 @include mobile {
                   font-size: 15px;
                   margin-top: 50px;
-                } /* /@include m576 */
-              } /* /nth 1 */
+                }
+
+                /* /@include m576 */
+              }
+
+              /* /nth 1 */
               &:nth-child(2) {
                 @include mobile {
                   font-size: 12px;
-                } /* / @include mobile */
+                }
+
+                /* / @include mobile */
                 width: 67.1%;
                 text-align: center;
                 opacity: 0.7;
-              } /* /nth 2 */
+              }
+
+              /* /nth 2 */
             }
-          } /* /headerp */
+          }
+
+          /* /headerp */
           .line {
             width: 60%;
             height: 1.3px;
@@ -2009,35 +2674,48 @@ span.psw {
             background-color: $fntClr;
             opacity: 0.5;
             margin: 50px 0px 30px 0px;
-          } /* /line */
+          }
+
+          /* /line */
 
           .footerP {
             font-size: 14px;
             color: $fntClr;
             opacity: 0.7;
-          } /* /footerP */
+          }
+
+          /* /footerP */
 
           .greenLine {
+            position: absolute;
+            bottom: 40px;
             width: 100%;
             height: 6px;
             margin-top: 5px;
             background-color: $greenLine;
-          } /* /greenLine */
-        } /* /memologo */
+          }
+
+          /* /greenLine */
+        }
+
+        /* /memologo */
         .chatRoom {
           width: 100%;
           height: 100%;
           position: relative;
+
           .chat-room {
             width: 100%;
             height: 92%;
             position: absolute;
             display: grid;
             grid-template-rows: 10% 80% 109px;
+
             @include m576 {
               grid-template-rows: 10% 80%;
               /*  top: 109px; */
             }
+
             .navChatRoom {
               position: relative;
               /*  box-shadow: 0px 2.5px 5px $cShadow; */
@@ -2046,14 +2724,17 @@ span.psw {
               /* overflow: hidden; */
               z-index: 1;
               background-color: $navMsgC;
+
               .containerName {
                 width: 190px;
                 height: 100%;
                 display: flex;
                 align-items: center;
+
                 .returnToBack {
                   display: none;
                   cursor: pointer;
+
                   @include m576 {
                     display: block;
                     color: $fntClr;
@@ -2064,30 +2745,39 @@ span.psw {
                     justify-content: center;
                     margin: 0px 10px 0px 10px;
                   }
+
                   color: $fntClr;
-                } /* /returnToBack */
+                }
+
+                /* /returnToBack */
 
                 .reciveUser {
                   display: flex;
                   margin: 5px;
                   display: flex;
                   cursor: pointer;
+
                   img {
                     margin: 3px;
                     width: 35px;
                     height: 35px;
                     border-radius: 50%;
-                  } /* /img */
+                  }
+
+                  /* /img */
                   .name-active {
                     margin-left: 3px;
                     display: flex;
                     flex-direction: column;
                     height: 100%;
+
                     .nameUser {
                       font-size: 14px;
                       color: $fntClr;
                       margin: 7px 4px 0px 4px;
-                    } /* /nameUser */
+                    }
+
+                    /* /nameUser */
                     .stateUser {
                       color: var(--fntClr);
                       width: 150px;
@@ -2097,9 +2787,12 @@ span.psw {
 
                       .lastSeen {
                         margin: 0px 5px;
-                      } /* /lastSeen */
+                      }
+
+                      /* /lastSeen */
 
                       @extend %flx;
+
                       p {
                         margin: 0px;
                         left: 18%;
@@ -2107,6 +2800,7 @@ span.psw {
                         margin-left: 5px;
                         margin-right: 5px;
                       }
+
                       span {
                         width: 6px;
                         height: 6px;
@@ -2114,11 +2808,21 @@ span.psw {
                         background-color: var(--logo);
                         margin-left: 2px;
                         margin-right: 2px;
-                      } /* /span */
-                    } /* /stateUser */
-                  } /* /name-active */
-                } /* /reciveUser */
-              } /* / */
+                      }
+
+                      /* /span */
+                    }
+
+                    /* /stateUser */
+                  }
+
+                  /* /name-active */
+                }
+
+                /* /reciveUser */
+              }
+
+              /* / */
 
               .calling {
                 margin: 5px;
@@ -2126,9 +2830,12 @@ span.psw {
                 width: auto;
                 justify-content: space-around;
                 position: relative;
+
                 @include m576 {
                   width: 70px;
-                } /* /m576 */
+                }
+
+                /* /m576 */
                 .settingMessage {
                   margin: 0px;
                   width: auto;
@@ -2140,17 +2847,21 @@ span.psw {
                   justify-content: space-between;
                   background-color: transparent;
                   height: 30px;
+
                   &:focus {
                     outline: none;
                     border: none;
                     opacity: 1;
                   }
+
                   span {
                     background-color: $fntClr;
                     width: 4px;
                     height: 4px;
                     border-radius: 50%;
-                  } /* /span */
+                  }
+
+                  /* /span */
                   .settingChat {
                     cursor: default;
                     display: none;
@@ -2162,24 +2873,40 @@ span.psw {
                     left: -195px;
                     bottom: -160px;
                     border: #0000001a solid;
+
                     li {
                       cursor: pointer;
                       width: 100%;
                       padding: 10px;
+
                       svg {
                         margin: 0px 10px;
-                      } /* /svg */
+                      }
+
+                      /* /svg */
                       &:hover {
                         background-color: $bgw;
-                      } /* /hover */
-                    } /* /li */
-                  } /* /settingChat */
+                      }
+
+                      /* /hover */
+                    }
+
+                    /* /li */
+                  }
+
+                  /* /settingChat */
                   &:focus {
                     .settingChat {
                       display: block;
-                    } /* /settingChat */
-                  } /* /settingChat */
-                } /* /settingMessage */
+                    }
+
+                    /* /settingChat */
+                  }
+
+                  /* /settingChat */
+                }
+
+                /* /settingMessage */
                 .buttonSearchMessage {
                   right: 0px;
                   position: absolute;
@@ -2193,13 +2920,19 @@ span.psw {
                   width: 30px;
                   height: 30px;
                   display: block;
+
                   &:focus {
                     outline: none;
-                  } /* /foucs */
-                } /* /settingMessage */
-                & > div {
+                  }
+
+                  /* /foucs */
+                }
+
+                /* /settingMessage */
+                &>div {
                   cursor: pointer;
                   font-size: 20px;
+
                   button {
                     background-color: transparent;
                     padding: 0px;
@@ -2208,17 +2941,29 @@ span.psw {
                     outline: none;
                     color: $fntClr;
                     color: $fntClr;
+
                     &:focus {
                       outline: none;
                     }
+
                     &:hover {
                       transition: color 0.3s ease;
                       color: $logo;
-                    } /* /hover */
-                  } /* /button */
-                } /* /direction */
-              } /* /calling */
-            } /* /navChatRoom */
+                    }
+
+                    /* /hover */
+                  }
+
+                  /* /button */
+                }
+
+                /* /direction */
+              }
+
+              /* /calling */
+            }
+
+            /* /navChatRoom */
             .sendCall {
               width: 100%;
               height: 70px;
@@ -2230,6 +2975,7 @@ span.psw {
               justify-content: space-between;
               box-shadow: 0px 2.5px 5px var(--cShadow), 1px 0px 2px inset var(--cShadow);
               background-color: $bg;
+
               p {
                 display: flex;
                 width: 150px;
@@ -2237,6 +2983,7 @@ span.psw {
                 color: $fntClr;
                 margin: 0px;
                 cursor: default;
+
                 span {
                   width: 5px;
                   height: 5px;
@@ -2248,26 +2995,37 @@ span.psw {
                   animation-timing-function: ease;
                   animation-duration: 1.5s;
                   animation-iteration-count: infinite;
+
                   &:nth-child(1) {
                     animation-delay: 0s;
                   }
+
                   &:nth-child(2) {
                     animation-delay: 0.3s;
                   }
+
                   &:nth-child(3) {
                     animation-delay: 0.6s;
                   }
-                } /* /span */
+                }
+
+                /* /span */
                 @keyframes showDot {
+
                   0%,
                   100% {
                     background-color: transparent;
                   }
+
                   50% {
                     background-color: $fntClr;
                   }
-                } /* /showDot */
-              } /* /p */
+                }
+
+                /* /showDot */
+              }
+
+              /* /p */
               .closeSendC {
                 transform: rotate(224deg);
                 width: 50px;
@@ -2280,8 +3038,12 @@ span.psw {
                 color: $fntClr;
                 font-size: 25px;
                 cursor: pointer;
-              } /* /closeSendC */
-            } /* /sendCall */
+              }
+
+              /* /closeSendC */
+            }
+
+            /* /sendCall */
             .wepper-chat {
               position: relative;
               /* width: 100%; */
@@ -2292,6 +3054,7 @@ span.psw {
               overflow-y: scroll;
               align-items: center;
               justify-content: center;
+
               @include m576 {
                 width: 100%;
                 height: 75%;
@@ -2299,7 +3062,9 @@ span.psw {
                 max-height: 98%;
                 position: fixed;
                 /*  top: 109px; */
-              } /* @include m420 {
+              }
+
+              /* @include m420 {
                 max-height: 100%;
               } */
               .myMessageCover,
@@ -2308,6 +3073,7 @@ span.psw {
                 position: relative;
                 width: 100%;
                 margin-bottom: 15px;
+
                 /* &:last-child {
                   margin-bottom: 45px;
                 } */
@@ -2320,9 +3086,11 @@ span.psw {
                   text-align: start;
                   color: $fntClr;
                   max-width: 60%;
+
                   @include m576 {
                     max-width: 75%;
                   }
+
                   position: relative;
                   box-shadow: 2px 2px 2px $cmessageShadow;
                   cursor: default;
@@ -2331,13 +3099,19 @@ span.psw {
                     .created {
                       display: none;
                       transition: all 0.3s ease;
-                    } /* /created */
+                    }
+
+                    /* /created */
                     #dispalyListView {
                       margin-top: 8px;
                       display: flex;
                       transition: all 0.3s ease;
-                    } /* /dispalyListView */
-                  } /* /hover */
+                    }
+
+                    /* /dispalyListView */
+                  }
+
+                  /* /hover */
 
                   .modified {
                     width: 100%;
@@ -2345,14 +3119,22 @@ span.psw {
                     font-size: 10px;
                     color: #898686;
                     margin-bottom: 5px;
-                  } /* /modified */
+                  }
+
+                  /* /modified */
                   p {
                     .msgLink {
                       &:hover {
                         text-decoration: none;
-                      } /* /hover */
-                    } /* /msgLink */
-                  } /* /p */
+                      }
+
+                      /* /hover */
+                    }
+
+                    /* /msgLink */
+                  }
+
+                  /* /p */
                   .fileType {
                     display: grid;
                     grid-template-columns: 1fr 2.5fr;
@@ -2365,6 +3147,7 @@ span.psw {
                       align-items: center;
                       margin-left: 5px;
                       height: 100%;
+
                       a {
                         img {
                           width: 35px;
@@ -2373,13 +3156,17 @@ span.psw {
                           justify-content: center;
                           align-items: center;
                           cursor: pointer;
-                        } /* /svg */
+                        }
+
+                        /* /svg */
                       }
                     }
+
                     .title {
                       display: flex;
                       align-items: center;
                       justify-content: center;
+
                       p {
                         margin: 5px;
                         color: $fntClr;
@@ -2394,11 +3181,17 @@ span.psw {
                         align-items: center;
                         cursor: default;
                       }
-                    } /* /title */
-                  } /* /fileType */
+                    }
+
+                    /* /title */
+                  }
+
+                  /* /fileType */
                   .imgType {
                     width: 100%;
-                  } /* /imgType */
+                  }
+
+                  /* /imgType */
                   #dispalyListView {
                     display: none;
                     position: relative;
@@ -2413,6 +3206,7 @@ span.psw {
                     justify-content: center;
                     align-items: center;
                     height: 13.5px;
+
                     .arrow {
                       border: solid $fntClr;
                       border-width: 0 3px 3px 0;
@@ -2428,7 +3222,9 @@ span.psw {
                         transform-style: preserve-3d;
                         transform-origin: center;
                       }
-                    } /* /arrow */
+                    }
+
+                    /* /arrow */
 
                     .listVieww {
                       /* width: 30%;
@@ -2442,11 +3238,13 @@ span.psw {
                       color: $fntClr;
                       right: 0px;
                       z-index: 3 !important;
+
                       .wepperListView {
                         width: 100%;
                         /* height: 100%; */
                         background-color: $bg;
                         box-shadow: 1px 2px 3px #000;
+
                         div {
                           overflow: hidden;
                           background-color: $bg;
@@ -2456,36 +3254,60 @@ span.psw {
                           align-items: center;
                           border-radius: 4px;
                           justify-content: center;
+
                           &:hover {
                             transition: all 0.3s ease;
                             background-color: $bgw;
                             cursor: pointer;
-                          } /* end of hover */
-                        } /* /div */
-                      } /* /wepperListView */
-                    } /* /listView */
+                          }
+
+                          /* end of hover */
+                        }
+
+                        /* /div */
+                      }
+
+                      /* /wepperListView */
+                    }
+
+                    /* /listView */
                     &:focus .listVieww {
                       transition: all 0.3s ease;
                       width: 160px;
                       /* height: 170px; */
                       outline: none;
                       top: 0px;
+
                       .wepperListView {
                         div {
                           padding: 9px;
-                        } /* /div */
-                      } /* /wepperListView */
-                    } /* end of foucs */
+                        }
+
+                        /* /div */
+                      }
+
+                      /* /wepperListView */
+                    }
+
+                    /* end of foucs */
                     &:focus {
                       outline: none;
                       border: none;
-                    } /* end of foucs */
+                    }
+
+                    /* end of foucs */
                     &:hover {
                       opacity: 1;
                       cursor: default;
-                    } /* end of hover */
-                  } /* /dispalyListView */
-                } /* /message */
+                    }
+
+                    /* end of hover */
+                  }
+
+                  /* /dispalyListView */
+                }
+
+                /* /message */
 
                 .triangle {
                   width: 0;
@@ -2497,19 +3319,26 @@ span.psw {
                   transform: rotate(64deg) translate(-2.9px, 4.9px);
                   z-index: -1;
                   top: -5px;
-                } /* /triangle */
+                }
+
+                /* /triangle */
 
                 /* this section for reply message maybe contain on image */
                 .coverReplyText {
                   display: flex;
                   background: $myReplayBgColor;
                   cursor: pointer;
+
                   img {
                     width: 50px;
                     height: 100%;
                     border-radius: 5px;
-                  } /* /img */
-                } /* /coverReplyText */
+                  }
+
+                  /* /img */
+                }
+
+                /* /coverReplyText */
 
                 .replayedMessage {
                   padding: 1px 5px;
@@ -2523,22 +3352,32 @@ span.psw {
                   min-width: 170px;
 
                   cursor: pointer;
+
                   .youUser {
                     color: $logo;
                     font-size: 16px;
-                  } /* /youUser */
+                  }
+
+                  /* /youUser */
 
                   /* this typeIcon reply message as sender and reciver */
                   .typeIcon {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+
                     p {
                       width: auto;
                     }
-                  } /* /nth-child 2 */
-                } /* /replayedMessage */
-              } /* /myMessageCover */
+                  }
+
+                  /* /nth-child 2 */
+                }
+
+                /* /replayedMessage */
+              }
+
+              /* /myMessageCover */
               .messageYouCover {
                 .triangle {
                   width: 0;
@@ -2550,28 +3389,43 @@ span.psw {
                   transform: rotate(64deg) translate(6px, -13px);
                   z-index: -1;
                   top: -5px;
-                } /* /triangle */
+                }
+
+                /* /triangle */
                 .message {
                   box-shadow: -2px 2px 2px $cmessageShadow;
+
                   &:hover {
                     .created {
                       display: block;
                       transition: all 0.3s ease;
-                    } /* /created */
+                    }
+
+                    /* /created */
                     #dispalyListView {
                       margin-top: 6px;
-                    } /* /dispalyListView */
-                  } /* /hover */
+                    }
+
+                    /* /dispalyListView */
+                  }
+
+                  /* /hover */
                   background-color: $bg;
                   float: right;
                   min-width: 80px;
+
                   p {
                     margin: 0px;
                   }
+
                   #dispalyListView {
                     float: left;
-                  } /* /#dispalyListView */
-                } /* /message */
+                  }
+
+                  /* /#dispalyListView */
+                }
+
+                /* /message */
                 .created {
                   position: relative;
                   margin-top: 5px;
@@ -2586,19 +3440,29 @@ span.psw {
                     z-index: 0;
                     display: block;
                     text-align: right;
-                  } */ /* /showDate */
-                } /* /created */
-                 /* this section for reply message maybe contain on image */
-                 .coverReplyText {
+                  } */
+                  /* /showDate */
+                }
+
+                /* /created */
+                /* this section for reply message maybe contain on image */
+                .coverReplyText {
                   display: flex;
                   background: $youBeplayBgColor;
-                  .replayedMessage{
+
+                  .replayedMessage {
                     display: flex;
                     align-items: center;
                     padding: 0px 6px;
-                  }/* /replayedMessage */
-                } /* /coverReplyText */
-              } /* /messageYouCover */
+                  }
+
+                  /* /replayedMessage */
+                }
+
+                /* /coverReplyText */
+              }
+
+              /* /messageYouCover */
               .myMessageCover {
                 .message {
                   padding: 10px;
@@ -2609,43 +3473,60 @@ span.psw {
                   text-align: start;
                   color: var(--fntClr);
                   max-width: 60%;
+
                   @include m576 {
                     max-width: 75%;
                   }
+
                   min-width: 100px;
                   cursor: default;
                   position: relative;
                   float: left;
+
                   p {
                     margin: 0px;
                   }
+
                   .check-dubole {
                     max-width: 20px;
                     max-height: 15px;
                     position: absolute;
                     bottom: 12px;
                     left: 7px;
+
                     img {
                       width: 100%;
                       height: 100%;
                     }
-                  } /* /check-dubole */
+                  }
+
+                  /* /check-dubole */
                   .created {
                     position: relative;
                     float: right;
                     font-size: 11px;
                     margin-top: 5px;
+
                     &.showDate {
                       bottom: -15px;
                       width: 92px;
                       z-index: 0;
                       display: block;
-                    } /* /showDate */
-                  } /* /created */
-                } /* /message */
-              } /* /myMwssageCover */
+                    }
+
+                    /* /showDate */
+                  }
+
+                  /* /created */
+                }
+
+                /* /message */
+              }
+
+              /* /myMwssageCover */
               .typing {
                 width: 100%;
+
                 .coverTyping {
                   position: relative;
                   width: 90px;
@@ -2658,6 +3539,7 @@ span.psw {
                   perspective: 600px;
                   transform-style: preserve-3d;
                   transform-origin: center;
+
                   span {
                     width: 10%;
                     height: 24%;
@@ -2666,66 +3548,95 @@ span.psw {
                     position: absolute;
                     top: 15px;
                     transition: all 0.3s ease;
+
                     @for $i from 1 through 3 {
                       &:nth-child(#{$i}) {
                         animation-name: moveCircl;
                         animation-timing-function: ease;
                         animation-iteration-count: infinite;
                         animation-duration: 1.5s;
+
                         @if $i==1 {
                           animation-delay: 0.6s;
                           transition: all 0.3s ease;
                           right: 15px;
-                        } @else if $i==2 {
+                        }
+
+                        @else if $i==2 {
                           right: 45px;
                           animation-delay: 0.3s;
                           transition: all 0.3s ease;
-                        } /* end of else if */
+                        }
+
+                        /* end of else if */
                         @else {
                           animation-delay: 0.1s;
                           right: 70px;
-                        } /* end of else */
-                      } /* end of span child */
-                    } /* end of for loop */
-                  } /* end of span */
+                        }
+
+                        /* end of else */
+                      }
+
+                      /* end of span child */
+                    }
+
+                    /* end of for loop */
+                  }
+
+                  /* end of span */
                   @keyframes moveCircl {
+
                     0%,
                     100% {
                       top: 7px;
                       transform: translateY(15px);
                     }
+
                     50% {
                       transform: translateY(4px);
                     }
-                  } /* /moveCircl */
-                } /* /coverTyping */
-              } /* /typing */
-            } /* /wepper-chat */
+                  }
+
+                  /* /moveCircl */
+                }
+
+                /* /coverTyping */
+              }
+
+              /* /typing */
+            }
+
+            /* /wepper-chat */
             .formContainer {
               position: relative;
               width: 100%;
               height: 100%;
+
               @include m576 {
                 position: static;
                 width: auto;
                 height: auto;
               }
+
               .formSendMessage,
               .messageBlockedUser,
               .replyForm {
                 height: 109px;
                 position: absolute;
+
                 @include m576 {
                   position: fixed;
                   min-height: 50px;
                   height: auto;
                 }
+
                 bottom: 0%;
                 right: 0px;
                 width: 100%;
                 background-color: $bgw;
                 box-shadow: -1px 0px 2px $cShadow;
                 z-index: 2;
+
                 form#sectionForRedirect {
                   border: none;
                   outline: none;
@@ -2734,10 +3645,12 @@ span.psw {
                   display: grid;
                   grid-template-columns: 1fr 5fr 1fr;
                   margin-top: 5px;
+
                   .uploadFile,
                   .voiceInput {
                     width: 100%;
                     height: 100%;
+
                     /* padding: 4px; */
                     label[for="option"],
                     label[for="voice"] {
@@ -2749,9 +3662,12 @@ span.psw {
                       cursor: pointer;
                       color: $fntClr;
                       margin: 0 auto;
-                    } /* end of libale */
+                    }
+
+                    /* end of libale */
                     label[for="voice"] {
                       position: relative;
+
                       .recorder {
                         position: absolute;
                         border: 4px solid $logo;
@@ -2763,25 +3679,36 @@ span.psw {
                         animation-duration: 1.5s;
                         animation-timing-function: ease-in-out;
                         animation-iteration-count: infinite;
-                      } /* /recorder */
+                      }
+
+                      /* /recorder */
                       @keyframes recorder {
                         0% {
                           width: 90%;
                           height: 90%;
                           opacity: 0;
                         }
+
                         100% {
                           width: 0%;
                           height: 0%;
                           opacity: 0.7;
                         }
-                      } /* end of animations */
-                    } /* label[for="voice"] */
+                      }
+
+                      /* end of animations */
+                    }
+
+                    /* label[for="voice"] */
                     #file,
                     #voice {
                       display: none;
-                    } /* /file */
-                  } /* /uploadFile */
+                    }
+
+                    /* /file */
+                  }
+
+                  /* /uploadFile */
                   .myMessageInput,
                   .voiceMsg {
                     width: 100%;
@@ -2789,22 +3716,31 @@ span.psw {
                     position: relative;
                     margin-top: 5px;
                     height: 100%;
+
                     input {
                       border: none;
                       outline: none;
                       margin: 0px;
                       width: 100%;
+
                       @include m576 {
                         height: 75%;
                       }
+
                       border-radius: 20px;
                       background-color: $bgSearch;
                       color: $fntClr;
-                    } /* end of input */
+                    }
+
+                    /* end of input */
                     .addMsg {
                       display: none;
-                    } /* /bottun */
-                  } /* /myMessageInput */
+                    }
+
+                    /* /bottun */
+                  }
+
+                  /* /myMessageInput */
                   .voiceMsg {
                     display: flex;
                     justify-content: space-between;
@@ -2813,6 +3749,7 @@ span.psw {
                     height: 60%;
                     display: none;
                     border-radius: 20px;
+
                     .trackVoice {
                       width: 80%;
                       height: 100%;
@@ -2822,6 +3759,7 @@ span.psw {
                       grid-template-columns: 5fr 0.4fr;
                       justify-content: space-between;
                       align-items: center;
+
                       .track {
                         position: absolute;
                         background: $cMsg;
@@ -2832,11 +3770,16 @@ span.psw {
                           0% {
                             width: 0px;
                           }
+
                           100% {
                             width: $wdth;
                           }
-                        } /* endof animation */
-                      } /* /track */
+                        }
+
+                        /* endof animation */
+                      }
+
+                      /* /track */
 
                       .timeTrack {
                         position: absolute;
@@ -2851,8 +3794,12 @@ span.psw {
                         justify-content: center;
                         align-items: center;
                         cursor: default;
-                      } /* /timeTrack */
-                    } /* /span */
+                      }
+
+                      /* /timeTrack */
+                    }
+
+                    /* /span */
                     label,
                     .checkAudioPlayOrNo {
                       color: $fntClr;
@@ -2864,15 +3811,22 @@ span.psw {
                       align-items: center;
                       cursor: pointer;
                       transition: all 0.3s ease;
-                    } /* /label */
+                    }
+
+                    /* /label */
                     .checkAudioPlayOrNo {
                       color: $cMsg;
                     }
+
                     .deleteVoice:hover {
                       color: $err;
                       transform: scale(1.2);
-                    } /* /deleteVoice */
-                  } /* /voiceMsg */
+                    }
+
+                    /* /deleteVoice */
+                  }
+
+                  /* /voiceMsg */
                   .munuOption {
                     width: 100%;
                     height: 180px;
@@ -2881,18 +3835,23 @@ span.psw {
                     transform: translateY(180px);
                     background-color: $bg;
                     transition: transform 0.2s ease;
+
                     .wrepperM {
                       display: grid;
                       padding: 8px;
                       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
                       .uploadFile,
                       .location {
                         border-radius: 5px;
                         padding: 3px;
+
                         &:hover {
                           transform: scale(1.05);
                           transition: all 0.5s ease;
-                        } /* /hover */
+                        }
+
+                        /* /hover */
                         cursor: pointer;
                         background-color: $bgw;
                         width: 90%;
@@ -2901,6 +3860,7 @@ span.psw {
                         margin: 0px 5px 5px 0px;
                         /* align-items: center; */
                         justify-content: center;
+
                         label {
                           cursor: pointer;
                           display: flex;
@@ -2910,11 +3870,21 @@ span.psw {
                           color: $fntClr;
                           width: 100%;
                           height: 100%;
-                        } /* /label */
-                      } /* /iconOption */
-                    } /* /wrepperM */
-                  } /* /munuOption */
-                } /* end of form */
+                        }
+
+                        /* /label */
+                      }
+
+                      /* /iconOption */
+                    }
+
+                    /* /wrepperM */
+                  }
+
+                  /* /munuOption */
+                }
+
+                /* end of form */
                 .redirectFormM {
                   width: 90%;
                   height: 45%;
@@ -2925,18 +3895,22 @@ span.psw {
                   @extend %flx;
                   justify-content: space-between;
                   box-shadow: 1px 2px 3px $cShadow, 0px -1px 3px $cShadow;
+
                   .sendRedirectMessage {
                     back: $fntClr;
                     cursor: pointer;
                     color: $logo;
                     padding: 3px;
                     border-radius: 4px;
-                  } /* /sendRedirectMessage */
+                  }
+
+                  /* /sendRedirectMessage */
                   .countAndCloseRedirect {
                     width: 50px;
                     @extend %flx;
                     justify-content: center;
                     height: 100%;
+
                     div {
                       position: relative;
                       @extend %flx;
@@ -2945,25 +3919,37 @@ span.psw {
                       height: 100%;
                       color: $fntClr;
                       cursor: default;
+
                       &:nth-child(2) {
                         cursor: pointer;
                       }
+
                       span {
                         position: absolute;
                         width: 80%;
                         height: 4px;
                         border-radius: 4px;
                         background-color: $fntClr;
+
                         &:nth-child(1) {
                           transform: rotate(45deg);
                         }
+
                         &:nth-child(2) {
                           transform: rotate(-45deg);
                         }
-                      } /* /span */
-                    } /* /div */
-                  } /* /countAndCloseRedirect */
-                } /* /redirectFormM */
+                      }
+
+                      /* /span */
+                    }
+
+                    /* /div */
+                  }
+
+                  /* /countAndCloseRedirect */
+                }
+
+                /* /redirectFormM */
                 .editMessage {
                   position: absolute;
                   top: 0px;
@@ -2971,6 +3957,7 @@ span.psw {
                   background-color: $bgw;
                   width: 100%;
                   padding: 10px 0px;
+
                   .formEditMessage {
                     width: 100%;
                     height: 100%;
@@ -2979,18 +3966,23 @@ span.psw {
                     padding: 0px 8px;
                     margin-top: 5px;
                     border: none;
+
                     input {
                       border: none;
                       outline: none;
                       margin: 0px;
                       width: 80%;
+
                       @include m576 {
                         height: 75%;
                       }
+
                       border-radius: 20px;
                       background-color: $bgSearch;
                       color: $fntClr;
-                    } /* /input */
+                    }
+
+                    /* /input */
                     .closeEditMyessage {
                       width: 18%;
                       display: flex;
@@ -2998,6 +3990,7 @@ span.psw {
                       justify-content: center;
                       position: relative;
                       cursor: pointer;
+
                       span {
                         width: 2.9px;
                         height: 25px;
@@ -3005,27 +3998,43 @@ span.psw {
                         position: absolute;
                         top: auto;
                         border-radius: 10px;
+
                         &:nth-child(1) {
                           transform: rotate(45deg);
                         }
+
                         &:nth-child(2) {
                           transform: rotate(-45deg);
                         }
-                      } /* /span */
-                    } /* /closeEditMyessage */
-                  } /* /formEditMessage */
-                } /* /editMessage */
-              } /* /formSendMessage */
+                      }
+
+                      /* /span */
+                    }
+
+                    /* /closeEditMyessage */
+                  }
+
+                  /* /formEditMessage */
+                }
+
+                /* /editMessage */
+              }
+
+              /* /formSendMessage */
               .messageBlockedUser {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 color: $fntClr;
+
                 .messageBlcok {
                   margin-bottom: 30px;
+
                   @include m576 {
                     margin-bottom: 0px;
-                  } /* /m576 */
+                  }
+
+                  /* /m576 */
                   &.unblock {
                     width: 60%;
                     padding: 10px 0px;
@@ -3036,9 +4045,15 @@ span.psw {
                     justify-content: center;
                     box-shadow: 1px 2px 3px $cShadow;
                     border-radius: 3px;
-                  } /* /unblock */
-                } /* /h6 */
-              } /* /messageBlockedUser */
+                  }
+
+                  /* /unblock */
+                }
+
+                /* /h6 */
+              }
+
+              /* /messageBlockedUser */
               .replyForm {
                 height: auto;
 
@@ -3049,10 +4064,18 @@ span.psw {
                     .myMessageInput {
                       #myMessageInput {
                         height: 45px;
-                      } /* /myMessageInput */
-                    } /* /myMessageInput */
-                  } /* /sectionForRedirect */
-                } /* /include */
+                      }
+
+                      /* /myMessageInput */
+                    }
+
+                    /* /myMessageInput */
+                  }
+
+                  /* /sectionForRedirect */
+                }
+
+                /* /include */
 
                 .replyText {
                   width: 100%;
@@ -3060,11 +4083,13 @@ span.psw {
                   display: flex;
                   align-items: center;
                   justify-content: center;
+
                   .replyContainer {
                     width: 100%;
                     height: 100%;
                     display: flex;
                     align-items: center;
+
                     .contentReplyedMessage {
                       height: 80%;
                       width: 95%;
@@ -3076,6 +4101,7 @@ span.psw {
                       position: relative;
                       display: flex;
                       justify-content: space-between;
+
                       /*  box-shadow: 7px 0px 0px inset $logo; */
                       /*  white-space: nowrap;
                       overflow: hidden !important;
@@ -3087,11 +4113,15 @@ span.psw {
                         width: 100px;
                         height: 100%;
                         top: 0px;
-                      } /* /img */
+                      }
+
+                      /* /img */
                       .coverTextReply {
                         .userReply {
                           color: $logo;
-                        } /* /userReply */
+                        }
+
+                        /* /userReply */
                         .textMessageReply {
                           width: 100%;
                           text-overflow: ellipsis;
@@ -3099,19 +4129,34 @@ span.psw {
                           white-space: nowrap;
                           color: $fntClr;
                           height: 60%;
-                        } /* /textMessageReply */
-                      } /* /coverTextReply */
-                    } /* /replyText */
+                        }
+
+                        /* /textMessageReply */
+                      }
+
+                      /* /coverTextReply */
+                    }
+
+                    /* /replyText */
                     .closeReply {
                       padding: 10px;
                       color: $fntClr;
                       height: 100%;
                       cursor: pointer;
-                    } /* /closeReply */
-                  } /* /replyContainer */
-                } /* /replyText */
-              } /* /replyForm */
+                    }
+
+                    /* /closeReply */
+                  }
+
+                  /* /replyContainer */
+                }
+
+                /* /replyText */
+              }
+
+              /* /replyForm */
             }
+
             .wrongMsg {
               width: 100%;
               height: 25px;
@@ -3122,6 +4167,7 @@ span.psw {
               z-index: 3;
               border-bottom-right-radius: 2px;
               border-bottom-left-radius: 2px;
+
               .wrepperWrong {
                 display: flex;
                 align-items: center;
@@ -3129,6 +4175,7 @@ span.psw {
                 width: 100%;
                 margin-top: 2px;
                 height: 90%;
+
                 .messageWrong {
                   display: flex;
                   align-items: center;
@@ -3138,8 +4185,12 @@ span.psw {
                   color: $fntClr;
                   font-size: 12px;
                   padding: 0px 3px 0px 3px;
-                } /* /messageWrong */
-              } /* /wrepperWrong */
+                }
+
+                /* /messageWrong */
+              }
+
+              /* /wrepperWrong */
               .timerMessageWrong {
                 transition: all 0.3s ease;
                 border-radius: 4px;
@@ -3149,16 +4200,23 @@ span.psw {
                 animation-name: timerMessageWrong;
                 animation-duration: 5s;
                 animation-timing-function: ease;
-              } /* /timerMessageWrong */
+              }
+
+              /* /timerMessageWrong */
               @keyframes timerMessageWrong {
                 0% {
                   width: 0%;
                 }
+
                 100% {
                   width: 100%;
                 }
-              } /* /timerMessageWrong animation */
-            } /* /wrongMsg */
+              }
+
+              /* /timerMessageWrong animation */
+            }
+
+            /* /wrongMsg */
             .wepperDate {
               width: 100%;
               height: auto;
@@ -3166,6 +4224,7 @@ span.psw {
               margin-bottom: 15px;
               @extend %flx;
               justify-content: center;
+
               .datePagination {
                 padding: 3px;
                 border-radius: 5px;
@@ -3175,17 +4234,27 @@ span.psw {
                 min-width: 70px;
                 text-align: center;
                 box-shadow: 1px 2px 3x $cShadow;
-              } /* /datePagination */
-            } /* /wepperDate */
-          } /* /chat-room */
-        } /* /chatRoom */
+              }
+
+              /* /datePagination */
+            }
+
+            /* /wepperDate */
+          }
+
+          /* /chat-room */
+        }
+
+        /* /chatRoom */
         .contactsOptionsMenu {
           width: 100%;
           display: flex;
           justify-content: center;
           position: absolute;
+
           @include m576 {
             justify-content: unset;
+
             @include m576 {
               height: 100vh;
               animation-name: animationWidthSetting;
@@ -3194,6 +4263,7 @@ span.psw {
               animation-iteration-count: 1;
             }
           }
+
           .contactOptions {
             position: absolute;
             width: 92%;
@@ -3213,17 +4283,21 @@ span.psw {
               height: 100vh;
               margin: 0px;
             }
+
             .navContact {
               width: 100%;
               height: 12%;
               display: flex;
               justify-content: space-between;
               align-items: center;
+
               .reciveName {
                 padding: 5px;
                 color: $fntClr;
                 opacity: 0.8;
-              } /* /reciveName */
+              }
+
+              /* /reciveName */
 
               button {
                 background: transparent;
@@ -3236,24 +4310,35 @@ span.psw {
                 justify-content: center;
                 align-items: center;
                 transition: color 0.3s ease;
+
                 &:hover {
                   color: $logo;
-                } /* /hover */
-              } /* /button */
-            } /* /navContact */
+                }
+
+                /* /hover */
+              }
+
+              /* /button */
+            }
+
+            /* /navContact */
             .lostOptionContact {
               width: 100%;
               padding: 2px;
+
               ul {
                 width: 100%;
                 position: relative;
+
                 li {
                   width: 100%;
                   height: 40px;
                   transition: background 0.3s ease;
+
                   &:hover {
                     background: $bg;
                   }
+
                   a {
                     text-decoration: none;
                     color: $fntClr;
@@ -3261,19 +4346,34 @@ span.psw {
                     height: 100%;
                     @extend %flx;
                     justify-content: center;
-                  } /* /a */
+                  }
+
+                  /* /a */
                   &:not(:last-child) {
                     border-bottom: 1px solid $brdList;
-                  } /* /child */
-                } /* /li */
-              } /* /ul */
-            } /* /lostOptionContact */
-          } /* /contactOptions */
-        } /* /contactsOptionsMenu */
+                  }
+
+                  /* /child */
+                }
+
+                /* /li */
+              }
+
+              /* /ul */
+            }
+
+            /* /lostOptionContact */
+          }
+
+          /* /contactOptions */
+        }
+
+        /* /contactsOptionsMenu */
         .settingYourProfile {
           position: absolute;
           width: 100%;
           z-index: 3;
+
           @include m576 {
             height: 100vh;
             animation-name: animationWidthSetting;
@@ -3281,6 +4381,7 @@ span.psw {
             animation-timing-function: ease;
             animation-iteration-count: 1;
           }
+
           .setting {
             background-color: var(--bgw);
             border-right: 1px solid $brdList;
@@ -3290,14 +4391,17 @@ span.psw {
             margin: auto;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
+
             @include m576 {
               width: 70%;
               height: 100%;
               margin: 0px;
             }
+
             .navSetting {
               width: 100%;
               height: 40px;
+
               button {
                 background: transparent;
                 padding: 0px;
@@ -3307,17 +4411,26 @@ span.psw {
                 border: none;
                 outline: none;
                 transition: color 0.3s ease;
+
                 &:hover {
                   color: $logo;
-                } /* /hover */
-              } /* /button */
-            } /* /navSetting */
+                }
+
+                /* /hover */
+              }
+
+              /* /button */
+            }
+
+            /* /navSetting */
             .listSetting {
               width: 100%;
               padding: 2px;
+
               ul {
                 width: 100%;
                 position: relative;
+
                 li {
                   width: 100%;
                   min-height: 40px;
@@ -3326,9 +4439,11 @@ span.psw {
                   justify-content: center;
                   align-items: center;
                   flex-direction: column;
+
                   &:hover {
                     background: $bg;
                   }
+
                   a {
                     text-decoration: none;
                     color: $fntClr;
@@ -3348,6 +4463,7 @@ span.psw {
                       justify-content: center;
                       align-items: center;
                       flex-direction: column;
+
                       .listLnag {
                         display: none;
                         width: 70%;
@@ -3363,42 +4479,73 @@ span.psw {
                           justify-content: space-between;
                           padding: 10px;
                           align-items: center;
+
                           &:hover {
                             background: $bg;
                           }
-                        } /* /p */
-                      } /* /listLnag */
+                        }
+
+                        /* /p */
+                      }
+
+                      /* /listLnag */
 
                       &:focus .listLnag {
                         display: block;
-                      } /* /foucs */
+                      }
+
+                      /* /foucs */
                       &:focus {
                         background: $bgw;
-                      } /* /foucs */
-                    } /* /button */
-                  } /* /a */
+                      }
+
+                      /* /foucs */
+                    }
+
+                    /* /button */
+                  }
+
+                  /* /a */
                   &:not(:last-child) {
                     border-bottom: 1px solid $brdList;
-                  } /* /child */
-                } /* /li */
-              } /* /ul */
-            } /* /listSetting */
-          } /* /setting */
-        } /* /settingYourProfile */
+                  }
+
+                  /* /child */
+                }
+
+                /* /li */
+              }
+
+              /* /ul */
+            }
+
+            /* /listSetting */
+          }
+
+          /* /setting */
+        }
+
+        /* /settingYourProfile */
         @keyframes animationWidthSetting {
           0% {
             width: 0%;
           }
+
           100% {
             width: 100%;
           }
-        } /* end of animation  */
-      } /* /rightSidebar */
+        }
+
+        /* end of animation  */
+      }
+
+      /* /rightSidebar */
       .showProfileUser {
         width: 0px;
         padding: 0px;
         overflow: hidden;
       }
+
       .showProfileUser:focus {
         transition: width 0.3s ease;
         display: block;
@@ -3410,16 +4557,21 @@ span.psw {
         margin: 0px;
         background-color: $bg;
         position: relative;
+
         @include m576 {
           z-index: 44;
           height: 100vh;
           width: 100%;
           max-width: 300px;
         }
+
         &:hover {
           opacity: 1;
-        } /* /hover */
+        }
+
+        /* /hover */
         cursor: default;
+
         .navUserProfile {
           width: 100%;
           height: 50px;
@@ -3430,6 +4582,7 @@ span.psw {
           @extend %flx;
           background-color: $bg;
           border-bottom: 3px solid $bgw;
+
           .closeUser {
             width: 20px;
             position: relative;
@@ -3439,24 +4592,38 @@ span.psw {
             align-items: center;
             margin-right: 4px;
             margin-left: 4px;
+
             &:hover {
               cursor: pointer;
-            } /* /hover */
+            }
+
+            /* /hover */
             span {
               width: 2px;
               height: 18px;
               position: absolute;
               border-radius: 5px;
               background-color: $fntClr;
+
               &:nth-child(1) {
                 transform: rotate(45deg);
-              } /* /nth-child(1) */
+              }
+
+              /* /nth-child(1) */
               &:nth-child(2) {
                 transform: rotate(-45deg);
-              } /* /nth-child(2) */
-            } /* /span */
-          } /* /closeUser */
-        } /* /navUserProfile */
+              }
+
+              /* /nth-child(2) */
+            }
+
+            /* /span */
+          }
+
+          /* /closeUser */
+        }
+
+        /* /navUserProfile */
         .infromationUserProfilr {
           width: 100%;
           /* height: 45%; */
@@ -3464,41 +4631,57 @@ span.psw {
           flex-direction: column;
           align-items: center;
           border-bottom: 20px solid $bgw;
+
           /* position: relative; */
           /*  justify-content: center; */
           .imageUserProfile {
             width: 100%;
             display: flex;
             justify-content: center;
+
             img {
               width: 120px;
               height: 120px;
+
               @include m576 {
                 width: 120px;
                 height: 120px;
               }
+
               border-radius: 50%;
               margin-top: 10px;
-            } /* /img */
-          } /* /imageUserProfile */
+            }
+
+            /* /img */
+          }
+
+          /* /imageUserProfile */
           .nameAndNumber {
             color: $fntClr;
 
             p {
               margin: 0px;
               color: $fntClr;
+
               &:nth-child(2) {
                 font-size: 13px;
               }
-            } /* /p */
-          } /* /nameAndNumber */
-        } /* /infromationUserProfilr */
+            }
+
+            /* /p */
+          }
+
+          /* /nameAndNumber */
+        }
+
+        /* /infromationUserProfilr */
         .aboutUserProfile,
         .mediaAnadLink {
           width: 100%;
           height: 20%;
           padding: 15px;
           border-bottom: 20px solid $bgw;
+
           .titleAbout,
           .titleMediaAnadLink {
             width: 100%;
@@ -3506,21 +4689,32 @@ span.psw {
             display: flex;
             height: 20px;
             justify-content: space-between;
+
             p {
               margin: 0px;
               display: flex;
               justify-content: center;
               align-items: center;
+
               &:nth-child(2) {
                 color: $brd;
                 cursor: pointer;
+
                 svg {
                   width: 20px;
                   height: 20px;
-                } /* /svg */
-              } /* /child */
-            } /* /p */
-          } /* /titleAbout */
+                }
+
+                /* /svg */
+              }
+
+              /* /child */
+            }
+
+            /* /p */
+          }
+
+          /* /titleAbout */
           p {
             padding: 0px;
             margin: 10px 0px 0px 0px;
@@ -3530,7 +4724,9 @@ span.psw {
             word-break: break-all;
             max-height: 40px;
             overflow-x: hidden;
-          } /* /p */
+          }
+
+          /* /p */
 
           ::-webkit-scrollbar {
             width: 7px;
@@ -3556,6 +4752,7 @@ span.psw {
             width: 7px;
             background-color: $bg;
           }
+
           ::-webkit-scrollbar-thumb {
             background-color: $logo;
             opacity: 0.6;
@@ -3579,36 +4776,52 @@ span.psw {
             opacity: 0.6;
             border-radius: 10px;
           }
-        } /* /aboutUserProfile */
+        }
+
+        /* /aboutUserProfile */
         .mediaAnadLink {
           width: 100%;
           border: none;
           height: 18%;
+
           .cardsLinksAndT {
             padding: 5px;
             overflow-x: hidden;
             height: 60px;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
+
             .mediaCar {
               margin: 0px 3px;
               width: 50px;
               height: 50px;
               margin-bottom: 3px;
+
               div {
                 width: 100%;
                 height: 100%;
+
                 img {
                   width: 100%;
                   height: 100%;
                   opacity: 0.8;
                   border-radius: 3px;
                 }
-              } /* /a */
-            } /* /mediaCar */
-          } /* /cardsLinksAndT */
-        } /* /mediaAnadLink */
-      } /* /showProfileUser */
+              }
+
+              /* /a */
+            }
+
+            /* /mediaCar */
+          }
+
+          /* /cardsLinksAndT */
+        }
+
+        /* /mediaAnadLink */
+      }
+
+      /* /showProfileUser */
 
       .coverSearcher {
         width: 100%;
@@ -3617,10 +4830,12 @@ span.psw {
         background-color: $bg;
         display: none;
         flex-direction: column;
+
         @include m576 {
           position: absolute;
           z-index: 2;
         }
+
         .navSearcher {
           width: 100%;
           height: 9.2%;
@@ -3628,12 +4843,14 @@ span.psw {
           border: 1px solid $brd;
           display: flex;
           cursor: default;
+
           .closeSearcher {
             position: relative;
             align-items: center;
             justify-content: center;
             height: 100%;
             width: 40px;
+
             .closeSpan {
               width: 70%;
               height: 100%;
@@ -3641,29 +4858,44 @@ span.psw {
               align-items: center;
               justify-content: center;
               cursor: pointer;
+
               span {
                 position: absolute;
                 width: 20px;
                 height: 2px;
                 background-color: $fntClr;
                 border-radius: 2px;
+
                 &:nth-child(1) {
                   transform: rotate(45deg);
                 }
+
                 &:nth-child(2) {
                   transform: rotate(-45deg);
-                } /* /nth-child(1) */
-              } /* /span */
-            } /* /closeSpan */
-          } /* /closeSearcher */
+                }
+
+                /* /nth-child(1) */
+              }
+
+              /* /span */
+            }
+
+            /* /closeSpan */
+          }
+
+          /* /closeSearcher */
           .textSearcher {
             height: 100%;
             color: $fntClr;
             display: flex;
             align-items: center;
             margin: 0px 5px;
-          } /* /textSearcher */
-        } /* /navSearcher */
+          }
+
+          /* /textSearcher */
+        }
+
+        /* /navSearcher */
         .searcherInputCover {
           width: 100%;
           height: 60px;
@@ -3671,10 +4903,12 @@ span.psw {
           display: flex;
           align-items: center;
           justify-content: center;
+
           .searcherInput {
             width: 90%;
             height: 60%;
             position: relative;
+
             .deleteArrow {
               display: none;
               position: absolute;
@@ -3685,21 +4919,28 @@ span.psw {
               align-items: center;
               justify-content: center;
               cursor: pointer;
+
               .arrow-down,
               .searchInputMsg {
                 font-size: 20px;
                 background-color: $bgSearch;
                 padding: 2px;
                 transform: rotate(-90deg) translateY(-10px);
-              } /* /arrow-down */
+              }
+
+              /* /arrow-down */
               .searchInputMsg {
                 transform: none;
                 transform: translateX(10px);
                 color: $fntClr;
                 visibility: hidden;
                 padding: 3px;
-              } /* /search */
-            } /* /deleteArrow */
+              }
+
+              /* /search */
+            }
+
+            /* /deleteArrow */
             .searchInput {
               width: 100%;
               height: 100%;
@@ -3709,9 +4950,15 @@ span.psw {
               font-size: 15px;
               color: $fntClr;
               border: 1px solid $bgSearch;
-            } /* /searchInput */
-          } /* /searcherInput */
-        } /* /searcherInputCover */
+            }
+
+            /* /searchInput */
+          }
+
+          /* /searcherInput */
+        }
+
+        /* /searcherInputCover */
 
         .cardWepperSearcher {
           width: 100%;
@@ -3719,6 +4966,7 @@ span.psw {
           max-height: 54%;
           overflow-y: auto;
           padding: 10px;
+
           .cardSearcher {
             cursor: pointer;
             width: 100%;
@@ -3728,68 +4976,103 @@ span.psw {
             display: flex;
             flex-direction: column;
             text-decoration: none;
+
             .dateCard {
               font-size: 11px;
               color: $fntClr;
               padding: 0px 5px;
-            } /* /dateCard */
+            }
+
+            /* /dateCard */
             .containMssageSearcher {
               display: flex;
+
               .stateMsgSearcher {
                 width: 30px;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 margin: 0px 4px;
+
                 img {
                   width: 16px;
                   height: 10px;
-                } /* /img */
-              } /* /stateMsgSearcher */
+                }
+
+                /* /img */
+              }
+
+              /* /stateMsgSearcher */
               .msgText {
                 white-space: nowrap;
                 overflow: hidden !important;
                 text-overflow: ellipsis;
                 max-width: 100%;
                 color: $fntClr;
+
                 .matchVal {
                   color: $logo;
-                } /* /matchVal */
-              } /* /msgText */
-            } /* /containMssageSearcher */
-          } /* /cardSearcher */
-        } /* /cardWepperSearcher */
+                }
+
+                /* /matchVal */
+              }
+
+              /* /msgText */
+            }
+
+            /* /containMssageSearcher */
+          }
+
+          /* /cardSearcher */
+        }
+
+        /* /cardWepperSearcher */
         ::-webkit-scrollbar {
           width: 2px;
         }
+
         ::-o-scrollbar {
           width: 2px;
         }
+
         ::-ms-scrollbar {
           width: 2px;
         }
+
         ::-moz-scrollbar {
           width: 2px;
         }
+
         ::-webkit-scrollbar-thumb {
           background-color: $scrollColor;
           border-radius: 3px;
         }
+
         ::-o-scrollbar-thumb {
           background-color: $scrollColor;
           border-radius: 3px;
         }
+
         ::-ms-scrollbar-thumb {
           background-color: $scrollColor;
           border-radius: 3px;
         }
+
         ::-moz-scrollbar-thumb {
           background-color: $scrollColor;
           border-radius: 3px;
-        } /* end of scroll bar */
-      } /* /coverSearcher */
-    } /* /sidebar */
-  } /* /conainer */
+        }
+
+        /* end of scroll bar */
+      }
+
+      /* /coverSearcher */
+    }
+
+    /* /sidebar */
+  }
+
+  /* /conainer */
   .coverCall {
     position: absolute;
     z-index: 111;
@@ -3797,6 +5080,7 @@ span.psw {
     height: 100%;
     @extend %flx;
     justify-content: center;
+
     .blurEffect {
       filter: blur(5px);
       position: absolute;
@@ -3804,7 +5088,9 @@ span.psw {
       height: 100%;
       background-color: $bg;
       opacity: 0.8;
-    } /* /blurEffect */
+    }
+
+    /* /blurEffect */
     .callContainer {
       width: 80%;
       height: 90%;
@@ -3812,15 +5098,18 @@ span.psw {
       justify-content: center;
       align-items: center;
       flex-direction: column;
+
       .callContent {
         position: relative;
         width: 100%;
         height: 100%;
         box-shadow: 1px 2px 3px $cShadow;
         border-radius: 3px;
+
         .callImag {
           width: 100%;
           height: 85%;
+
           img {
             width: 100%;
             height: 100%;
@@ -3828,8 +5117,12 @@ span.psw {
             filter: blur(0.3);
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
-          } /* /img */
-        } /* /callImag */
+          }
+
+          /* /img */
+        }
+
+        /* /callImag */
         .callType {
           position: absolute;
           top: 0px;
@@ -3839,6 +5132,7 @@ span.psw {
           @extend %flx;
           justify-content: center;
           flex-direction: column;
+
           .coverType {
             border-radius: 50%;
             width: 150px;
@@ -3851,12 +5145,15 @@ span.psw {
             animation-timing-function: ease;
             animation-iteration-count: infinite;
             animation-duration: 0.1s;
+
             .blurType {
               width: 100%;
               height: 100%;
               border-radius: 50%;
               background-color: $bgw;
-            } /* /blurType */
+            }
+
+            /* /blurType */
             .phoneIcon {
               color: var(--fntClr);
               position: absolute;
@@ -3867,26 +5164,38 @@ span.psw {
               animation-duration: 2s;
 
               /* animation: rotateIcon .1s ease 0s infinite; */
-            } /* /phoneIcon */
+            }
+
+            /* /phoneIcon */
             @keyframes scalIcon {
+
               0%,
               100% {
                 transform: scale(1);
               }
+
               50% {
                 transform: scale(1.2);
               }
-            } /* end of animation */
-          } /* /coverType */
+            }
+
+            /* end of animation */
+          }
+
+          /* /coverType */
           @keyframes rotateIcon {
+
             0%,
             100% {
               transform: rotate(3deg);
             }
+
             50% {
               transform: rotate(0deg);
             }
-          } /* /rotateIcon */
+          }
+
+          /* /rotateIcon */
           .nameItem {
             margin-top: 35px;
             color: $fntClr;
@@ -3897,8 +5206,12 @@ span.psw {
             text-align: center;
             overflow: hidden;
             box-shadow: 1px 2px 3px $cShadow;
-          } /* /nameItem */
-        } /* /callType */
+          }
+
+          /* /nameItem */
+        }
+
+        /* /callType */
         .callControll {
           width: 100%;
           height: 15%;
@@ -3906,6 +5219,7 @@ span.psw {
           padding: 15px;
           @extend %flx;
           justify-content: space-around;
+
           div {
             background: #fff;
             width: 70px;
@@ -3917,17 +5231,28 @@ span.psw {
             font-size: 30px;
             cursor: pointer;
             box-shadow: 1px 2px 3px $cShadow, 1px 2px 3px $cShadow;
-          } /* /acceptCall */
+          }
+
+          /* /acceptCall */
           .acceptCall {
             color: $logo;
           }
+
           .rejectCall {
             color: $phone;
           }
-        } /* /callControll */
-      } /* /callContent */
-    } /* /callContainer */
-  } /* /coverCall */
+        }
+
+        /* /callControll */
+      }
+
+      /* /callContent */
+    }
+
+    /* /callContainer */
+  }
+
+  /* /coverCall */
   .homeRedirect {
     position: relative;
     width: 100%;
@@ -3935,13 +5260,16 @@ span.psw {
     z-index: 3;
     @extend %flx;
     justify-content: center;
+
     .backgroundForHomeRedirect {
       position: absolute;
       background-color: $bgw;
       filter: opacity(0.7);
       width: 100%;
       height: 100%;
-    } /* /backgroundForHomeRedirect */
+    }
+
+    /* /backgroundForHomeRedirect */
     .coverForContactMessage {
       position: absolute;
       width: 80%;
@@ -3951,10 +5279,12 @@ span.psw {
       background-color: $bg;
       display: grid;
       grid-template-rows: 20% 80%;
+
       .navRedirecMsg {
         display: grid;
         grid-template-rows: 50% 50%;
         background-color: $bgw;
+
         .titleRedirect {
           width: 100%;
           height: 100%;
@@ -3963,6 +5293,7 @@ span.psw {
           color: $fntClr;
           @extend %flx;
           justify-content: space-between;
+
           .closeRedirectMessage {
             position: relative;
             height: 100%;
@@ -3971,27 +5302,37 @@ span.psw {
             justify-content: center;
             align-items: center;
             cursor: pointer;
+
             span {
               position: absolute;
               width: 25px;
               height: 3px;
               border-radius: 4px;
               background: $fntClr;
+
               &:nth-child(1) {
                 transform: rotate(45deg);
               }
+
               &:nth-child(2) {
                 transform: rotate(-45deg);
               }
-            } /* /span */
-          } /* /closeRedirectMessage */
-        } /* /titleRedirect */
+            }
+
+            /* /span */
+          }
+
+          /* /closeRedirectMessage */
+        }
+
+        /* /titleRedirect */
         .searchRedirectMessage {
           width: 100%;
           @extend %flx;
           justify-content: center;
           box-shadow: 0px 2px 3px $cShadow;
           z-index: 1;
+
           .searchInputR {
             width: 70%;
             height: 37px;
@@ -4007,7 +5348,9 @@ span.psw {
               color: $fntClr;
               padding-left: 8px;
               padding-right: 8px;
-            } /* /input */
+            }
+
+            /* /input */
             .coverLoder {
               width: 50px;
               background-color: $bg;
@@ -4015,16 +5358,27 @@ span.psw {
               display: flex;
               justify-content: center;
               align-items: center;
+
               .loader {
                 width: 25px;
                 height: 25px;
                 border: 3px solid var(--bgw);
                 border-top: 3px solid var(--cMsg);
-              } /* /loader */
-            } /* /coverLoder */
-          } /* /searchInputR */
-        } /* /searchRedirectMessage */
-      } /* /navRedirecMsg */
+              }
+
+              /* /loader */
+            }
+
+            /* /coverLoder */
+          }
+
+          /* /searchInputR */
+        }
+
+        /* /searchRedirectMessage */
+      }
+
+      /* /navRedirecMsg */
       .wepperCardRedirectMessage {
         width: 100%;
         max-height: 100%;
@@ -4033,6 +5387,7 @@ span.psw {
         flex-direction: column;
         padding: 5px;
         position: relative;
+
         .cardWepperMessageRedirect {
           width: 100%;
           border-radius: 3px;
@@ -4044,34 +5399,50 @@ span.psw {
           display: flex;
           justify-content: space-between;
           cursor: pointer;
+
           .section1 {
             width: 90%;
             height: 100%;
             display: flex;
+
             .imageUser {
               width: 90px;
               height: 100%;
+
               img {
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
-              } /* /img */
-            } /* /imageUser */
+              }
+
+              /* /img */
+            }
+
+            /* /imageUser */
             .nameUser {
               display: flex;
               justify-content: center;
               flex-direction: column;
+
               .name {
                 color: $fntClr;
                 font-weight: 700;
-              } /* /name */
+              }
+
+              /* /name */
               .state {
                 font-size: 11px;
                 color: var(--fntClr);
                 filter: opacity(0.9);
-              } /* /state */
-            } /* /nameUser */
-          } /* /section1 */
+              }
+
+              /* /state */
+            }
+
+            /* /nameUser */
+          }
+
+          /* /section1 */
           .section2 {
             height: 100%;
             width: 10%;
@@ -4079,6 +5450,7 @@ span.psw {
             justify-content: center;
             align-items: center;
             cursor: pointer;
+
             .checked {
               width: 20px;
               height: 20px;
@@ -4089,6 +5461,7 @@ span.psw {
               align-items: center;
               cursor: pointer;
               color: $fntClr;
+
               &.checkMark::after {
                 content: "\2713";
                 background-color: $cMsg;
@@ -4098,15 +5471,27 @@ span.psw {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-              } /* /checkMark */
-            } /* /checked */
-          } /* /section2 */
+              }
+
+              /* /checkMark */
+            }
+
+            /* /checked */
+          }
+
+          /* /section2 */
           &:hover {
             background-color: $brdList;
             transition: all 0.3s ease;
-          } /* /hover */
-        } /* /cardWepperMessageRedirect */
-      } /* /wepperCardRedirectMessage */
+          }
+
+          /* /hover */
+        }
+
+        /* /cardWepperMessageRedirect */
+      }
+
+      /* /wepperCardRedirectMessage */
       ::-webkit-scrollbar {
         width: 7px;
         background-color: $bg;
@@ -4126,6 +5511,7 @@ span.psw {
         width: 7px;
         background-color: $bg;
       }
+
       ::-webkit-scrollbar-thumb {
         background-color: $logo;
         opacity: 0.6;
@@ -4149,6 +5535,7 @@ span.psw {
         opacity: 0.6;
         border-radius: 10px;
       }
+
       .sendRedirectMessage {
         /* position: absolute; */
         width: 100%;
@@ -4157,15 +5544,19 @@ span.psw {
         background-color: $bg;
         box-shadow: 0px -2px 3px $cShadow;
         bottom: 1px;
+
         .wepperSendRedirectMessage {
           width: 100%;
           height: 100%;
           display: flex;
           justify-content: space-between;
           padding: 0px 20px 0px 20px;
+
           .sendMessages {
             cursor: pointer;
-          } /* /.sendMessages */
+          }
+
+          /* /.sendMessages */
           .sendMessages,
           .countSekectedUser {
             height: 100%;
@@ -4173,11 +5564,21 @@ span.psw {
             justify-content: center;
             align-items: center;
             color: $fntClr;
-          } /* /sendMessages */
-        } /* /wepperSendRedirectMessage */
-      } /* /sendRedirectMessage */
-    } /* /coverForContactMessage */
-  } /* /homeRedirect */
+          }
+
+          /* /sendMessages */
+        }
+
+        /* /wepperSendRedirectMessage */
+      }
+
+      /* /sendRedirectMessage */
+    }
+
+    /* /coverForContactMessage */
+  }
+
+  /* /homeRedirect */
 
   .deleteProps {
     width: 100vw;
@@ -4187,13 +5588,16 @@ span.psw {
     align-items: center;
     position: relative;
     z-index: 10;
+
     .deleteBackground {
       position: absolute;
       width: 100%;
       height: 100%;
       background-color: $bg;
       opacity: 0.8;
-    } /* /deleteBackground */
+    }
+
+    /* /deleteBackground */
     .deleteCover,
     .deleteFoucs {
       @include m576 {
@@ -4201,6 +5605,7 @@ span.psw {
         height: 30%;
         font-size: 13px;
       }
+
       position: absolute;
       z-index: 4;
       min-width: 400px;
@@ -4212,17 +5617,23 @@ span.psw {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       .deleteTitle {
         width: 100%;
         height: 30px;
         background-color: $cMsg;
         display: flex;
         align-items: center;
+
         span {
           color: $fntClr;
           padding: 3px 0px 0px 3px;
-        } /* /span */
-      } /* /deleteTitle */
+        }
+
+        /* /span */
+      }
+
+      /* /deleteTitle */
       .deleteOption {
         width: 70%;
         /* padding: 3px 0px 0px 3px; */
@@ -4233,6 +5644,7 @@ span.psw {
         margin-right: 30px;
         margin-left: 30px;
         margin-bottom: 10px;
+
         div {
           width: 70%;
           height: 100%;
@@ -4245,23 +5657,37 @@ span.psw {
           border: 1px solid $cShadow;
           margin: 2px;
           padding: 2px;
+
           &:hover {
             box-shadow: 1px 2px 3px $cShadow;
             transition: all 0.3s ease;
-          } /* /hover */
+          }
+
+          /* /hover */
           &:nth-child(1) {
             background-color: $cMsg;
             color: $fntClr;
             border: none;
-          } /* /child */
+          }
+
+          /* /child */
           &:nth-child(2) {
             min-width: 100px;
-          } /* /child */
-        } /* /div */
-      } /* /deleteOption */
-    } /* /deleteCover */
+          }
+
+          /* /child */
+        }
+
+        /* /div */
+      }
+
+      /* /deleteOption */
+    }
+
+    /* /deleteCover */
     .deleteFoucs {
       z-index: -1;
+
       .coverDeleteFoucs {
         position: relative;
         width: 100%;
@@ -4269,27 +5695,40 @@ span.psw {
         display: flex;
         justify-content: center;
         align-items: center;
+
         .deleteFoucsColor {
           position: absolute;
           width: 100%;
           height: 100%;
           background-color: $bgw;
           opacity: 0.5;
-        } /* /deleteFoucsColor */
+        }
+
+        /* /deleteFoucsColor */
 
         .deleteNow {
           margin: 8px;
           color: $fntClr;
-        } /* /deleteNow */
+        }
+
+        /* /deleteNow */
         .loader {
           width: 25px;
           height: 25px;
           border: 4px solid #f3f3f3;
           border-top: 4px solid var(--cMsg);
-        } /* /loder */
-      } /* /coverDeleteFoucs */
-    } /* /deleteFoucs */
-  } /* /deleteProps */
+        }
+
+        /* /loder */
+      }
+
+      /* /coverDeleteFoucs */
+    }
+
+    /* /deleteFoucs */
+  }
+
+  /* /deleteProps */
 
   .alertBlock,
   .deleteAcount {
@@ -4300,6 +5739,7 @@ span.psw {
     display: flex;
     align-items: center;
     justify-content: center;
+
     .backgroundAlter,
     .backgroundDeleteAccount {
       width: 100%;
@@ -4307,7 +5747,9 @@ span.psw {
       position: absolute;
       filter: blur(4px) opacity(0.6);
       background-color: $bgw;
-    } /* /backgroundAlter */
+    }
+
+    /* /backgroundAlter */
     .contenerAlert,
     .weppperDeleteAcount {
       position: absolute;
@@ -4323,14 +5765,18 @@ span.psw {
       @include m576 {
         width: 80%;
         height: 60%;
-      } /* /m576 */
+      }
+
+      /* /m576 */
 
       .messageBlock {
         width: 100%;
         height: 15%;
         padding: 10px;
         color: $fntClr;
-      } /* /messageBlock */
+      }
+
+      /* /messageBlock */
       .userInfo {
         display: flex;
         flex-direction: column;
@@ -4338,16 +5784,23 @@ span.psw {
         justify-content: center;
         height: 60%;
         width: 100%;
+
         .avatar {
           width: 120px;
           height: 120px;
           border-radius: 50%;
           margin-bottom: 10px;
-        } /* /avatar */
+        }
+
+        /* /avatar */
         .username {
           color: $fntClr;
-        } /* /username */
-      } /* /userInfo */
+        }
+
+        /* /username */
+      }
+
+      /* /userInfo */
       .choser {
         width: 100%;
         height: 25%;
@@ -4356,34 +5809,51 @@ span.psw {
         justify-content: space-around;
         padding: 10px;
         color: $fntClr;
+
         div {
           padding: 4px 10px;
           border-radius: 5px;
           cursor: pointer;
-        } /* /div */
+        }
+
+        /* /div */
         .yes {
           background-color: $phone;
-        } /* yes */
+        }
+
+        /* yes */
         .no {
           border: $brd;
           background-color: $logo;
-        } /* /no */
-      } /* /choser */
-    } /* /contenerAlert */
-  } /* /alertBlock */
+        }
+
+        /* /no */
+      }
+
+      /* /choser */
+    }
+
+    /* /contenerAlert */
+  }
+
+  /* /alertBlock */
   .deleteAcount {
     .weppperDeleteAcount {
       width: 40%;
+
       @include m576 {
         height: 30%;
         width: 80%;
       }
+
       .worningDeleteAcount {
         width: 100%;
         height: 70%;
         color: $fntClr;
         padding: 10px;
-      } /* /worningDeleteAcount */
+      }
+
+      /* /worningDeleteAcount */
       .check {
         width: 100%;
         height: auto;
@@ -4391,16 +5861,24 @@ span.psw {
         align-items: center;
         justify-content: space-between;
         padding: 20px;
+
         div {
           padding: 10px;
           color: $fntClr;
           border-radius: 4px;
           cursor: pointer;
+
           &.delete {
             background-color: $phone;
-          } /* /delete */
-        } /* /div */
-      } /* /check */
+          }
+
+          /* /delete */
+        }
+
+        /* /div */
+      }
+
+      /* /check */
       .waiting {
         width: 100%;
         height: 100%;
@@ -4408,20 +5886,31 @@ span.psw {
         align-items: center;
         padding: 20px;
         justify-content: center;
+
         .loader {
           width: 25px;
           height: 25px;
           border: 3px solid #f3f3f3;
           border-top: 3px solid $cMsg;
           margin: 8px;
-        } /* /loader */
+        }
+
+        /* /loader */
         p {
           color: $fntClr;
           margin: 0px;
-        } /* /p */
-      } /* /waiting */
-    } /* /weppperDeleteAcount */
-  } /* /deleteAcount */
+        }
+
+        /* /p */
+      }
+
+      /* /waiting */
+    }
+
+    /* /weppperDeleteAcount */
+  }
+
+  /* /deleteAcount */
   .fullScreen {
     position: fixed;
     bottom: 30px;
@@ -4441,8 +5930,12 @@ span.psw {
     // @include m576{
     //   display: flex;
     // }/* /include */
-  } /* /fullScreen */
-} /* /home */
+  }
+
+  /* /fullScreen */
+}
+
+/* /home */
 /* /home page */
 
 .callRoom {
@@ -4452,6 +5945,7 @@ span.psw {
   flex-direction: column;
   position: relative;
   background-color: $bg;
+
   .showVideos {
     @extend %flx;
     justify-content: center;
@@ -4461,6 +5955,7 @@ span.psw {
     height: 90%;
     margin-top: 5px;
     overflow: hidden;
+
     .myVideo {
       z-index: 1;
       position: absolute;
@@ -4469,38 +5964,49 @@ span.psw {
       bottom: 0px;
       left: 0.5%;
       border-radius: 4px;
-     /*  box-shadow: 1px 0px 3px $cShadow, 1px 2px 30px $cShadow; */
+      /*  box-shadow: 1px 0px 3px $cShadow, 1px 2px 30px $cShadow; */
       transition: all .3s ease;
+
       video {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: 4px;
-      } /* /video */
+      }
 
-    } /* /myVideo */
+      /* /video */
+
+    }
+
+    /* /myVideo */
 
     @keyframes zoomOut {
-      0%{
+      0% {
         width: 20%;
         height: 40%;
       }
-      100%{
+
+      100% {
         width: 100%;
         height: 100%;
       }
-    }/* /zoomOut */
+    }
+
+    /* /zoomOut */
 
     @keyframes zoomIn {
-      0%{
+      0% {
         width: 100%;
         height: 100%;
       }
-      100%{
+
+      100% {
         width: 20%;
         height: 40%;
       }
-    }/* /zoomOut */
+    }
+
+    /* /zoomOut */
 
     .rcvVideo {
       width: 100%;
@@ -4508,25 +6014,36 @@ span.psw {
       @extend %flx;
       justify-content: center;
       position: relative;
+
       img {
         position: absolute;
         width: 50%;
         height: 50%;
-      } /* /img  */
+      }
+
+      /* /img  */
       video {
         width: 99%;
         height: 100%;
         object-fit: cover;
-      } /* /video */
-    } /* /rcvVideo */
-    .changeCamera{
+      }
+
+      /* /video */
+    }
+
+    /* /rcvVideo */
+    .changeCamera {
       position: absolute;
       top: 6px;
       right: 12px;
       z-index: 1;
       cursor: pointer;
-    }/* /changeCamera */
-  } /* /showVideos */
+    }
+
+    /* /changeCamera */
+  }
+
+  /* /showVideos */
   .controllVideo {
     position: absolute;
     bottom: 0px;
@@ -4536,6 +6053,7 @@ span.psw {
     @extend %flx;
     justify-content: space-around;
     font-size: 20px;
+
     div {
       width: 50px;
       height: 50px;
@@ -4547,45 +6065,65 @@ span.psw {
       cursor: pointer;
       transition: transform 0.3s ease;
       color: $fntClr;
+
       &:hover {
         transform: scale(1.05);
-      } /* /hover */
-    } /* /div */
+      }
+
+      /* /hover */
+    }
+
+    /* /div */
     .phone {
       background-color: $phone;
       color: $cphone;
     }
-  } /* /controllVideo */
-} /* /callRoom */
+  }
+
+  /* /controllVideo */
+}
+
+/* /callRoom */
 
 .rc-anchor-normal .rc-anchor-pt {
   display: none;
 }
+
 .imageState {
   width: 15px;
   margin: 0px 5px;
-} /* /imageState */
+}
+
+/* /imageState */
 
 .addAnimationColor {
   animation-name: addAnimationColor;
   animation-duration: 2s;
   animation-timing-function: ease;
-} /* /addAnimationColor */
+}
+
+/* /addAnimationColor */
 
 @keyframes addAnimationColor {
   0% {
     background-color: $cMsg;
   }
+
   10% {
     background-color: $notifictionMsg;
   }
+
   20% {
     background-color: $cMsg;
   }
+
   30% {
     background-color: $notifictionMsg;
   }
+
   100% {
     background-color: $cMsg;
   }
-} /* /addAnimationColor */
+}
+
+/* /addAnimationColor */

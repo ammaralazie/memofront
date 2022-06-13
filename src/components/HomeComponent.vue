@@ -374,9 +374,13 @@
                 </div>
                 <!-- /carad -->
               </div>
-              <div class="wepper-card notFounChats" v-else>
+              <div class="wepper-card notFounChats" v-else-if="reciveMyChat.length <= 0 && !searchLoader">
                 {{ _trans("note10") }}
               </div>
+              <div class="loaderForGetData" v-if="searchLoader">
+                <div class="loader"></div>
+              </div>
+              <!-- /loaderForGetData -->
               <!-- <div class="wepper-card" v-else>dont have any chat</div> -->
               <!-- /wepper-card -->
             </div>
@@ -711,7 +715,7 @@ import store from "../store/index";
 import newMessage from "../assets/uploads/audio/newMessage.mp3";
 import changeNumberFormat from "../lang/changeNumber.js"
 
-import ringingMemo from "../assets/uploads/audio/ringingMemo.mp3";
+import ringingMemo from "../assets/uploads/audio/ringingMemo.mp3"
 
 var serachInput = false;
 var searchV = null;
@@ -770,7 +774,8 @@ export default {
       lng: cookie.get("lang") || "en",
       fullScreen: false,
       displayReply: false,
-      audioFile: null
+      audioFile: null,
+      searchLoader: null
     }; /* end of return */
   } /* end of data */,
 
@@ -989,16 +994,21 @@ export default {
       if (store.state.widthforZoom) return store.state.widthforZoom;
       return null;
     } /* /widthforZoom */,
+
+    checkSearchLoader() {
+      if (this.$store.state.searchLoader) {
+        return true
+      }/* /searchLoader */
+      return false
+    },/* /checkSearchLoader */
   } /* /computed */,
   watch: {
-    //this function used for disply reply form
-    // displyReplyForm(x) {
-    //   if (x) {
-    //     this.displayReply=x
-    //     this.$store.state.reply.disply=false
-    //   }/* end of if */
-    // },/* /displyReplyForm */
-    //this function used for append value for global varible searchInput
+
+    //this function for display and hidden the loader
+    checkSearchLoader(x) {
+      this.searchLoader = x
+    },/* /checkSearchLoader */
+
     inputValueForSearchMsg(x) {
       if (x.length > 1)
         this.sendSearchMsgValue(x, this.io)
@@ -1509,7 +1519,6 @@ export default {
     closeSearcherMsg(x) {
       var sidebar = document.getElementsByClassName("sidebar")[0]
       if (!x) {
-        console.log("x : ", x)
         sidebar.children[0].style.display = "none"
         sidebar.children[1].style.display = "block"
       }/* end of if */
@@ -2107,7 +2116,7 @@ export default {
 
     newChat() {
       this.io.on("new chat", (data) => {
-        /* console.log("new chat : ", data); */
+        console.log("new chat : ", data);
         if (
           data.user.id == cookie.get("user").id &&
           data.message.sender_id == cookie.get("user").id

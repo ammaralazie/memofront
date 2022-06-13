@@ -34,7 +34,6 @@ export default createStore({
       "https://memoback.herokuapp.com" /* ,{ transports : ['websocket'] } */
     ),
 
-
     // imgProfilePath: "http://192.168.1.7:8080/yawar_chat/uploads/profile/",
     // imgPath: "http://192.168.1.7:8080/yawar_chat/uploads/chatimage/",
     // videoPath: "http://192.168.1.7:8080/yawar_chat/uploads/video/",
@@ -91,15 +90,14 @@ export default createStore({
     blockUserInfo: [],
     unBlockUserInfo: [],
     accountDeletedSuccessfly: null,
+    searchLoader: false,
     /* reply:false, */
   } /* /state */,
   getters: {
     blockedUsers(state) {
-      if (state.blockedUsers)
-        return state.blockedUsers
-      else
-        return null
-    }/* /blockedUsers */,
+      if (state.blockedUsers) return state.blockedUsers;
+      else return null;
+    } /* /blockedUsers */,
     rchiveConversations(state) {
       if (state.rchiveConversations) return state.rchiveConversations;
       return null;
@@ -112,7 +110,7 @@ export default createStore({
       } /* end of if */
     } /* /userProfile */,
     peerJs(state) {
-      var newPeer = state.peer
+      var newPeer = state.peer;
       return newPeer;
     } /* peerJs */,
     myProfile(state) {
@@ -159,8 +157,8 @@ export default createStore({
   } /* /getters */,
   mutations: {
     blockedUsers(state, data) {
-      state.blockedUsers = data
-    },/* /blockedUsers */
+      state.blockedUsers = data;
+    } /* /blockedUsers */,
 
     getSignupReslutes(state, data) {
       state.phone = data.data.user[1];
@@ -204,14 +202,13 @@ export default createStore({
   } /* /mutations */,
   actions: {
     signup(context, payload) {
-
       // const ex = new URLSearchParams();
       // ex.append("phone", payload.phone);
 
       axios
         .post(
           context.state.pattUrl + context.state.phpPort + "APIS/signup.php",
-          payload/* ex */
+          payload /* ex */
         )
         .then((res) => {
           context.commit("getSignupReslutes", res.data);
@@ -274,9 +271,8 @@ export default createStore({
     } /* /sendPassword */,
 
     async myContact(context, payload) {
-
-      delete axios.defaults.headers.common['Authorization']
-      delete axios.defaults.headers.common['Content-Type']
+      delete axios.defaults.headers.common["Authorization"];
+      delete axios.defaults.headers.common["Content-Type"];
 
       context.state.page_nums = 0;
       context.state.page_numss = 0;
@@ -284,19 +280,22 @@ export default createStore({
       context.state.oldPages = null;
       context.state.page = 1;
       context.state.pages = 1;
+
+      //this section for display loader
+      context.state.searchLoader = true;
+
       const resulte = await axios
         //8080
         .get(
           context.state.pattUrl +
-          context.state.phpPort +
-          "APIS/mychat.php?user_id=" +
-          payload.user_id
+            context.state.phpPort +
+            "APIS/mychat.php?user_id=" +
+            payload.user_id
         )
         .catch((err) => console.log(err));
       if (resulte) {
         var myContact = [];
         myContact = resulte.data.data.filter((value) => {
-
           if (
             (value.state == null || value.state != cookie.get("user").id) &&
             value.state != "0"
@@ -311,7 +310,10 @@ export default createStore({
             return value;
         }); /* end of filter */
         context.commit("archiveContact", archivMessageContact);
-      }/* end of if */
+
+        //this section for hidden loader
+        context.state.searchLoader = false;
+      } /* end of if */
     } /* /myContact */,
 
     async getMessageByUser(context, payload) {
@@ -344,8 +346,7 @@ export default createStore({
         context.state.lastEarchValue = payload.searchValue;
         context.state.page_nums = 0;
         context.state.oldPage = null;
-        payload.page = 1
-
+        payload.page = 1;
       } /* en dof if */
 
       var resulte = null;
@@ -359,14 +360,17 @@ export default createStore({
         ex.append("page", context.state.page); */
 
         payload.sn = payload.searchValue;
-        ex = payload
+        ex = payload;
+
+        //this section for display loader
+        context.state.searchLoader = true;
 
         resulte = await axios
           //8080
           .post(
             context.state.pattUrl +
-            context.state.phpPort +
-            "APIS/search_for_user.php",
+              context.state.phpPort +
+              "APIS/search_for_user.php",
             /* payload */ ex
           )
           .catch((err) => console.log(err));
@@ -391,11 +395,13 @@ export default createStore({
         } /* end of if */
 
         if (resulte.data.data.length > 0) context.state.page += 1;
+
+        //this section for hideen loader 
+      context.state.searchLoader=false
       } /* end of if */
     } /* /searchUser */,
 
     async deleteConversation(context, payload) {
-
       context.state.delteInfoUserInput = true;
       /* context.dispatch("myContact",{user_id:cookie.get("user").id}) */
 
@@ -412,10 +418,10 @@ export default createStore({
         }); /* /filter */
         context.state.myChat = l;
 
-        var archiveList = context.state.rchiveConversations.filter(value => {
-          if (value.id != payload.chat_id) return value
-        })/* end of archive filter */
-        context.state.rchiveConversations = archiveList
+        var archiveList = context.state.rchiveConversations.filter((value) => {
+          if (value.id != payload.chat_id) return value;
+        }); /* end of archive filter */
+        context.state.rchiveConversations = archiveList;
         // if (context.state.deleteConversationResulte)
         //   context.state.deleteConversationResulte[
         //     context.state.deleteConversationResulte.length
@@ -446,7 +452,7 @@ export default createStore({
         context.state.pages = 1;
         context.state.lastEarchValue = payload.searchValue;
         context.state.oldPages = null;
-        payload.page = 1
+        payload.page = 1;
       } /* en dof if */
 
       var resulte = null;
@@ -464,8 +470,8 @@ export default createStore({
           //8080
           .post(
             context.state.pattUrl +
-            context.state.phpPort +
-            "APIS/search_for_user.php",
+              context.state.phpPort +
+              "APIS/search_for_user.php",
             payload /* ex */
           )
           .catch((err) => console.log(err));
@@ -491,9 +497,9 @@ export default createStore({
       const resulte = await axios
         .get(
           context.state.pattUrl +
-          context.state.phpPort +
-          "APIS/mychat.php?user_id=" +
-          payload.user_id
+            context.state.phpPort +
+            "APIS/mychat.php?user_id=" +
+            payload.user_id
         )
         .catch((err) => console.log(err));
       if (resulte.data) {
@@ -584,56 +590,82 @@ export default createStore({
           axios.defaults.headers.common["Authorization"] =
             "Key=AAAA4428f68:APA91bGmEQZqZESoHenOQGETIbiOWS9N3r7e_BkHs1KFXi6ThD81FPkIHWp4dCsksTALD9IxaeHySy8ORraWmpjwvGh7Zls7Sc75NZQ0qTEwqIkWQZlMFdDC6OEGRNI22VfnkTu8LjP6";
           axios
-            .post("https://fcm.googleapis.com/fcm/send", payload).then(res => {
+            .post("https://fcm.googleapis.com/fcm/send", payload)
+            .then((res) => {
               if (res) {
-                delete axios.defaults.headers.common["Content-Type"]
-                delete axios.defaults.headers.common["Authorization"]
-              }/* end of if */
+                delete axios.defaults.headers.common["Content-Type"];
+                delete axios.defaults.headers.common["Authorization"];
+              } /* end of if */
             })
             .catch((err) => console.log(err));
-        }/* end of if */
-    },/* /sendNotfication */
+        } /* end of if */
+    } /* /sendNotfication */,
 
     async blockUser(context, payload) {
-      const result = await axios.post(context.state.pattUrl + context.state.port + "addtoblock", payload).catch(e => console.log(e))
+      const result = await axios
+        .post(
+          context.state.pattUrl + context.state.port + "addtoblock",
+          payload
+        )
+        .catch((e) => console.log(e));
       if (result) {
-        const result2 = await axios.post(context.state.pattUrl + context.state.port + "myblocklist", payload).catch(e => console.log(e))
-        if (result2)
-          context.commit("blockedUsers", result2.data)
-      }/* end of if */
-    },/* /blockUser */
+        const result2 = await axios
+          .post(
+            context.state.pattUrl + context.state.port + "myblocklist",
+            payload
+          )
+          .catch((e) => console.log(e));
+        if (result2) context.commit("blockedUsers", result2.data);
+      } /* end of if */
+    } /* /blockUser */,
 
     async getBlockList(context, payload) {
-      const result = await axios.post(context.state.pattUrl + context.state.port + "myblocklist", payload).catch(e => console.log(e))
+      const result = await axios
+        .post(
+          context.state.pattUrl + context.state.port + "myblocklist",
+          payload
+        )
+        .catch((e) => console.log(e));
       if (result) {
-        context.commit("blockedUsers", result.data)
-      }/* end of if */
-    },/* /getBlockList */
+        context.commit("blockedUsers", result.data);
+      } /* end of if */
+    } /* /getBlockList */,
 
     async unblockUser(context, payload) {
-      const result = await axios.post(context.state.pattUrl + context.state.port + "deleteblock", payload).catch(e => console.log(e))
+      const result = await axios
+        .post(
+          context.state.pattUrl + context.state.port + "deleteblock",
+          payload
+        )
+        .catch((e) => console.log(e));
       if (result) {
-
-        context.state.blockedUsers = context.state.blockedUsers.filter(value => {
-          if (value.id != payload.user_id)
-            return value
-        })/* end of filter */
-      }/* end of if */
-    },/* /unblockUser */
+        context.state.blockedUsers = context.state.blockedUsers.filter(
+          (value) => {
+            if (value.id != payload.user_id) return value;
+          }
+        ); /* end of filter */
+      } /* end of if */
+    } /* /unblockUser */,
 
     async deleteAcount(context, payload) {
-
       /* var ex=new FormData()
       ex.append("user_id",payload.user_id)
       ex.append("sn",payload.sn) */
 
-      const resulte = await axios.post(context.state.pattUrl + context.state.phpPort + "APIS/delete_my_account.php", payload/* ex */).catch(e => console.log(e))
+      const resulte = await axios
+        .post(
+          context.state.pattUrl +
+            context.state.phpPort +
+            "APIS/delete_my_account.php",
+          payload /* ex */
+        )
+        .catch((e) => console.log(e));
       if (resulte) {
         if (resulte.data.data) {
-          context.state.accountDeletedSuccessfly = resulte.data.data
-        }/* end of if */
+          context.state.accountDeletedSuccessfly = resulte.data.data;
+        } /* end of if */
         /* context.state.accountDeletedSuccessfly */
-      }/* end of if  */
-    }/* /deleteAcount */
+      } /* end of if  */
+    } /* /deleteAcount */,
   } /* /actions */,
 }); /* /createStore */
