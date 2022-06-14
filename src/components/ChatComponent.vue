@@ -433,13 +433,13 @@ export default {
     this.stopTyping();
     this.connectToMaps()
   } /* /created */,
+
   // beforeCreate() {
 
   // },/* /beForceated */
   methods: {
     //this function used for display reply form in side the chat room
     displayReplyMessage() {
-      console.log("this function is used ... ")
       // var myMessageCover = document.createElement("div");
       // var messageYouCover = document.createElement("div");
       // var p = document.createElement("p");
@@ -674,7 +674,7 @@ export default {
       `
 
 
-            //this section for location as reciver
+      //this section for location as reciver
       wepperChat.innerHTML +=
         `
       <div class="messageYouCover">
@@ -2159,8 +2159,6 @@ export default {
       try {
         this.typing = false;
 
-        console.log("replyId : ", replyId)
-
         if (document.getElementsByClassName("myMessageInput")) {
           document.getElementsByClassName("myMessageInput")[0].style.display =
             "block";
@@ -2311,6 +2309,8 @@ export default {
 
               this.inputMsg = "";
               audio = null;
+
+              this.$emit("editOrderMyChat", this.itm)
             } /* end of if */
           } else {
             this.messageWrong = this._trans("audioSizeWrong");
@@ -2369,6 +2369,8 @@ export default {
               state: 0,
               msg_id: replyId || null,
             }); /* end of new message emit */
+
+            this.$emit("editOrderMyChat", this.itm)
 
             this.replyId = null
             this.fcmToken = cookie.get("fcmToken");
@@ -2551,6 +2553,7 @@ export default {
                 cookie.set("fcmToken", this.fcmToken);
 
                 this.getBoundingReact(message.getAttribute("id"), "");
+                this.$emit("editOrderMyChat", this.itm)
               } /* end of if */
             } else if (
               //is validate on vedio file
@@ -2667,6 +2670,8 @@ export default {
                   } /* end of if  */
                 }, 4999); /* end of setTimeOut */
               } /* end of if */
+
+              this.$emit("editOrderMyChat", this.itm)
             } else if (
               //this validate for audio file
               extn == ".wproj" ||
@@ -2804,6 +2809,7 @@ export default {
                   this.fcmToken.data.body = resulte3.data.message;
                 } /* end of if */
                 cookie.set("fcmToken", this.fcmToken);
+                this.$emit("editOrderMyChat", this.itm)
               } /* resulte3 */
               if (this.user.id == snd_id)
                 this.getBoundingReact(message.getAttribute("id"), "snd");
@@ -2913,6 +2919,7 @@ export default {
                   this.fcmToken.data.body = resulte5.data.message;
                 } /* end of if */
                 cookie.set("fcmToken", this.fcmToken);
+                this.$emit("editOrderMyChat", this.itm)
               } /* /resulte5 */
 
               this.getBoundingReact(message.getAttribute("id"), "");
@@ -3023,6 +3030,35 @@ export default {
             }/* /end of if */
           } /* end of if */
         } /* end of if */
+
+        if (this.$store.state.myChat.length > 0) {
+          var myItem = this.$store.state.myChat.filter(value => {
+            if (value.id == data.chat_id) {
+              return value
+            }/* end of if */
+          })//filter
+
+          if (data.seen != true) {
+            var senderId = null
+
+
+            if (cookie.get("sndRcvId"))
+              if (cookie.get("sndRcvId").sender_id == cookie.get("user").id) {
+                senderId = cookie.get("sndRcvId").reciver_id
+              } else {
+                senderId = cookie.get("sndRcvId").sender_id
+              }//end of if
+
+
+            if ((senderId != data.sender_id) && (data.state != 3)) {
+              myItem[0].num_msg += 1
+            }/* end of if */
+
+
+          }/* end of if  */
+          console.log("myItem[0] : ", myItem[0])
+          this.$emit("editOrderMyChat", myItem[0])
+        }/* end of if */
       }); /* end of new message on */
     } /* /reciveMessage */,
 
@@ -5027,6 +5063,9 @@ export default {
             your_id: rcv_id,
             state: 3,
           });
+
+          this.itm.num_msg = 0
+
         } catch (e) {
           console.log(e);
         }

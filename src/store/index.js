@@ -302,7 +302,16 @@ export default createStore({
           )
             return value;
         }); /* end of filter */
-        context.commit("myChat", myContact);
+
+
+        console.log("myContact : ",myContact)
+        
+        //this for order the list by timstamp
+        myContact.sort(function (x, y) {
+          return x.created_at - y.created_at;
+        });/* end of sort data */
+
+        context.commit("myChat", myContact.reverse());
 
         var archivMessageContact = [];
         archivMessageContact = resulte.data.data.filter((value) => {
@@ -396,8 +405,8 @@ export default createStore({
 
         if (resulte.data.data.length > 0) context.state.page += 1;
 
-        //this section for hideen loader 
-      context.state.searchLoader=false
+        //this section for hideen loader
+        context.state.searchLoader = false;
       } /* end of if */
     } /* /searchUser */,
 

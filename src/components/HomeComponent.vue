@@ -369,6 +369,9 @@
                       </button>
                     </div>
                     <!-- /aroow -->
+
+                    <div class="notSeenState" v-if="item.num_msg>0" v-text="convertFormatNumber(item.num_msg)"></div>
+                    <!-- /notSeenState -->
                   </div>
                   <!-- /dateAndOptions -->
                 </div>
@@ -582,7 +585,8 @@
           <div class="chatRoom" style="z-index: -1">
             <ChatComponent :msgs="messagesByUsers" :getItem="reciverUser" :newCchat="newCchat"
               :checkUserConnet="checkUserConnet" :blockedUserInfo="blockedUserInfo" @calling="calling"
-              @unblockUser="unblockUser" @displayMsgCover="displayMsgCover" @checkDate="checkDate" v-if="!call">
+              @unblockUser="unblockUser" @displayMsgCover="displayMsgCover" @checkDate="checkDate"
+              @editOrderMyChat="editOrderMyChat" v-if="!call">
             </ChatComponent>
           </div>
           <!-- /chatRoom -->
@@ -691,6 +695,7 @@
 </template>
 
 <script>
+
 import ChatComponent from "./ChatComponent.vue";
 import ContactOptionMenu from "./ContactOptionMenu.vue";
 import SettingsComponent from "./SettingsComponent.vue";
@@ -713,9 +718,7 @@ import moment from "moment";
 import _ from "lodash";
 import store from "../store/index";
 import newMessage from "../assets/uploads/audio/newMessage.mp3";
-import changeNumberFormat from "../lang/changeNumber.js"
-
-import ringingMemo from "../assets/uploads/audio/ringingMemo.mp3"
+import obj from "../lang/changeNumber.js"
 
 var serachInput = false;
 var searchV = null;
@@ -774,7 +777,7 @@ export default {
       lng: cookie.get("lang") || "en",
       fullScreen: false,
       displayReply: false,
-      audioFile: null,
+      //audioFile: null,
       searchLoader: null
     }; /* end of return */
   } /* end of data */,
@@ -818,7 +821,7 @@ export default {
     this.block();
     this.unblock();
     this.getresulteSearchMsg();
-    this.loadRingingFile();
+    this.editOrderMyChat();
   } /* end of mounted */,
   computed: {
 
@@ -1183,6 +1186,7 @@ export default {
             this.reciveMyChat = x;
           }, 200);
           this.checkDisplayList();
+
         } else this.reciveMyChat = [];
       } /* end of if */
     } /* /reciveMyChatt */,
@@ -1312,15 +1316,36 @@ export default {
     }, 1000) /* /debounce */ /* ,serachUser */,
   } /* /watch */,
   methods: {
+    //this function for convert format number 
+    convertFormatNumber(num){
+      return obj.changeFomat(num)
+    },/* /convertFormatNumber */
 
-    //this function used for download ringing audio file
-    loadRingingFile() {
-      console.log("load file is working")
-      var audioObj = new Audio(ringingMemo);
-      audioObj.preload
-      audioObj.muted = this.$store.state.mute;
-      this.audioFile = audioObj;
-    },/* /loadRingingFile */
+    //this function to reorder for my conversations and new chat
+    editOrderMyChat(itm) {
+      if (this.$store.state.myChat.length > 0) {
+        if (this.$store.state.myChat[0] != itm) {
+          var mynewChat = this.$store.state.myChat.filter(value => {
+            return value == itm
+          })/* /filter */
+
+          var myChat = this.$store.state.myChat.filter(value => {
+            return value != itm
+          })/* /filter */
+
+          var myChatt = []
+
+          for (var i = 0; i < myChat.length; i++) {
+            myChatt[i + 1] = myChat[i]
+          }/* end of for loop */
+
+          myChatt[0] = mynewChat[0]
+
+          this.$store.state.myChat = myChatt
+
+        }/* end of if */
+      }/* end of if */
+    }/* /mychat */,
 
     //this function to display my screen on all page
     fullScreenFunction(check) {
@@ -1374,6 +1399,7 @@ export default {
       });
       this.$store.state.peer = peer
     },/* /connectioPeer */
+
     //this function used for get resulte for search message 
     getresulteSearchMsg() {
       this.io.on("msg search", data => {
@@ -1524,6 +1550,7 @@ export default {
       }/* end of if */
       this.inputValueForSearchMsg = ""
     }/* /displayMsgCoverr */,
+
     //this function used for displae searcherMsg
     displayMsgCover(x) {
       var sidebar = document.getElementsByClassName("sidebar")[0]
@@ -1560,7 +1587,7 @@ export default {
       ) {
         //this section used for check the date is in same current date
         if (cookie.get("lang") == 'ar')
-          return changeNumberFormat.changeNumberFormat(moment(lastMsgDate).format("LT"));
+          return obj.changeNumberFormat(moment(lastMsgDate).format("LT"));
         else
           return moment(lastMsgDate).format("LT")
       } else if (
@@ -1573,7 +1600,7 @@ export default {
       } else {
         //this section for old date
         if (cookie.get("lang") == 'ar')
-          return changeNumberFormat.changeNumberFormat(moment(lastMsgDate).format("YYYY/MM/DD"));
+          return obj.changeNumberFormat(moment(lastMsgDate).format("YYYY/MM/DD"));
         else
           return moment(lastMsgDate).format("YYYY/MM/DD")
       } /* end of if */

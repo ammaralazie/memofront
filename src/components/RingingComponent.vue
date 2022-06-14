@@ -46,15 +46,16 @@
   <!-- /coverCall -->
 </template>
 <script>
+import ringingMemo from "../assets/uploads/audio/ringingMemo.mp3"
 export default {
-  props: ["calldat", "audioObj"],
+  props: ["calldat"],
   data() {
     return {
       item: null,
       io: this.$store.state.socket,
-      audioObject: null,
       clearTimeOut: null,
       clearInterval: null,
+      audioObject: null,
     }; /* /return */
   } /* /data */,
   mounted() {
@@ -65,15 +66,18 @@ export default {
     this.calldata();
   } /* /created */,
   methods: {
+
     calldata() {
       //this object for rainging
-      console.log("this.audioObj : ",this.audioObj)
-      this.audioObject = this.audioObj?this.audioObj:null;
+      this.audioObject = new Audio(ringingMemo)
+      this.audioObject.addEventListener('canplaythrough', () => {
+        this.audioObject.loop=true
+        this.audioObject.play()
+      });/* /ringingMemo */
+      /* this.clearInterval = setInterval(() => {
+        console.log("set intervall is working")
 
-      this.clearInterval = setInterval(() => {
-        this.audioObject = this.audioObj?this.audioObj:null;
-        this.audioObj.play();
-      }, 21000);
+      }, 21000); */
 
       if (this.calldat) {
         this.item = this.calldat;
@@ -81,7 +85,9 @@ export default {
           this.item.user.profile_image =
             this.$store.state.imgProfilePath + this.item.user.profile_image;
       } else this.item = null;
+
     } /* /calldata */,
+
     answer(x) {
       if (x == true) {
         this.item.peerId = this.$store.state.myPeerId;
@@ -106,6 +112,7 @@ export default {
       this.io.emit("recivePeerId", this.item);
       this.callTimeOut(false);
     } /* /nsswer */,
+
     closeCallFromSender() {
       this.io.on("closeCallFromSender", (data) => {
         if (data) {
@@ -116,6 +123,7 @@ export default {
         } /* end of if */
       }); /* /closeCallFromSender */
     } /* /closeCallFromSender */,
+    
     callTimeOut(timOut) {
       if (timOut == true) {
         this.clearTimeOut = setTimeout(() => {
