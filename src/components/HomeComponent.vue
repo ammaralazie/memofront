@@ -370,7 +370,7 @@
                     </div>
                     <!-- /aroow -->
 
-                    <div class="notSeenState" v-if="item.num_msg>0" v-text="convertFormatNumber(item.num_msg)"></div>
+                    <div class="notSeenState" v-if="item.num_msg > 0" v-text="convertFormatNumber(item.num_msg)"></div>
                     <!-- /notSeenState -->
                   </div>
                   <!-- /dateAndOptions -->
@@ -1317,7 +1317,7 @@ export default {
   } /* /watch */,
   methods: {
     //this function for convert format number 
-    convertFormatNumber(num){
+    convertFormatNumber(num) {
       return obj.changeFomat(num)
     },/* /convertFormatNumber */
 
@@ -2646,23 +2646,13 @@ export default {
     } /* /myProfile */,
 
     getMessageByUser(reciver, sender, chat_id, item) {
-      this.reciverUser = item;
-      if (chat_id) {
-        var payload = {
-          sender_id: sender,
-          reciver_id: reciver,
-          chat_id: chat_id,
-        };
-        this.$store.dispatch("getMessageByUser", payload);
-      } else {
-        cookie.remove("sndRcvId");
-        cookie.set("sndRcvId", {
-          sender_id: sender,
-          reciver_id: reciver,
-          chat_id: null,
-        });
-        this.$store.state.getMessageByUser = [];
-      } /* end of if */
+
+      console.log("loader for workin ...")
+      const memologo = document.getElementsByClassName("memologo")[0];
+      memologo.style.display = "none";
+      const chatRoom = document.getElementsByClassName("chatRoom")[0];
+      chatRoom.style.zIndex = "3";
+
       var wepperChat = document.getElementsByClassName("wepper-chat")[0]
       var leftSideBar = document.getElementsByClassName("leftSideBar")[0];
       var rightSidebar = document.getElementsByClassName("rightSidebar")[0];
@@ -2681,6 +2671,25 @@ export default {
         document.getElementsByClassName("fullScreen")[0].style.zIndex = "-1"
 
       }/* /wepperChat */
+
+
+      this.reciverUser = item;
+      if (chat_id) {
+        var payload = {
+          sender_id: sender,
+          reciver_id: reciver,
+          chat_id: chat_id,
+        };
+        this.$store.dispatch("getMessageByUser", payload);
+      } else {
+        cookie.remove("sndRcvId");
+        cookie.set("sndRcvId", {
+          sender_id: sender,
+          reciver_id: reciver,
+          chat_id: null,
+        });
+        this.$store.state.getMessageByUser = [];
+      } /* end of if */
 
       if (screenSize.offsetWidth < 576) {
         if (leftSideBar && rightSidebar) {
