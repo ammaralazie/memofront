@@ -27,12 +27,12 @@ export default createStore({
     audioPath: "https://storage.googleapis.com/memoback-ea9c4.appspot.com/",
     filePath: "https://storage.googleapis.com/memoback-ea9c4.appspot.com/",
 
-    phpPort: "/",
-    port: "/",
-    pattUrl: "https://memoback.herokuapp.com",
-    socket: io(
-      "https://memoback.herokuapp.com" /* ,{ transports : ['websocket'] } */
-    ),
+    // phpPort: "/",
+    // port: "/",
+    // pattUrl: "https://memoback.herokuapp.com",
+    // socket: io(
+    //   "https://memoback.herokuapp.com" /* ,{ transports : ['websocket'] } */
+    // ),
 
     // imgProfilePath: "http://192.168.1.7:8080/yawar_chat/uploads/profile/",
     // imgPath: "http://192.168.1.7:8080/yawar_chat/uploads/chatimage/",
@@ -40,12 +40,12 @@ export default createStore({
     // audioPath: "http://192.168.1.7:8080/yawar_chat/uploads/audio/",
     // filePath: "http://192.168.1.7:8080/yawar_chat/uploads/files/",
 
-    // phpPort: ":8080/yawar_chat/views/",
-    // port: ":3000/",
-    // pattUrl: "http://192.168.0.106",
-    // socket: io(
-    //   "http://192.168.0.106:3000" /* ,{ transports : ['websocket'] } */
-    // ),
+    phpPort: ":8080/yawar_chat/views/",
+    port: ":3000/",
+    pattUrl: "http://192.168.0.108",
+    socket: io(
+      "http://192.168.0.108:3000" /* ,{ transports : ['websocket'] } */
+    ),
 
     myChat: [],
     getMessageByUser: null,
@@ -202,13 +202,13 @@ export default createStore({
   } /* /mutations */,
   actions: {
     signup(context, payload) {
-      // const ex = new URLSearchParams();
-      // ex.append("phone", payload.phone);
+      const ex = new URLSearchParams();
+      ex.append("phone", payload.phone);
 
       axios
         .post(
           context.state.pattUrl + context.state.phpPort + "APIS/signup.php",
-          payload /* ex */
+          /* payload */ ex
         )
         .then((res) => {
           context.commit("getSignupReslutes", res.data);
@@ -363,13 +363,13 @@ export default createStore({
         context.state.oldPage = context.state.page;
 
         var ex = null;
-        /*ex = new FormData();
+        ex = new FormData();
         ex.append("sn", payload.searchValue);
         ex.append("sercherId", payload.sercherId);
-        ex.append("page", context.state.page); */
+        ex.append("page", context.state.page);
 
-        payload.sn = payload.searchValue;
-        ex = payload;
+        // payload.sn = payload.searchValue;
+        // ex = payload;
 
         //this section for display loader
         context.state.searchLoader = true;
@@ -468,10 +468,10 @@ export default createStore({
       if (context.state.oldPages != context.state.pages) {
         context.state.oldPages = context.state.pages;
 
-        /* const ex = new FormData();
+        const ex = new FormData();
         ex.append("sn", payload.searchValue);
         ex.append("sercherId", payload.sercherId);
-        ex.append("page", context.state.pages); */
+        ex.append("page", context.state.pages);
 
         payload.sn = payload.searchValue;
 
@@ -481,7 +481,7 @@ export default createStore({
             context.state.pattUrl +
               context.state.phpPort +
               "APIS/search_for_user.php",
-            payload /* ex */
+            /* payload */ ex
           )
           .catch((err) => console.log(err));
       } /* end of if */
@@ -657,16 +657,16 @@ export default createStore({
     } /* /unblockUser */,
 
     async deleteAcount(context, payload) {
-      /* var ex=new FormData()
+      var ex=new FormData()
       ex.append("user_id",payload.user_id)
-      ex.append("sn",payload.sn) */
+      ex.append("sn",payload.sn)
 
       const resulte = await axios
         .post(
           context.state.pattUrl +
             context.state.phpPort +
             "APIS/delete_my_account.php",
-          payload /* ex */
+          /* payload */ ex
         )
         .catch((e) => console.log(e));
       if (resulte) {

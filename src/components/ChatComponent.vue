@@ -439,7 +439,8 @@ export default {
   // },/* /beForceated */
   methods: {
     //this function used for display reply form in side the chat room
-    displayReplyMessage() {
+    displayReplyMessage(item, type) {
+
       // var myMessageCover = document.createElement("div");
       // var messageYouCover = document.createElement("div");
       // var p = document.createElement("p");
@@ -449,8 +450,10 @@ export default {
       var wepperChat = document.getElementsByClassName("wepper-chat")[0]
 
       //this for text section as sender
-      wepperChat.innerHTML +=
-        `
+      if (type == "sender" && item.message_type == "text") {
+        console.log("this section for text sender : ", item)
+        wepperChat.innerHTML +=
+          `
       <div class="myMessageCover">
         <div class="message">
            <div class="coverReplyText">
@@ -467,10 +470,10 @@ export default {
         <!-- /message -->
       </div>
       `
-
-      //this for text section as reciver
-      wepperChat.innerHTML +=
-        `
+      } else if (type == "reciver" && item.message_type == "text") {
+        //this for text section as reciver
+        wepperChat.innerHTML +=
+          `
       <div class="messageYouCover">
         <div class="message">
           <div class="coverReplyText">
@@ -485,11 +488,13 @@ export default {
         <!-- /message -->
       </div>
       `
+      }/* end of if */
 
-
-      //this function for audio section as sender
-      wepperChat.innerHTML +=
-        `
+      //this section for sender message
+      else if (type == "sender" && item.message_type == "audio") {
+        //this function for audio section as sender
+        wepperChat.innerHTML +=
+          `
       <div class="myMessageCover">
         <div class="message">
           <div class="coverReplyText">
@@ -507,10 +512,10 @@ export default {
         <!-- /message -->
       </div>
       `
-
-      //this function for audio as reciver
-      wepperChat.innerHTML +=
-        `
+      } else if (type == "reciver" && item.message_type == "audio") {
+        //this function for audio as reciver
+        wepperChat.innerHTML +=
+          `
       <div class="messageYouCover">
         <div class="message">
           <div class="coverReplyText">
@@ -526,10 +531,13 @@ export default {
         <!-- /message -->
       </div>
       `
+      }/* end of if */
 
-      //this section for image as sender
-      wepperChat.innerHTML +=
-        `
+      //this section for sender 
+      else if (type == "sender" && item.message_type == "image") {
+        //this section for image as sender
+        wepperChat.innerHTML +=
+          `
       <div class="myMessageCover">
         <div class="message">
           <div class="coverReplyText">
@@ -548,10 +556,10 @@ export default {
         <!-- /message -->
       </div>
       `
-
-      //this section for image as reciver
-      wepperChat.innerHTML +=
-        `
+      } else if (type == "reciver" && item.message_type == "image") {
+        //this section for image as reciver
+        wepperChat.innerHTML +=
+          `
       <div class="messageYouCover">
         <div class="message">
           <div class="coverReplyText">
@@ -568,10 +576,13 @@ export default {
         <!-- /message -->
       </div>
       `
+      }/* end of if */
 
-      //this section for vedio as sender
-      wepperChat.innerHTML +=
-        `
+      //this section for sender
+      else if (type == "sender" && item.message_type == "video") {
+        //this section for vedio as sender
+        wepperChat.innerHTML +=
+          `
       <div class="myMessageCover">
         <div class="message">
           <div class="coverReplyText">
@@ -590,10 +601,11 @@ export default {
         <!-- /message -->
       </div>
       `
-
-      //this section for vedio as reciver
-      wepperChat.innerHTML +=
-        `
+        //this section for reciver
+      } else if (type == "reciver" && item.message_type == "video") {
+        //this section for vedio as reciver
+        wepperChat.innerHTML +=
+          `
       <div class="messageYouCover">
         <div class="message">
           <div class="coverReplyText">
@@ -610,10 +622,14 @@ export default {
         <!-- /message -->
       </div>
       `
+      }/* end of if */
 
-      //this for text section as sender
-      wepperChat.innerHTML +=
-        `
+
+      //this section for sender
+      else if (type == "sender" && item.message_type == "file") {
+        //this for file section as sender
+        wepperChat.innerHTML +=
+          `
       <div class="myMessageCover">
         <div class="message">
            <div class="coverReplyText">
@@ -632,9 +648,11 @@ export default {
       </div>
       `
 
-      //this for text section as reciver
-      wepperChat.innerHTML +=
-        `
+        //this section for reciver
+      } else if (type == "reciver" && item.message_type == "file") {
+        //this for file section as reciver
+        wepperChat.innerHTML +=
+          `
       <div class="messageYouCover">
         <div class="message">
           <div class="coverReplyText">
@@ -650,10 +668,14 @@ export default {
         <!-- /message -->
       </div>
       `
+      }/* end of if */
 
-      //this section for location as sender
-      wepperChat.innerHTML +=
-        `
+
+      //this section for sender
+      if (type == "sender" && item.message_type == "file") {
+        //this section for location as sender
+        wepperChat.innerHTML +=
+          `
       <div class="myMessageCover">
         <div class="message">
           <div class="coverReplyText">
@@ -672,11 +694,10 @@ export default {
         <!-- /message -->
       </div>
       `
-
-
-      //this section for location as reciver
-      wepperChat.innerHTML +=
-        `
+      } else if (type == "reciver" && item.message_type == "file") {
+        //this section for location as reciver
+        wepperChat.innerHTML +=
+          `
       <div class="messageYouCover">
         <div class="message">
           <div class="coverReplyText">
@@ -693,6 +714,8 @@ export default {
         <!-- /message -->
       </div>
       `
+      }/* end of if */
+
       //this to control on box shadow for reply message
       var replayedMessage = document.getElementsByClassName("replayedMessage")[0]
       if (cookie.get('lang') == 'ar') {
@@ -1646,7 +1669,7 @@ export default {
             dateTime: new Date().getTime(),
             message_id: message.getAttribute("id"),
             state: 0,
-            msg_id: replyId || null
+            reply: replyId || null
           }); /* end of new message emit */
 
           this.replyId = null
@@ -2290,7 +2313,7 @@ export default {
                 id: resulte.data.id,
                 newchat: resulte.data.newchat,
                 deleted_for: resulte.data.deleted_for || "null",
-                msg_id: replyId || null
+                reply: replyId || null
               }); /* end of new message emit */
 
               this.replyId = null
@@ -2367,7 +2390,7 @@ export default {
               dateTime: new Date().getTime(),
               message_id: message.getAttribute("id"),
               state: 0,
-              msg_id: replyId || null,
+              reply: replyId || null,
             }); /* end of new message emit */
 
             this.$emit("editOrderMyChat", this.itm)
@@ -2540,7 +2563,7 @@ export default {
                   id: resulte.data.id,
                   newchat: resulte.data.newchat,
                   deleted_for: resulte.data.deleted_for || "null",
-                  msg_id: this.replyId || null,
+                  reply: this.replyId || null,
                 }); /* end of new message emit */
 
                 this.replyId = null
@@ -2648,7 +2671,7 @@ export default {
                     id: resulte2.data.id,
                     newchat: resulte2.data.newchat,
                     deleted_for: resulte2.data.deleted_for || "null",
-                    msg_id: this.replyId || null,
+                    reply: this.replyId || null,
                   }); /* end of new message emit */
                 } /* end of if */
 
@@ -2798,7 +2821,7 @@ export default {
                   id: resulte3.data.id,
                   newchat: resulte3.data.newchat,
                   deleted_for: resulte3.data.deleted_for || "null",
-                  msg_id: this.replyId || null,
+                  reply: this.replyId || null,
                 }); /* end of new message emit */
 
                 this.replyId = null
@@ -2909,7 +2932,7 @@ export default {
                   id: resulte5.data.id,
                   newchat: resulte5.data.newchat,
                   deleted_for: resulte5.data.deleted_for || "null",
-                  msg_id: this.replyId || null,
+                  reply: this.replyId || null,
                 }); /* end of new message emit */
                 this.replyId = null
                 this.fcmToken = cookie.get("fcmToken");
@@ -3040,8 +3063,6 @@ export default {
 
           if (data.seen != true) {
             var senderId = null
-
-
             if (cookie.get("sndRcvId"))
               if (cookie.get("sndRcvId").sender_id == cookie.get("user").id) {
                 senderId = cookie.get("sndRcvId").reciver_id
@@ -3049,14 +3070,10 @@ export default {
                 senderId = cookie.get("sndRcvId").sender_id
               }//end of if
 
-
-            if ((senderId != data.sender_id) && (data.state != 3)) {
+            if ((senderId == data.sender_id) && (data.state != 3)) {
               myItem[0].num_msg += 1
             }/* end of if */
-
-
           }/* end of if  */
-          console.log("myItem[0] : ", myItem[0])
           this.$emit("editOrderMyChat", myItem[0])
         }/* end of if */
       }); /* end of new message on */
@@ -4067,6 +4084,7 @@ export default {
     msgs(x) {
       setTimeout(() => {
         try {
+
           this.inputMsg = ""
           this.lastDateMsg = null;
           this.displyReply = false;
@@ -4137,467 +4155,523 @@ export default {
               var end = moment(new Date()); */
               switch (item.message_type) {
                 case "text":
-                  if (item.sender_id == this.user.id) {
-                    if (this.checkUrlInMessage(item.message)) {
-                      p.innerHTML = this.checkUrlInMessage(item.message);
+                  //this section for if not found reply message
+                  if (!item.reply_message) {
+                    if (item.sender_id == this.user.id) {
+                      if (this.checkUrlInMessage(item.message)) {
+                        p.innerHTML = this.checkUrlInMessage(item.message);
+                      } else {
+                        p.textContent = item.message;
+                      } /* end of if */
+
+                      //create div created
+                      created.classList.add("created");
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      //create my myMessageCover
+                      myMessageCover.classList.add("myMessageCover");
+                      //add p and created into message
+                      message.appendChild(p);
+                      message.appendChild(created);
+                      switch (item.state) {
+                        case 1:
+                          seen.classList.add("check-dubole");
+                          img.src = check;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 2:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDuboleNotSeen;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 3:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDubole;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        default:
+                          console.log("something wrong...");
+                          break;
+                      } /* end of switch */
+                      //add messages div into myMessageCover
+                      myMessageCover.appendChild(message);
+                      wepperChat.appendChild(myMessageCover);
+
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
+
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, myMessageCover);
+                      } /* end of if */
                     } else {
-                      p.textContent = item.message;
+                      //add text content for p
+                      if (this.checkUrlInMessage(item.message)) {
+                        p.innerHTML = this.checkUrlInMessage(item.message);
+                      } else {
+                        p.textContent = item.message;
+                      } /* end of if */
+                      //create div created
+                      created.classList.add("created");
+
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      //create my myMessageCover
+                      messageYouCover.classList.add("messageYouCover");
+                      //add p and created into message
+                      message.appendChild(p);
+                      message.appendChild(created);
+                      //add messages div into myMessageCover
+                      messageYouCover.appendChild(message);
+                      wepperChat.appendChild(messageYouCover);
+
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
+
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, messageYouCover);
+                      } /* end of if */
                     } /* end of if */
 
-                    //create div created
-                    created.classList.add("created");
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    //create my myMessageCover
-                    myMessageCover.classList.add("myMessageCover");
-                    //add p and created into message
-                    message.appendChild(p);
-                    message.appendChild(created);
-                    switch (item.state) {
-                      case 1:
-                        seen.classList.add("check-dubole");
-                        img.src = check;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 2:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDuboleNotSeen;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 3:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDubole;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      default:
-                        console.log("something wrong...");
-                        break;
-                    } /* end of switch */
-                    //add messages div into myMessageCover
-                    myMessageCover.appendChild(message);
-                    wepperChat.appendChild(myMessageCover);
-
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
-
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
-
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, myMessageCover);
-                    } /* end of if */
+                    //this section for if found reply message
                   } else {
-                    //add text content for p
-                    if (this.checkUrlInMessage(item.message)) {
-                      p.innerHTML = this.checkUrlInMessage(item.message);
+                    //this section for sender message
+                    if (item.sender_id == this.user.id) {
+                      this.displayReplyMessage(item, "sender")
+                      //this section for reciver message
                     } else {
-                      p.textContent = item.message;
-                    } /* end of if */
-                    //create div created
-                    created.classList.add("created");
-
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    //create my myMessageCover
-                    messageYouCover.classList.add("messageYouCover");
-                    //add p and created into message
-                    message.appendChild(p);
-                    message.appendChild(created);
-                    //add messages div into myMessageCover
-                    messageYouCover.appendChild(message);
-                    wepperChat.appendChild(messageYouCover);
-
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
-
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
-
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, messageYouCover);
-                    } /* end of if */
-                  } /* end of if */
+                      this.displayReplyMessage(item, "reciver")
+                    }/* end of if */
+                  }/* end of if */
                   break;
                 /* end of text case */
                 case "video":
-                  if (item.sender_id == this.user.id) {
-                    //create p tag
-                    /* here we will create video element */
-                    video.controls = "controls";
-                    video.classList.add("videoType");
-                    video.classList.add("flex");
-                    video.src = this.$store.state.videoPath + item.message;
 
-                    video.addEventListener("canplay", () => {
-                      wepperChat.scrollTop = wepperChat.scrollHeight;
-                    });
-                    //create div created
-                    created.classList.add("created");
+                  /* this section for if not found reply message */
+                  if (!item.reply_message) {
+                    if (item.sender_id == this.user.id) {
+                      //create p tag
+                      /* here we will create video element */
+                      video.controls = "controls";
+                      video.classList.add("videoType");
+                      video.classList.add("flex");
+                      video.src = this.$store.state.videoPath + item.message;
 
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    //create my myMessageCover
-                    myMessageCover.classList.add("myMessageCover");
-                    //add p and created into message
-                    video.appendChild(source);
-                    switch (item.state) {
-                      case 1:
-                        seen.classList.add("check-dubole");
-                        img.src = check;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 2:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDuboleNotSeen;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 3:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDubole;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      default:
-                        console.log("something wrong...");
-                        break;
-                    } /* end of switch */
-                    message.appendChild(video);
-                    message.appendChild(created);
-                    //add messages div into myMessageCover
-                    myMessageCover.appendChild(message);
-                    wepperChat.appendChild(myMessageCover);
+                      video.addEventListener("canplay", () => {
+                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                      });
+                      //create div created
+                      created.classList.add("created");
 
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      //create my myMessageCover
+                      myMessageCover.classList.add("myMessageCover");
+                      //add p and created into message
+                      video.appendChild(source);
+                      switch (item.state) {
+                        case 1:
+                          seen.classList.add("check-dubole");
+                          img.src = check;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 2:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDuboleNotSeen;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 3:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDubole;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        default:
+                          console.log("something wrong...");
+                          break;
+                      } /* end of switch */
+                      message.appendChild(video);
+                      message.appendChild(created);
+                      //add messages div into myMessageCover
+                      myMessageCover.appendChild(message);
+                      wepperChat.appendChild(myMessageCover);
 
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
 
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, myMessageCover);
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, myMessageCover);
+                      } /* end of if */
+                    } else {
+                      video.controls = "controls";
+                      video.classList.add("videoType");
+                      video.src = this.$store.state.videoPath + item.message;
+                      video.addEventListener("canplay", () => {
+                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                      });
+                      //create div created
+                      created.classList.add("created");
+
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      //create my myMessageCover
+                      messageYouCover.classList.add("messageYouCover");
+                      //add p and created into message
+                      video.appendChild(source);
+                      message.appendChild(video);
+                      message.appendChild(created);
+                      //add messages div into myMessageCover
+                      messageYouCover.appendChild(message);
+                      wepperChat.appendChild(messageYouCover);
+
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
+
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, messageYouCover);
+                      } /* end of if */
                     } /* end of if */
+
+                    //this section for if found reply message
                   } else {
-                    video.controls = "controls";
-                    video.classList.add("videoType");
-                    video.src = this.$store.state.videoPath + item.message;
-                    video.addEventListener("canplay", () => {
-                      wepperChat.scrollTop = wepperChat.scrollHeight;
-                    });
-                    //create div created
-                    created.classList.add("created");
+                    //this section for sender message
+                    if (item.sender_id == this.user.id) {
+                      this.displayReplyMessage(item, "sender")
+                      //this section for reciver message
+                    } else {
+                      this.displayReplyMessage(item, "reciver")
+                    }/* end of if */
+                  }/* end of if */
 
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    //create my myMessageCover
-                    messageYouCover.classList.add("messageYouCover");
-                    //add p and created into message
-                    video.appendChild(source);
-                    message.appendChild(video);
-                    message.appendChild(created);
-                    //add messages div into myMessageCover
-                    messageYouCover.appendChild(message);
-                    wepperChat.appendChild(messageYouCover);
-
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
-
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
-
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, messageYouCover);
-                    } /* end of if */
-                  } /* end of if */
                   break;
                 /* /case video */
                 case "voice":
-                  if (item.sender_id == this.user.id) {
-                    //create p tag
-                    /* here we will create video element */
-                    audio.controls = "controls";
-                    audio.classList.add("audioType");
-                    source.src = this.$store.state.audioPath + item.message;
-                    //create div created
-                    created.classList.add("created");
+                  /* this section for if not found reply message */
+                  if (!item.reply_message) {
+                    if (item.sender_id == this.user.id) {
+                      //create p tag
+                      /* here we will create video element */
+                      audio.controls = "controls";
+                      audio.classList.add("audioType");
+                      source.src = this.$store.state.audioPath + item.message;
+                      //create div created
+                      created.classList.add("created");
 
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    message.style.width = "80%";
-                    message.style.height = "95px";
-                    switch (item.state) {
-                      case 1:
-                        seen.classList.add("check-dubole");
-                        img.src = check;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 2:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDuboleNotSeen;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 3:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDubole;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      default:
-                        console.log("something wrong...");
-                        break;
-                    } /* end of switch */
-                    //create my myMessageCover
-                    myMessageCover.classList.add("myMessageCover");
-                    //add p and created into message
-                    audio.appendChild(source);
-                    message.appendChild(audio);
-                    message.appendChild(created);
-                    //add messages div into myMessageCover
-                    myMessageCover.appendChild(message);
-                    wepperChat.appendChild(myMessageCover);
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      message.style.width = "80%";
+                      message.style.height = "95px";
+                      switch (item.state) {
+                        case 1:
+                          seen.classList.add("check-dubole");
+                          img.src = check;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 2:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDuboleNotSeen;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 3:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDubole;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        default:
+                          console.log("something wrong...");
+                          break;
+                      } /* end of switch */
+                      //create my myMessageCover
+                      myMessageCover.classList.add("myMessageCover");
+                      //add p and created into message
+                      audio.appendChild(source);
+                      message.appendChild(audio);
+                      message.appendChild(created);
+                      //add messages div into myMessageCover
+                      myMessageCover.appendChild(message);
+                      wepperChat.appendChild(myMessageCover);
 
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
 
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
 
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, myMessageCover);
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, myMessageCover);
+                      } /* end of if */
+                    } else {
+                      audio.controls = "controls";
+                      audio.classList.add("audioType");
+                      source.src = this.$store.state.audioPath + item.message;
+                      //create div created
+                      created.classList.add("created");
+
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      message.style.width = "80%";
+                      message.style.height = "95px";
+                      //create my myMessageCover
+                      messageYouCover.classList.add("messageYouCover");
+                      //add p and created into message
+                      audio.appendChild(source);
+                      message.appendChild(audio);
+                      message.appendChild(created);
+                      //add messages div into myMessageCover
+                      messageYouCover.appendChild(message);
+                      wepperChat.appendChild(messageYouCover);
+
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
+
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, messageYouCover);
+                      } /* end of if */
                     } /* end of if */
+
+                    //this section for if found reply message
                   } else {
-                    audio.controls = "controls";
-                    audio.classList.add("audioType");
-                    source.src = this.$store.state.audioPath + item.message;
-                    //create div created
-                    created.classList.add("created");
+                    //this section for sender message
+                    if (item.sender_id == this.user.id) {
+                      this.displayReplyMessage(item, "sender")
+                      //this section for reciver message
+                    } else {
+                      this.displayReplyMessage(item, "reciver")
+                    }/* end of if */
+                  }/* end of if */
 
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    message.style.width = "80%";
-                    message.style.height = "95px";
-                    //create my myMessageCover
-                    messageYouCover.classList.add("messageYouCover");
-                    //add p and created into message
-                    audio.appendChild(source);
-                    message.appendChild(audio);
-                    message.appendChild(created);
-                    //add messages div into myMessageCover
-                    messageYouCover.appendChild(message);
-                    wepperChat.appendChild(messageYouCover);
-
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
-
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
-
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, messageYouCover);
-                    } /* end of if */
-                  } /* end of if */
                   break;
                 /* end of voice */
                 case "file":
-                  if (item.sender_id == this.user.id) {
-                    downloadLink.href =
-                      this.$store.state.filePath + item.message;
-                    img2.src = download;
-                    img2.style.width = "50px";
-                    downloadLink.appendChild(img2);
-                    downloadLink.target = "_blank";
-                    rl.appendChild(downloadLink);
+                  /* this section for if not found reply message */
+                  if (!item.reply_message) {
+                    if (item.sender_id == this.user.id) {
+                      downloadLink.href =
+                        this.$store.state.filePath + item.message;
+                      img2.src = download;
+                      img2.style.width = "50px";
+                      downloadLink.appendChild(img2);
+                      downloadLink.target = "_blank";
+                      rl.appendChild(downloadLink);
 
-                    p.textContent = item.orginalName;
-                    title.appendChild(p);
+                      p.textContent = item.orginalName;
+                      title.appendChild(p);
 
-                    imgf.src = file2;
-                    title.appendChild(imgf);
-                    title.classList.add("title");
+                      imgf.src = file2;
+                      title.appendChild(imgf);
+                      title.classList.add("title");
 
-                    coverFile.appendChild(rl);
-                    coverFile.appendChild(title);
-                    coverFile.classList.add("fileType");
+                      coverFile.appendChild(rl);
+                      coverFile.appendChild(title);
+                      coverFile.classList.add("fileType");
 
-                    created.classList.add("created");
+                      created.classList.add("created");
 
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    switch (item.state) {
-                      case 1:
-                        seen.classList.add("check-dubole");
-                        img.src = check;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 2:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDuboleNotSeen;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 3:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDubole;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      default:
-                        console.log("something wrong...");
-                        break;
-                    } /* end of switch */
-                    message.appendChild(coverFile);
-                    message.appendChild(created);
-                    message.classList.add("message");
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      switch (item.state) {
+                        case 1:
+                          seen.classList.add("check-dubole");
+                          img.src = check;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 2:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDuboleNotSeen;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 3:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDubole;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        default:
+                          console.log("something wrong...");
+                          break;
+                      } /* end of switch */
+                      message.appendChild(coverFile);
+                      message.appendChild(created);
+                      message.classList.add("message");
 
-                    myMessageCover.appendChild(message);
-                    myMessageCover.classList.add("myMessageCover");
+                      myMessageCover.appendChild(message);
+                      myMessageCover.classList.add("myMessageCover");
 
-                    wepperChat.appendChild(myMessageCover);
+                      wepperChat.appendChild(myMessageCover);
 
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
 
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
 
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, myMessageCover);
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, myMessageCover);
+                      } /* end of if */
+                    } else {
+                      downloadLink.href =
+                        this.$store.state.filePath + item.message;
+                      img2.src = download;
+                      img2.style.width = "50px";
+                      downloadLink.appendChild(img2);
+                      downloadLink.target = "_blank";
+                      rl.appendChild(downloadLink);
+
+                      p.textContent = item.orginalName;
+                      title.appendChild(p);
+
+                      img.src = file2;
+                      title.appendChild(img);
+                      title.classList.add("title");
+
+                      coverFile.appendChild(rl);
+                      coverFile.appendChild(title);
+                      coverFile.classList.add("fileType");
+
+                      created.classList.add("created");
+
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+
+                      message.appendChild(coverFile);
+                      message.appendChild(created);
+                      message.classList.add("message");
+
+                      messageYouCover.appendChild(message);
+                      messageYouCover.classList.add("messageYouCover");
+
+                      wepperChat.appendChild(messageYouCover);
+
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
+
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, messageYouCover);
+                      } /* end of if */
                     } /* end of if */
+
+                    //this section for if found reply message
                   } else {
-                    downloadLink.href =
-                      this.$store.state.filePath + item.message;
-                    img2.src = download;
-                    img2.style.width = "50px";
-                    downloadLink.appendChild(img2);
-                    downloadLink.target = "_blank";
-                    rl.appendChild(downloadLink);
+                    //this section for sender message
+                    if (item.sender_id == this.user.id) {
+                      this.displayReplyMessage(item, "sender")
+                      //this section for reciver message
+                    } else {
+                      this.displayReplyMessage(item, "reciver")
+                    }/* end of if */
+                  }/* end of if  */
 
-                    p.textContent = item.orginalName;
-                    title.appendChild(p);
-
-                    img.src = file2;
-                    title.appendChild(img);
-                    title.classList.add("title");
-
-                    coverFile.appendChild(rl);
-                    coverFile.appendChild(title);
-                    coverFile.classList.add("fileType");
-
-                    created.classList.add("created");
-
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-
-                    message.appendChild(coverFile);
-                    message.appendChild(created);
-                    message.classList.add("message");
-
-                    messageYouCover.appendChild(message);
-                    messageYouCover.classList.add("messageYouCover");
-
-                    wepperChat.appendChild(messageYouCover);
-
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
-
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
-
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, messageYouCover);
-                    } /* end of if */
-                  } /* end of if */
                   break;
                 /* end of file */
                 case "image":
@@ -4725,267 +4799,293 @@ export default {
                   break;
                 /* end of image */
                 case "imageWeb":
-                  if (item.sender_id == this.user.id) {
-                    //create p tag
-                    /* here we will create video element */
-                    img2.classList.add("imgType");
-                    img2.classList.add("flex");
-                    img2.src = this.$store.state.imgPath + item.message;
-                    img2.addEventListener("load", () => {
-                      var isLoaded = img2.complete && img2.naturalHeight !== 0;
-                      if (isLoaded) {
-                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                  /* this section for if not found reply message */
+                  if (!item.reply_message) {
+                    if (item.sender_id == this.user.id) {
+                      //create p tag
+                      /* here we will create video element */
+                      img2.classList.add("imgType");
+                      img2.classList.add("flex");
+                      img2.src = this.$store.state.imgPath + item.message;
+                      img2.addEventListener("load", () => {
+                        var isLoaded = img2.complete && img2.naturalHeight !== 0;
+                        if (isLoaded) {
+                          wepperChat.scrollTop = wepperChat.scrollHeight;
+                        } /* end of if */
+                      }); /* end of add event listener */
+                      //create div created
+                      created.classList.add("created");
+
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      //create my myMessageCover
+                      myMessageCover.classList.add("myMessageCover");
+                      //add p and created into message
+                      rl.appendChild(img2);
+                      rl.target = "_blank";
+                      rl.href = this.$store.state.imgPath + item.message;
+                      message.appendChild(rl);
+                      message.appendChild(created);
+                      switch (item.state) {
+                        case 1:
+                          seen.classList.add("check-dubole");
+                          img.src = check;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 2:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDuboleNotSeen;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 3:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDubole;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        default:
+                          console.log("something wrong...");
+                          break;
+                      } /* end of switch */
+                      message.style.width = "250px";
+                      //add messages div into myMessageCover
+                      myMessageCover.appendChild(message);
+                      wepperChat.appendChild(myMessageCover);
+
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
+
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
-                    }); /* end of add event listener */
-                    //create div created
-                    created.classList.add("created");
+                    } else {
+                      img.classList.add("imgType");
+                      img.classList.add("flex");
+                      img.src = this.$store.state.imgPath + item.message;
+                      img.addEventListener("load", () => {
+                        var isLoaded = img.complete && img.naturalHeight !== 0;
+                        if (isLoaded) {
+                          wepperChat.scrollTop = wepperChat.scrollHeight;
+                        } /* end of if */
+                      }); /* end of add event listener */
+                      //create div created
+                      created.classList.add("created");
 
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    //create my myMessageCover
-                    myMessageCover.classList.add("myMessageCover");
-                    //add p and created into message
-                    rl.appendChild(img2);
-                    rl.target = "_blank";
-                    rl.href = this.$store.state.imgPath + item.message;
-                    message.appendChild(rl);
-                    message.appendChild(created);
-                    switch (item.state) {
-                      case 1:
-                        seen.classList.add("check-dubole");
-                        img.src = check;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 2:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDuboleNotSeen;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 3:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDubole;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      default:
-                        console.log("something wrong...");
-                        break;
-                    } /* end of switch */
-                    message.style.width = "250px";
-                    //add messages div into myMessageCover
-                    myMessageCover.appendChild(message);
-                    wepperChat.appendChild(myMessageCover);
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      //create div message
+                      message.classList.add("message");
+                      //create my myMessageCover
+                      messageYouCover.classList.add("messageYouCover");
+                      //add p and created into message
+                      img.appendChild(source);
+                      message.appendChild(img);
+                      message.appendChild(img);
+                      message.appendChild(created);
+                      message.style.maxWidth = "250px";
+                      //add messages div into myMessageCover
+                      messageYouCover.appendChild(message);
+                      wepperChat.appendChild(messageYouCover);
 
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
 
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
 
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, myMessageCover);
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, messageYouCover);
+                      } /* end of if */
                     } /* end of if */
+
+                    //this section for if found reply message
                   } else {
-                    img.classList.add("imgType");
-                    img.classList.add("flex");
-                    img.src = this.$store.state.imgPath + item.message;
-                    img.addEventListener("load", () => {
-                      var isLoaded = img.complete && img.naturalHeight !== 0;
-                      if (isLoaded) {
-                        wepperChat.scrollTop = wepperChat.scrollHeight;
-                      } /* end of if */
-                    }); /* end of add event listener */
-                    //create div created
-                    created.classList.add("created");
-
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    //create div message
-                    message.classList.add("message");
-                    //create my myMessageCover
-                    messageYouCover.classList.add("messageYouCover");
-                    //add p and created into message
-                    img.appendChild(source);
-                    message.appendChild(img);
-                    message.appendChild(img);
-                    message.appendChild(created);
-                    message.style.maxWidth = "250px";
-                    //add messages div into myMessageCover
-                    messageYouCover.appendChild(message);
-                    wepperChat.appendChild(messageYouCover);
-
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
-
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
-
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, messageYouCover);
-                    } /* end of if */
-                  } /* end of if */
+                    //this section for sender message
+                    if (item.sender_id == this.user.id) {
+                      this.displayReplyMessage(item, "sender")
+                      //this section for reciver message
+                    } else {
+                      this.displayReplyMessage(item, "reciver")
+                    }/* end of if */
+                  }/* end of if */
                   break;
                 /* end of image */
                 case "location":
-                  // var loction = item.message.split(",");
-                  if (item.sender_id == this.user.id) {
-                    // aMap.href =
-                    //   "https://www.google.com/maps?q=" +
-                    //   loction[0] +
-                    //   "," +
-                    //   loction[1] +
-                    //   "&z=17&hl=ar";
-                    // aMap.target = "_blank";
 
-                    imgMap.src = map;
-                    aMap.style.width = "100%";
-                    aMap.style.height = "200px";
-                    //imgMap.style.width = "100%";
-                    //imgMap.style.height = "200px";
-                    //aMap.appendChild(imgMap);
-                    created.classList.add("created");
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    message.classList.add("message");
-                    myMessageCover.classList.add("myMessageCover");
+                  /* this section for if not found reply message */
+                  if (!item.reply_message) {
+                    // var loction = item.message.split(",");
+                    if (item.sender_id == this.user.id) {
+                      // aMap.href =
+                      //   "https://www.google.com/maps?q=" +
+                      //   loction[0] +
+                      //   "," +
+                      //   loction[1] +
+                      //   "&z=17&hl=ar";
+                      // aMap.target = "_blank";
 
-                    message.appendChild(aMap);
-                    message.appendChild(created);
+                      imgMap.src = map;
+                      aMap.style.width = "100%";
+                      aMap.style.height = "200px";
+                      //imgMap.style.width = "100%";
+                      //imgMap.style.height = "200px";
+                      //aMap.appendChild(imgMap);
+                      created.classList.add("created");
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      message.classList.add("message");
+                      myMessageCover.classList.add("myMessageCover");
 
-                    message.style.minWidth = "260px"
+                      message.appendChild(aMap);
+                      message.appendChild(created);
 
-                    switch (item.state) {
-                      case 1:
-                        seen.classList.add("check-dubole");
-                        img.src = check;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 2:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDuboleNotSeen;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      case 3:
-                        seen.classList.add("check-dubole");
-                        img.src = checkDubole;
-                        seen.appendChild(img);
-                        message.appendChild(seen);
-                        break;
-                      default:
-                        console.log("something wrong...");
-                        break;
-                    } /* end of switch */
+                      message.style.minWidth = "260px"
 
-                    myMessageCover.appendChild(message);
-                    wepperChat.appendChild(myMessageCover);
+                      switch (item.state) {
+                        case 1:
+                          seen.classList.add("check-dubole");
+                          img.src = check;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 2:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDuboleNotSeen;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        case 3:
+                          seen.classList.add("check-dubole");
+                          img.src = checkDubole;
+                          seen.appendChild(img);
+                          message.appendChild(seen);
+                          break;
+                        default:
+                          console.log("something wrong...");
+                          break;
+                      } /* end of switch */
 
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
+                      myMessageCover.appendChild(message);
+                      wepperChat.appendChild(myMessageCover);
 
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
 
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, myMessageCover);
-                    } /* end of if */
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
 
-                    imgMap.addEventListener("load", () => {
-                      var isLoaded =
-                        imgMap.complete && imgMap.naturalHeight !== 0;
-                      if (isLoaded) {
-                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
-                    }); /* end of add event listener */
+
+                      imgMap.addEventListener("load", () => {
+                        var isLoaded =
+                          imgMap.complete && imgMap.naturalHeight !== 0;
+                        if (isLoaded) {
+                          wepperChat.scrollTop = wepperChat.scrollHeight;
+                        } /* end of if */
+                      }); /* end of add event listener */
+                    } else {
+                      // aMap.href =
+                      //   "https://www.google.com/maps?q=" +
+                      //   loction[0] +
+                      //   "," +
+                      //   loction[1] +
+                      //   "&z=17&hl=ar";
+                      // aMap.target = "_blank";
+                      //imgMap.src = map;
+                      aMap.style.width = "100%";
+                      aMap.style.height = "200px";
+                      //imgMap.style.width = "100%";
+                      //imgMap.style.height = "200px";
+                      //aMap.appendChild(imgMap);
+                      created.classList.add("created");
+                      if (cookie.get("lang") == 'ar')
+                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT"), true);
+                      else
+                        created.textContent = moment(
+                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                        ).format("LT");
+                      message.classList.add("message");
+                      messageYouCover.classList.add("messageYouCover");
+                      message.appendChild(aMap);
+                      message.style.display = "flex";
+                      message.style.flexDirection = "column";
+                      message.appendChild(created);
+                      messageYouCover.appendChild(message);
+
+                      message.style.minWidth = "260px"
+
+                      wepperChat.appendChild(messageYouCover);
+
+                      getDateMessage = this.checkWepperDate(item, true);
+                      if (getDateMessage) {
+                        createWpperDate = document.createElement("div");
+                        createWpperDate.classList.add("wepperDate");
+
+                        createDatePagination = document.createElement("div");
+                        createWpperDate.appendChild(createDatePagination);
+
+                        createDatePagination.textContent = getDateMessage;
+                        createDatePagination.classList.add("datePagination");
+                        wepperChat.insertBefore(createWpperDate, messageYouCover);
+                      } /* end of if */
+
+                      imgMap.addEventListener("load", () => {
+                        var isLoaded =
+                          imgMap.complete && imgMap.naturalHeight !== 0;
+                        if (isLoaded) {
+                          wepperChat.scrollTop = wepperChat.scrollHeight;
+                        } /* end of if */
+                      }); /* end of add event listener */
+                    } /* end of if */
+                    this.drawLocation(aMap, item.message)
                   } else {
-                    // aMap.href =
-                    //   "https://www.google.com/maps?q=" +
-                    //   loction[0] +
-                    //   "," +
-                    //   loction[1] +
-                    //   "&z=17&hl=ar";
-                    // aMap.target = "_blank";
-                    //imgMap.src = map;
-                    aMap.style.width = "100%";
-                    aMap.style.height = "200px";
-                    //imgMap.style.width = "100%";
-                    //imgMap.style.height = "200px";
-                    //aMap.appendChild(imgMap);
-                    created.classList.add("created");
-                    if (cookie.get("lang") == 'ar')
-                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT"), true);
-                    else
-                      created.textContent = moment(
-                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                      ).format("LT");
-                    message.classList.add("message");
-                    messageYouCover.classList.add("messageYouCover");
-                    message.appendChild(aMap);
-                    message.style.display = "flex";
-                    message.style.flexDirection = "column";
-                    message.appendChild(created);
-                    messageYouCover.appendChild(message);
+                    //this section for sender message
+                    if (item.sender_id == this.user.id) {
+                      this.displayReplyMessage(item, "sender")
+                      //this section for reciver message
+                    } else {
+                      this.displayReplyMessage(item, "reciver")
+                    }/* end of if */
+                  }/* end of if */
 
-                    message.style.minWidth = "260px"
-
-                    wepperChat.appendChild(messageYouCover);
-
-                    getDateMessage = this.checkWepperDate(item, true);
-                    if (getDateMessage) {
-                      createWpperDate = document.createElement("div");
-                      createWpperDate.classList.add("wepperDate");
-
-                      createDatePagination = document.createElement("div");
-                      createWpperDate.appendChild(createDatePagination);
-
-                      createDatePagination.textContent = getDateMessage;
-                      createDatePagination.classList.add("datePagination");
-                      wepperChat.insertBefore(createWpperDate, messageYouCover);
-                    } /* end of if */
-
-                    imgMap.addEventListener("load", () => {
-                      var isLoaded =
-                        imgMap.complete && imgMap.naturalHeight !== 0;
-                      if (isLoaded) {
-                        wepperChat.scrollTop = wepperChat.scrollHeight;
-                      } /* end of if */
-                    }); /* end of add event listener */
-                  } /* end of if */
-                  this.drawLocation(aMap, item.message)
                   break;
                 default:
                   console.log(`somethings wrong`);
