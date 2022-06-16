@@ -87,7 +87,7 @@
 
           <div class="myMessageInput">
             <input id="myMessageInput" type="text" v-model="inputMsg" :placeholder="_trans('message') + '...'" />
-            <button class="btn addMsg" @click.prevent="addMsg">
+            <button class="btn addMsg" @click.prevent="addMsg(null)">
               <fa icon="paper-plane" />
             </button>
           </div>
@@ -113,7 +113,7 @@
               <fa icon="microphone" />
               <div class="recorder" v-if="recorder"></div>
             </label>
-            <label for="voice" @click.prevent="addMsg" class="sendVoice">
+            <label for="voice" @click.prevent="addMsg(null)" class="sendVoice">
               <fa icon="paper-plane" />
             </label>
           </div>
@@ -414,6 +414,9 @@ export default {
       google: this.googlee,
       displyReply: false,
       replyId: null,
+      newMsgs: [],
+      checkImage: false,
+      checkFile: false,
     }; /* /return */
   } /* /data */,
 
@@ -438,292 +441,265 @@ export default {
 
   // },/* /beForceated */
   methods: {
-    //this function used for display reply form in side the chat room
-    displayReplyMessage(item, type) {
+    //this function used for add new reply message when press on enter
+    createItemForReplyMessage(item, replyId, type, message) {
+      var reply_message
+      var messageCover
+      reply_message = this.msgs.filter(value => {
+        if (value.message_id == replyId)
+          return value
+      })/* /filter */
 
-      // var myMessageCover = document.createElement("div");
-      // var messageYouCover = document.createElement("div");
-      // var p = document.createElement("p");
-      // var created = document.createElement("div");
-      // var message = document.createElement("div");
+
+      //this section when the replay message exist in msgs array
+      if (reply_message[0]) {
+        item.reply_message = reply_message[0]
+        return item
+      }/* end of if */
+
+      //this section when the replay message not exist in msgs array
+      else {
+
+        reply_message = this.newMsgs.filter(value => {
+          if (value.message_id == replyId)
+            return value
+        })/* /filter */
+        var sender = null
+        var reciver = null
+
+        if (reply_message[0]) {
+          item.reply_message = reply_message[0]
+          console.log("item : ", item)
+          return item
+        } else {
+
+          if (cookie.get("sndRcvId").sender_id == cookie.get("user").id) {
+            sender = cookie.get("sndRcvId").sender_id
+            reciver = cookie.get("sndRcvId").reciver_id
+          } else {
+            sender = cookie.get("sndRcvId").reciver_id
+            reciver = cookie.get("sndRcvId").sender_id
+          }/* end of if */
+
+          var srcImg = null
+          if (type == "imageWeb") {
+            messageCover = document.getElementById(replyId)
+            if (messageCover)
+              if (messageCover.children[0].children[0].tagName == "IMG") {
+                srcImg = messageCover.children[0].children[0].src
+                this.checkImage = true
+              }/* end of if */
+          }/* end of if */
+
+          if (type == "file") {
+            messageCover = document.getElementById(replyId)
+            if (messageCover)
+              for (var i = 0; i < messageCover.children.length; i++) {
+                console.log("messageCover.children[i]  : ", messageCover.children[i])
+                if (messageCover.children[i].classList.contains("fileType") ) {
+                  var orginalName = messageCover.children[i].children[1].children[0].textContent
+                  this.checkFile = true
+                }/* end of if */
+              }/* end of for */
+          }/* end of if */
+
+
+
+          item.reply_message = {
+            sender_id: sender,
+            reciver_id: reciver,
+            message_type: type,
+            message: message || srcImg,
+            message_id: replyId,
+            orginalName: orginalName || null
+          }/* end of if */
+          this.newMsgs.push(item)
+          console.log("item : ", item)
+          return item
+        }/* end of if */
+      }/* end of if */
+    },/* /createItemForReplyMessage */
+
+    //this function used for display reply form in side the chat room
+    displayReplyMessage(item, messageCover) {
+
+      console.log(item, messageCover)
 
       var wepperChat = document.getElementsByClassName("wepper-chat")[0]
 
+      var replayCover = document.createElement("div")
+      var replayedMessage = document.createElement("div")
+      var youUser = document.createElement("div")
+      var typeIcon = document.createElement("div")
+      var img = document.createElement("img")
+
+      replayCover.classList.add("coverReplyText")
+      replayedMessage.classList.add("replayedMessage")
+      typeIcon.classList.add("typeIcon")
+      replayedMessage.style.display = "flex"
+      replayedMessage.style.alignItems = "center"
+
+      if (item.sender_id == item.reply_message.sender_id) {
+        youUser.classList.add("youUser")
+        youUser.textContent = this._trans("you")
+        replayedMessage.appendChild(youUser)
+        replayedMessage.style.display = "block"
+        replayedMessage.style.alignItems = "unset"
+      } /* end of if */
+
       //this for text section as sender
-      if (type == "sender" && item.message_type == "text") {
-        console.log("this section for text sender : ", item)
-        wepperChat.innerHTML +=
-          `
-      <div class="myMessageCover">
-        <div class="message">
-           <div class="coverReplyText">
-          <div class="replayedMessage">
-            <div class="youUser">${this._trans("you")}</div>
-           <div class="typeIcon" style="display:inline-block">this is replyed function</div>
-          </div>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <div class="check-dubole">s</div>
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
-      } else if (type == "reciver" && item.message_type == "text") {
-        //this for text section as reciver
-        wepperChat.innerHTML +=
-          `
-      <div class="messageYouCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-           <div class="typeIcon" style="display:inline-block">this is replyed function</div>
-          </div>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
+      if (item.reply_message.message_type == "text") {
+
+        if (messageCover.children[0].classList.contains("message")) {
+          typeIcon.style.display = "inline-block"
+          typeIcon.textContent = item.reply_message.message
+          replayedMessage.appendChild(typeIcon)
+          replayCover.appendChild(replayedMessage)
+
+          messageCover.children[0].prepend(replayCover)
+          wepperChat.appendChild(messageCover)
+          wepperChat.scrollTop = wepperChat.scrollHeight
+
+        }/* end of if */
+
       }/* end of if */
 
-      //this section for sender message
-      else if (type == "sender" && item.message_type == "audio") {
-        //this function for audio section as sender
-        wepperChat.innerHTML +=
-          `
-      <div class="myMessageCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-            <div class="youUser">${this._trans("you")}</div>
-           <div class="typeIcon" style="display:inline-block">${this._trans("voiceFile")} &nbsp;&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="microphone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-microphone fa-w-11" data-fa-i2svg>
-  <path fill="currentColor" d="M176 352c53.02 0 96-42.98 96-96V96c0-53.02-42.98-96-96-96S80 42.98 80 96v160c0 53.02 42.98 96 96 96zm160-160h-16c-8.84 0-16 7.16-16 16v48c0 74.8-64.49 134.82-140.79 127.38C96.71 376.89 48 317.11 48 250.3V208c0-8.84-7.16-16-16-16H16c-8.84 0-16 7.16-16 16v40.16c0 89.64 63.97 169.55 152 181.69V464H96c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16h-56v-33.77C285.71 418.47 352 344.9 352 256v-48c0-8.84-7.16-16-16-16z" class=""></path></svg></div>
-          </div>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <div class="check-dubole">s</div>
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
-      } else if (type == "reciver" && item.message_type == "audio") {
-        //this function for audio as reciver
-        wepperChat.innerHTML +=
-          `
-      <div class="messageYouCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-           <div class="typeIcon" style="display:inline-block">${this._trans("voiceFile")} &nbsp;&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="microphone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-microphone fa-w-11" data-fa-i2svg>
-  <path fill="currentColor" d="M176 352c53.02 0 96-42.98 96-96V96c0-53.02-42.98-96-96-96S80 42.98 80 96v160c0 53.02 42.98 96 96 96zm160-160h-16c-8.84 0-16 7.16-16 16v48c0 74.8-64.49 134.82-140.79 127.38C96.71 376.89 48 317.11 48 250.3V208c0-8.84-7.16-16-16-16H16c-8.84 0-16 7.16-16 16v40.16c0 89.64 63.97 169.55 152 181.69V464H96c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16h-56v-33.77C285.71 418.47 352 344.9 352 256v-48c0-8.84-7.16-16-16-16z" class=""></path></svg></div>
-          </div>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
+      //this section for voice message
+      else if (item.reply_message.message_type == "voice") {
+        if (messageCover.children[0].classList.contains("message")) {
+
+          typeIcon.innerHTML = `${this._trans("voiceFile")} &nbsp;&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="microphone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-microphone fa-w-11" data-fa-i2svg>
+        // <path fill="currentColor" d="M176 352c53.02 0 96-42.98 96-96V96c0-53.02-42.98-96-96-96S80 42.98 80 96v160c0 53.02 42.98 96 96 96zm160-160h-16c-8.84 0-16 7.16-16 16v48c0 74.8-64.49 134.82-140.79 127.38C96.71 376.89 48 317.11 48 250.3V208c0-8.84-7.16-16-16-16H16c-8.84 0-16 7.16-16 16v40.16c0 89.64 63.97 169.55 152 181.69V464H96c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16h-56v-33.77C285.71 418.47 352 344.9 352 256v-48c0-8.84-7.16-16-16-16z" class=""></path></svg>`
+          typeIcon.style.display = "inline-block"
+          /*  typeIcon.textContent = item.reply_message.message */
+          replayedMessage.appendChild(typeIcon)
+
+          replayCover.appendChild(replayedMessage)
+
+          messageCover.children[0].prepend(replayCover)
+          wepperChat.appendChild(messageCover)
+          wepperChat.scrollTop = wepperChat.scrollHeight
+        }/* end of if */
+
+
       }/* end of if */
 
-      //this section for sender 
-      else if (type == "sender" && item.message_type == "image") {
-        //this section for image as sender
-        wepperChat.innerHTML +=
-          `
-      <div class="myMessageCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-          <div class="youUser">${this._trans("you")}</div>
-           <div class="typeIcon"><p>${this._trans("image")} &nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" class=""></path></svg></p></div>
-          </div>
-           <img src=${file2}>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <div class="check-dubole">s</div>
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
-      } else if (type == "reciver" && item.message_type == "image") {
-        //this section for image as reciver
-        wepperChat.innerHTML +=
-          `
-      <div class="messageYouCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-           <div class="typeIcon"><p>${this._trans("image")} &nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" class=""></path></svg></p></div>
-          </div>
-           <img src=${file2}>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
+      //this section for image message 
+      else if (item.reply_message.message_type == "imageWeb") {
+
+        typeIcon.innerHTML = ""
+        typeIcon.innerHTML = `${this._trans("image")} &nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
+        // <path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" class=""></path></svg>`
+        typeIcon.style.display = "inline-block"
+        /*  typeIcon.textContent = item.reply_message.message */
+
+        if (!this.checkImage) {
+          item.reply_message.message = this.$store.state.imgPath + item.reply_message.message
+        }/* end of if */
+        this.checkImage = false
+
+        img.src = item.reply_message.message
+
+        replayedMessage.appendChild(typeIcon)
+        replayedMessage.style.minWidth = "120px"
+        replayCover.appendChild(replayedMessage)
+        replayCover.appendChild(img)
+
+        messageCover.children[0].prepend(replayCover)
+        wepperChat.appendChild(messageCover)
+        wepperChat.scrollTop = wepperChat.scrollHeight
+
       }/* end of if */
 
-      //this section for sender
-      else if (type == "sender" && item.message_type == "video") {
-        //this section for vedio as sender
-        wepperChat.innerHTML +=
-          `
-      <div class="myMessageCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-            <div class="youUser">${this._trans("you")}</div>
-           <div class="typeIcon"><p>${this._trans("vedio") + ' you must add the video for the image '}&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="film" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-film fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M488 64h-8v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V64H96v20c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12V64h-8C10.7 64 0 74.7 0 88v336c0 13.3 10.7 24 24 24h8v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h320v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h8c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM96 372c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm272 208c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm0-168c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm112 152c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40z" class=""></path></svg></p></div>
-          </div>
-           <img src=${file2}>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <div class="check-dubole">s</div>
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
-        //this section for reciver
-      } else if (type == "reciver" && item.message_type == "video") {
-        //this section for vedio as reciver
-        wepperChat.innerHTML +=
-          `
-      <div class="messageYouCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-           <div class="typeIcon"><p>${this._trans("vedio") + ' you must add the video for the image '}&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="film" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-film fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M488 64h-8v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V64H96v20c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12V64h-8C10.7 64 0 74.7 0 88v336c0 13.3 10.7 24 24 24h8v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h320v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h8c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM96 372c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm272 208c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm0-168c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm112 152c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40z" class=""></path></svg></p></div>
-          </div>
-           <img src=${file2}>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
+      //this section for video message
+      else if (item.reply_message.message_type == "video") {
+        //       wepperChat.innerHTML +=
+        //         `
+        //     <div class="myMessageCover">
+        //       <div class="message" id=${item.message_id}>
+        //         <div class="coverReplyText">
+        //         <div class="replayedMessage">
+        //           <div class="youUser">${this._trans("you")}</div>
+        //          <div class="typeIcon"><p>${this._trans("vedio") + ' you must add the video for the image '}&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="film" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-film fa-w-16" data-fa-i2svg>
+        // <path fill="currentColor" d="M488 64h-8v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V64H96v20c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12V64h-8C10.7 64 0 74.7 0 88v336c0 13.3 10.7 24 24 24h8v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h320v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h8c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM96 372c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm272 208c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm0-168c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm112 152c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40z" class=""></path></svg></p></div>
+        //         </div>
+        //          <img src=${file2}>
+        //         </div>
+        //         <p>hellow</p>
+        //         <div class="created">22.01 AM</div><!-- /created -->
+        //         <button id="dispalyListView">c</button>
+        //       </div>
+        //       <!-- /message -->
+        //     </div>
+        //     `
+
+      }
+
+
+      //this section for file message
+      else if (item.reply_message.message_type == "file") {
+        //       //this for file section as sender
+        //       wepperChat.innerHTML +=
+        //         `
+        //     <div class="myMessageCover">
+        //       <div class="message" id=${item.message_id}>
+        //          <div class="coverReplyText">
+        //         <div class="replayedMessage">
+        //           <div class="youUser">${this._trans("you")}</div>
+        //          <div class="typeIcon" style="display:inline-block">name of the file&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="file" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
+        // <path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z" class=""></path></svg></div>
+        //         </div>
+        //         </div>
+        //         <p>hellow</p>
+        //         <div class="created">22.01 AM</div><!-- /created -->
+        //         <button id="dispalyListView">c</button>
+        //       </div>
+        //       <!-- /message -->
+        //     </div>
+        //     `
+
+        if (messageCover.children[0].classList.contains("message")) {
+
+          typeIcon.innerHTML = `${item.reply_message.orginalName} &nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="file" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
+        // <path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z" class=""></path></svg>`
+          typeIcon.style.display = "inline-block"
+          /*  typeIcon.textContent = item.reply_message.message */
+          replayedMessage.appendChild(typeIcon)
+
+          replayCover.appendChild(replayedMessage)
+
+          messageCover.children[0].prepend(replayCover)
+          wepperChat.appendChild(messageCover)
+          wepperChat.scrollTop = wepperChat.scrollHeight
+        }/* end of if */
+
+
       }/* end of if */
 
-
-      //this section for sender
-      else if (type == "sender" && item.message_type == "file") {
-        //this for file section as sender
-        wepperChat.innerHTML +=
-          `
-      <div class="myMessageCover">
-        <div class="message">
-           <div class="coverReplyText">
-          <div class="replayedMessage">
-            <div class="youUser">${this._trans("you")}</div>
-           <div class="typeIcon" style="display:inline-block">name of the file&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="file" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z" class=""></path></svg></div>
-          </div>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <div class="check-dubole">s</div>
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
-
-        //this section for reciver
-      } else if (type == "reciver" && item.message_type == "file") {
-        //this for file section as reciver
-        wepperChat.innerHTML +=
-          `
-      <div class="messageYouCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-           <div class="typeIcon" style="display:inline-block">name of the file&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="file" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z" class=""></path></svg></div>
-          </div>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
-      }/* end of if */
-
-
-      //this section for sender
-      if (type == "sender" && item.message_type == "file") {
-        //this section for location as sender
-        wepperChat.innerHTML +=
-          `
-      <div class="myMessageCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-            <div class="youUser">${this._trans("you")}</div>
-           <div class="typeIcon"><p>${this._trans("location") + ' you must add the location for the image '}&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="map" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z" class=""></path></svg></p></div>
-          </div>
-           <img src=${file2}>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <div class="check-dubole">s</div>
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
-      } else if (type == "reciver" && item.message_type == "file") {
+      //this section for location message
+      else if (item.reply_message.message_type == "location") {
         //this section for location as reciver
-        wepperChat.innerHTML +=
-          `
-      <div class="messageYouCover">
-        <div class="message">
-          <div class="coverReplyText">
-          <div class="replayedMessage">
-           <div class="typeIcon"><p>${this._trans("location") + ' you must add the location for the image '}&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="map" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
-  <path fill="currentColor" d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z" class=""></path></svg></p></div>
-          </div>
-           <img src=${file2}>
-          </div>
-          <p>hellow</p>
-          <div class="created">22.01 AM</div><!-- /created -->
-          <button id="dispalyListView">c</button>
-        </div>
-        <!-- /message -->
-      </div>
-      `
+        //       wepperChat.innerHTML +=
+        //         `
+        //     <div class="messageYouCover">
+        //       <div class="message" id=${item.message_id}>
+        //         <div class="coverReplyText">
+        //         <div class="replayedMessage">
+        //          <div class="typeIcon"><p>${this._trans("location") + ' you must add the location for the image '}&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="map" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
+        // <path fill="currentColor" d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z" class=""></path></svg></p></div>
+        //         </div>
+        //          <img src=${file2}>
+        //         </div>
+        //         <p>hellow</p>
+        //         <div class="created">22.01 AM</div><!-- /created -->
+        //         <button id="dispalyListView">c</button>
+        //       </div>
+        //       <!-- /message -->
+        //     </div>
+        //     `
+
       }/* end of if */
 
-      //this to control on box shadow for reply message
-      var replayedMessage = document.getElementsByClassName("replayedMessage")[0]
-      if (cookie.get('lang') == 'ar') {
-        replayedMessage.style.boxShadow = "-3px 0px 0px #3cab44"
-      } else {
-        replayedMessage.style.boxShadow = "3px 0px 0px #3cab44"
-      }/* end of if */
-      wepperChat.scrollTop = wepperChat.scrollHeight
     },/* /displayReplyMessage */
 
     //this function for close reply function 
@@ -1875,10 +1851,12 @@ export default {
 
           if (ck != "rcv") {
             if (
-              (getBoundingForMessage.children[0].classList.contains(
+              ((getBoundingForMessage.children[0].classList.contains(
                 "modified"
-              ) &&
-                getBoundingForMessage.children[1].tagName == "P") ||
+              ) || getBoundingForMessage.children[0].classList.contains(
+                "coverReplyText"
+              )) &&
+                (getBoundingForMessage.children[1].tagName == "P" || getBoundingForMessage.children[2].tagName == "P")) ||
               getBoundingForMessage.children[0].tagName == "P"
             ) {
               updateMessage.textContent = this._trans("edit");
@@ -2217,6 +2195,7 @@ export default {
           chatRoooooom.insertBefore(wepperChat, formMsg);
         } /* end of if */
 
+        //this section for send audio
         if (audio) {
           //here I will send file plob to server after some of update
           var myBlob = new Blob([this.audioBlob], { type: "audio/mpeg" });
@@ -2257,8 +2236,12 @@ export default {
 
             myMessageCover.appendChild(message);
             myMessageCover.classList.add("myMessageCover");
-
             wepperChat.appendChild(myMessageCover);
+
+
+            // if (!replyId) {
+            //   wepperChat.appendChild(myMessageCover);
+            // } /* end of if */
 
             var checkBoundingType = null;
             //this for detrmaine who is sender and who is reciver
@@ -2297,10 +2280,7 @@ export default {
               //here I will send the resulte over the socket to update on state
               //here you can use socket to send and receave data
 
-              seen.innerHTML = "";
-              seen.remove();
-
-              this.io.emit("new message", {
+              var voiceItem = {
                 //here you muste plce real sender and reacever id
                 sender_id: snd_id,
                 reciver_id: rcv_id,
@@ -2314,7 +2294,16 @@ export default {
                 newchat: resulte.data.newchat,
                 deleted_for: resulte.data.deleted_for || "null",
                 reply: replyId || null
-              }); /* end of new message emit */
+              }//end of item
+
+              // if (replyId) {
+              //   this.displayReplyMessage(this.createItemForReplyMessage(voiceItem, replyId, voiceItem.message_type, null), myMessageCover)
+              // }/* end of if */
+
+              seen.innerHTML = "";
+              seen.remove();
+
+              this.io.emit("new message", voiceItem); /* end of new message emit */
 
               this.replyId = null
               this.getBoundingReact(
@@ -2341,7 +2330,9 @@ export default {
               this.messageWrong = null;
             }, 5000);
           } /* end of if */
-        } else {
+        } //end of if
+        //this section for send text message
+        else {
           if (this.inputMsg) {
             if (this.checkUrlInMessage(this.inputMsg)) {
               p.innerHTML = this.checkUrlInMessage(this.inputMsg);
@@ -2366,9 +2357,7 @@ export default {
             message.appendChild(created);
             //add messages div into myMessageCover
             myMessageCover.appendChild(message);
-            wepperChat.appendChild(myMessageCover);
 
-            this.getBoundingReact(message.getAttribute("id"), "");
 
             if (cookie.get("sndRcvId").sender_id == this.user.id) {
               snd_id = cookie.get("sndRcvId").sender_id;
@@ -2376,12 +2365,9 @@ export default {
             } else {
               snd_id = cookie.get("sndRcvId").reciver_id;
               rcv_id = cookie.get("sndRcvId").sender_id;
-            }
+            }/* end of if */
 
-            myMessageCover.setAttribute("cover_id", snd_id);
-
-            //here you can use socket to send and receave data
-            this.io.emit("new message", {
+            var item = {
               //here you muste plce real sendet and reaceve id
               sender_id: snd_id,
               reciver_id: rcv_id,
@@ -2391,7 +2377,38 @@ export default {
               message_id: message.getAttribute("id"),
               state: 0,
               reply: replyId || null,
-            }); /* end of new message emit */
+            }//end of item
+
+            //this section to check this message is reply for other message or no
+            if (!replyId) {
+              wepperChat.appendChild(myMessageCover);
+            } else {
+              var messageCover = document.getElementById(replyId)
+              if (messageCover) {
+                for (var i = 0; i < messageCover.children.length; i++) {
+                  if (messageCover.children[i].tagName == "P") {
+                    this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "text", this.inputMsg), myMessageCover)
+                  } else if (messageCover.children[i].tagName == "AUDIO") {
+                    this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "voice", null), myMessageCover)
+                  } else if (messageCover.children[i].classList.contains("fileType")) {
+                    this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "file", null), myMessageCover)
+                  } else {
+                    if (messageCover.children[i].children[0]) {
+                      if (messageCover.children[i].children[0].tagName == "IMG" && messageCover.children[i].children[0].classList.contains("imgType")) {
+                        this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "imageWeb", null), myMessageCover)
+                      }/* end of if */
+                    }/* end of if */
+                  }/* end of if */
+                }/* end of for loop */
+              }/* end of if */
+            }/* end of if */
+
+            this.getBoundingReact(message.getAttribute("id"), "");
+
+            myMessageCover.setAttribute("cover_id", snd_id);
+
+            //here you can use socket to send and receave data
+            this.io.emit("new message", item); /* end of new message emit */
 
             this.$emit("editOrderMyChat", this.itm)
 
@@ -2407,7 +2424,7 @@ export default {
             this.inputMsg = "";
             this.displyReply = false
           } /* end of if */
-        } /* end of if */
+        } /* end of else */
 
         this.newFormMessage(this.user.id);
         this.sendNotfication(this.fcmToken);
@@ -4156,56 +4173,59 @@ export default {
               switch (item.message_type) {
                 case "text":
                   //this section for if not found reply message
-                  if (!item.reply_message) {
-                    if (item.sender_id == this.user.id) {
-                      if (this.checkUrlInMessage(item.message)) {
-                        p.innerHTML = this.checkUrlInMessage(item.message);
-                      } else {
-                        p.textContent = item.message;
-                      } /* end of if */
 
-                      //create div created
-                      created.classList.add("created");
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      //create my myMessageCover
-                      myMessageCover.classList.add("myMessageCover");
-                      //add p and created into message
-                      message.appendChild(p);
-                      message.appendChild(created);
-                      switch (item.state) {
-                        case 1:
-                          seen.classList.add("check-dubole");
-                          img.src = check;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 2:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDuboleNotSeen;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 3:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDubole;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        default:
-                          console.log("something wrong...");
-                          break;
-                      } /* end of switch */
-                      //add messages div into myMessageCover
-                      myMessageCover.appendChild(message);
+                  if (item.sender_id == this.user.id) {
+                    if (this.checkUrlInMessage(item.message)) {
+                      p.innerHTML = this.checkUrlInMessage(item.message);
+                    } else {
+                      p.textContent = item.message;
+                    } /* end of if */
+
+                    //create div created
+                    created.classList.add("created");
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    //create my myMessageCover
+                    myMessageCover.classList.add("myMessageCover");
+                    //add p and created into message
+                    message.appendChild(p);
+                    message.appendChild(created);
+                    switch (item.state) {
+                      case 1:
+                        seen.classList.add("check-dubole");
+                        img.src = check;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 2:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDuboleNotSeen;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 3:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDubole;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      default:
+                        console.log("something wrong...");
+                        break;
+                    } /* end of switch */
+                    //add messages div into myMessageCover
+                    myMessageCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(myMessageCover);
 
                       getDateMessage = this.checkWepperDate(item, true);
@@ -4220,35 +4240,43 @@ export default {
                         createDatePagination.classList.add("datePagination");
                         wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
+
                     } else {
-                      //add text content for p
-                      if (this.checkUrlInMessage(item.message)) {
-                        p.innerHTML = this.checkUrlInMessage(item.message);
-                      } else {
-                        p.textContent = item.message;
-                      } /* end of if */
-                      //create div created
-                      created.classList.add("created");
+                      this.displayReplyMessage(item, myMessageCover)
+                    }/* end of if */
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      //create my myMessageCover
-                      messageYouCover.classList.add("messageYouCover");
-                      //add p and created into message
-                      message.appendChild(p);
-                      message.appendChild(created);
-                      //add messages div into myMessageCover
-                      messageYouCover.appendChild(message);
+
+                  } else {
+                    //add text content for p
+                    if (this.checkUrlInMessage(item.message)) {
+                      p.innerHTML = this.checkUrlInMessage(item.message);
+                    } else {
+                      p.textContent = item.message;
+                    } /* end of if */
+                    //create div created
+                    created.classList.add("created");
+
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    //create my myMessageCover
+                    messageYouCover.classList.add("messageYouCover");
+                    //add p and created into message
+                    message.appendChild(p);
+                    message.appendChild(created);
+                    //add messages div into myMessageCover
+                    messageYouCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(messageYouCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4261,81 +4289,76 @@ export default {
                         createDatePagination.classList.add("datePagination");
                         wepperChat.insertBefore(createWpperDate, messageYouCover);
                       } /* end of if */
-                    } /* end of if */
-
-                    //this section for if found reply message
-                  } else {
-                    //this section for sender message
-                    if (item.sender_id == this.user.id) {
-                      this.displayReplyMessage(item, "sender")
-                      //this section for reciver message
                     } else {
-                      this.displayReplyMessage(item, "reciver")
+                      this.displayReplyMessage(item, messageYouCover)
                     }/* end of if */
-                  }/* end of if */
+
+                  } /* end of if */
+
                   break;
                 /* end of text case */
                 case "video":
 
                   /* this section for if not found reply message */
-                  if (!item.reply_message) {
-                    if (item.sender_id == this.user.id) {
-                      //create p tag
-                      /* here we will create video element */
-                      video.controls = "controls";
-                      video.classList.add("videoType");
-                      video.classList.add("flex");
-                      video.src = this.$store.state.videoPath + item.message;
+                  if (item.sender_id == this.user.id) {
+                    //create p tag
+                    /* here we will create video element */
+                    video.controls = "controls";
+                    video.classList.add("videoType");
+                    video.classList.add("flex");
+                    video.src = this.$store.state.videoPath + item.message;
 
-                      video.addEventListener("canplay", () => {
-                        wepperChat.scrollTop = wepperChat.scrollHeight;
-                      });
-                      //create div created
-                      created.classList.add("created");
+                    video.addEventListener("canplay", () => {
+                      wepperChat.scrollTop = wepperChat.scrollHeight;
+                    });
+                    //create div created
+                    created.classList.add("created");
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      //create my myMessageCover
-                      myMessageCover.classList.add("myMessageCover");
-                      //add p and created into message
-                      video.appendChild(source);
-                      switch (item.state) {
-                        case 1:
-                          seen.classList.add("check-dubole");
-                          img.src = check;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 2:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDuboleNotSeen;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 3:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDubole;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        default:
-                          console.log("something wrong...");
-                          break;
-                      } /* end of switch */
-                      message.appendChild(video);
-                      message.appendChild(created);
-                      //add messages div into myMessageCover
-                      myMessageCover.appendChild(message);
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    //create my myMessageCover
+                    myMessageCover.classList.add("myMessageCover");
+                    //add p and created into message
+                    video.appendChild(source);
+                    switch (item.state) {
+                      case 1:
+                        seen.classList.add("check-dubole");
+                        img.src = check;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 2:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDuboleNotSeen;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 3:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDubole;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      default:
+                        console.log("something wrong...");
+                        break;
+                    } /* end of switch */
+                    message.appendChild(video);
+                    message.appendChild(created);
+                    //add messages div into myMessageCover
+                    myMessageCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(myMessageCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4349,35 +4372,41 @@ export default {
                         wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
                     } else {
-                      video.controls = "controls";
-                      video.classList.add("videoType");
-                      video.src = this.$store.state.videoPath + item.message;
-                      video.addEventListener("canplay", () => {
-                        wepperChat.scrollTop = wepperChat.scrollHeight;
-                      });
-                      //create div created
-                      created.classList.add("created");
+                      this.displayReplyMessage(item, myMessageCover)
+                    }/* end of if */
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      //create my myMessageCover
-                      messageYouCover.classList.add("messageYouCover");
-                      //add p and created into message
-                      video.appendChild(source);
-                      message.appendChild(video);
-                      message.appendChild(created);
-                      //add messages div into myMessageCover
-                      messageYouCover.appendChild(message);
+                  } else {
+                    video.controls = "controls";
+                    video.classList.add("videoType");
+                    video.src = this.$store.state.videoPath + item.message;
+                    video.addEventListener("canplay", () => {
+                      wepperChat.scrollTop = wepperChat.scrollHeight;
+                    });
+                    //create div created
+                    created.classList.add("created");
+
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    //create my myMessageCover
+                    messageYouCover.classList.add("messageYouCover");
+                    //add p and created into message
+                    video.appendChild(source);
+                    message.appendChild(video);
+                    message.appendChild(created);
+                    //add messages div into myMessageCover
+                    messageYouCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(messageYouCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4390,78 +4419,82 @@ export default {
                         createDatePagination.classList.add("datePagination");
                         wepperChat.insertBefore(createWpperDate, messageYouCover);
                       } /* end of if */
-                    } /* end of if */
-
-                    //this section for if found reply message
-                  } else {
-                    //this section for sender message
-                    if (item.sender_id == this.user.id) {
-                      this.displayReplyMessage(item, "sender")
-                      //this section for reciver message
                     } else {
-                      this.displayReplyMessage(item, "reciver")
+                      this.displayReplyMessage(item, messageYouCover)
                     }/* end of if */
-                  }/* end of if */
+
+                  } /* end of if */
+
+                  //   //this section for sender message
+                  //   if (item.sender_id == this.user.id) {
+                  //     this.displayReplyMessage(item, "sender")
+                  //     //this section for reciver message
+                  //   } else {
+                  //     this.displayReplyMessage(item, "reciver")
+                  //   }/* end of if */
+                  // }/* end of if */
 
                   break;
                 /* /case video */
                 case "voice":
                   /* this section for if not found reply message */
-                  if (!item.reply_message) {
-                    if (item.sender_id == this.user.id) {
-                      //create p tag
-                      /* here we will create video element */
-                      audio.controls = "controls";
-                      audio.classList.add("audioType");
-                      source.src = this.$store.state.audioPath + item.message;
-                      //create div created
-                      created.classList.add("created");
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      message.style.width = "80%";
-                      message.style.height = "95px";
-                      switch (item.state) {
-                        case 1:
-                          seen.classList.add("check-dubole");
-                          img.src = check;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 2:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDuboleNotSeen;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 3:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDubole;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        default:
-                          console.log("something wrong...");
-                          break;
-                      } /* end of switch */
-                      //create my myMessageCover
-                      myMessageCover.classList.add("myMessageCover");
-                      //add p and created into message
-                      audio.appendChild(source);
-                      message.appendChild(audio);
-                      message.appendChild(created);
-                      //add messages div into myMessageCover
-                      myMessageCover.appendChild(message);
+                  if (item.sender_id == this.user.id) {
+                    //create p tag
+                    /* here we will create video element */
+                    audio.controls = "controls";
+                    audio.classList.add("audioType");
+                    source.src = this.$store.state.audioPath + item.message;
+                    //create div created
+                    created.classList.add("created");
+
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    message.style.width = "80%";
+                    message.style.height = "95px";
+                    switch (item.state) {
+                      case 1:
+                        seen.classList.add("check-dubole");
+                        img.src = check;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 2:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDuboleNotSeen;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 3:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDubole;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      default:
+                        console.log("something wrong...");
+                        break;
+                    } /* end of switch */
+                    //create my myMessageCover
+                    myMessageCover.classList.add("myMessageCover");
+                    //add p and created into message
+                    audio.appendChild(source);
+                    message.appendChild(audio);
+                    message.appendChild(created);
+                    //add messages div into myMessageCover
+                    myMessageCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(myMessageCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4475,34 +4508,41 @@ export default {
                         wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
                     } else {
-                      audio.controls = "controls";
-                      audio.classList.add("audioType");
-                      source.src = this.$store.state.audioPath + item.message;
-                      //create div created
-                      created.classList.add("created");
+                      this.displayReplyMessage(item, myMessageCover)
+                    }/* end of if */
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      message.style.width = "80%";
-                      message.style.height = "95px";
-                      //create my myMessageCover
-                      messageYouCover.classList.add("messageYouCover");
-                      //add p and created into message
-                      audio.appendChild(source);
-                      message.appendChild(audio);
-                      message.appendChild(created);
-                      //add messages div into myMessageCover
-                      messageYouCover.appendChild(message);
+
+                  } else {
+                    audio.controls = "controls";
+                    audio.classList.add("audioType");
+                    source.src = this.$store.state.audioPath + item.message;
+                    //create div created
+                    created.classList.add("created");
+
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    message.style.width = "80%";
+                    message.style.height = "95px";
+                    //create my myMessageCover
+                    messageYouCover.classList.add("messageYouCover");
+                    //add p and created into message
+                    audio.appendChild(source);
+                    message.appendChild(audio);
+                    message.appendChild(created);
+                    //add messages div into myMessageCover
+                    messageYouCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(messageYouCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4515,86 +4555,90 @@ export default {
                         createDatePagination.classList.add("datePagination");
                         wepperChat.insertBefore(createWpperDate, messageYouCover);
                       } /* end of if */
-                    } /* end of if */
-
-                    //this section for if found reply message
-                  } else {
-                    //this section for sender message
-                    if (item.sender_id == this.user.id) {
-                      this.displayReplyMessage(item, "sender")
-                      //this section for reciver message
                     } else {
-                      this.displayReplyMessage(item, "reciver")
+                      this.displayReplyMessage(item, messageYouCover)
                     }/* end of if */
-                  }/* end of if */
+
+
+                  } /* end of if */
+
+
+                  // //this section for sender message
+                  // if (item.sender_id == this.user.id) {
+                  //   this.displayReplyMessage(item, "sender")
+                  //   //this section for reciver message
+                  // } else {
+                  //   this.displayReplyMessage(item, "reciver")
+                  // }/* end of if */
+
 
                   break;
                 /* end of voice */
                 case "file":
                   /* this section for if not found reply message */
-                  if (!item.reply_message) {
-                    if (item.sender_id == this.user.id) {
-                      downloadLink.href =
-                        this.$store.state.filePath + item.message;
-                      img2.src = download;
-                      img2.style.width = "50px";
-                      downloadLink.appendChild(img2);
-                      downloadLink.target = "_blank";
-                      rl.appendChild(downloadLink);
+                  if (item.sender_id == this.user.id) {
+                    downloadLink.href =
+                      this.$store.state.filePath + item.message;
+                    img2.src = download;
+                    img2.style.width = "50px";
+                    downloadLink.appendChild(img2);
+                    downloadLink.target = "_blank";
+                    rl.appendChild(downloadLink);
 
-                      p.textContent = item.orginalName;
-                      title.appendChild(p);
+                    p.textContent = item.orginalName;
+                    title.appendChild(p);
 
-                      imgf.src = file2;
-                      title.appendChild(imgf);
-                      title.classList.add("title");
+                    imgf.src = file2;
+                    title.appendChild(imgf);
+                    title.classList.add("title");
 
-                      coverFile.appendChild(rl);
-                      coverFile.appendChild(title);
-                      coverFile.classList.add("fileType");
+                    coverFile.appendChild(rl);
+                    coverFile.appendChild(title);
+                    coverFile.classList.add("fileType");
 
-                      created.classList.add("created");
+                    created.classList.add("created");
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      switch (item.state) {
-                        case 1:
-                          seen.classList.add("check-dubole");
-                          img.src = check;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 2:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDuboleNotSeen;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 3:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDubole;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        default:
-                          console.log("something wrong...");
-                          break;
-                      } /* end of switch */
-                      message.appendChild(coverFile);
-                      message.appendChild(created);
-                      message.classList.add("message");
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    switch (item.state) {
+                      case 1:
+                        seen.classList.add("check-dubole");
+                        img.src = check;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 2:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDuboleNotSeen;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 3:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDubole;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      default:
+                        console.log("something wrong...");
+                        break;
+                    } /* end of switch */
+                    message.appendChild(coverFile);
+                    message.appendChild(created);
+                    message.classList.add("message");
 
-                      myMessageCover.appendChild(message);
-                      myMessageCover.classList.add("myMessageCover");
+                    myMessageCover.appendChild(message);
+                    myMessageCover.classList.add("myMessageCover");
 
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(myMessageCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4608,43 +4652,48 @@ export default {
                         wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
                     } else {
-                      downloadLink.href =
-                        this.$store.state.filePath + item.message;
-                      img2.src = download;
-                      img2.style.width = "50px";
-                      downloadLink.appendChild(img2);
-                      downloadLink.target = "_blank";
-                      rl.appendChild(downloadLink);
+                      this.displayReplyMessage(item, myMessageCover)
+                    }/* end of if */
 
-                      p.textContent = item.orginalName;
-                      title.appendChild(p);
+                  } else {
+                    downloadLink.href =
+                      this.$store.state.filePath + item.message;
+                    img2.src = download;
+                    img2.style.width = "50px";
+                    downloadLink.appendChild(img2);
+                    downloadLink.target = "_blank";
+                    rl.appendChild(downloadLink);
 
-                      img.src = file2;
-                      title.appendChild(img);
-                      title.classList.add("title");
+                    p.textContent = item.orginalName;
+                    title.appendChild(p);
 
-                      coverFile.appendChild(rl);
-                      coverFile.appendChild(title);
-                      coverFile.classList.add("fileType");
+                    img.src = file2;
+                    title.appendChild(img);
+                    title.classList.add("title");
 
-                      created.classList.add("created");
+                    coverFile.appendChild(rl);
+                    coverFile.appendChild(title);
+                    coverFile.classList.add("fileType");
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
+                    created.classList.add("created");
 
-                      message.appendChild(coverFile);
-                      message.appendChild(created);
-                      message.classList.add("message");
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
 
-                      messageYouCover.appendChild(message);
-                      messageYouCover.classList.add("messageYouCover");
+                    message.appendChild(coverFile);
+                    message.appendChild(created);
+                    message.classList.add("message");
 
+                    messageYouCover.appendChild(message);
+                    messageYouCover.classList.add("messageYouCover");
+
+                    if (!item.reply_message) {
                       wepperChat.appendChild(messageYouCover);
 
                       getDateMessage = this.checkWepperDate(item, true);
@@ -4659,19 +4708,19 @@ export default {
                         createDatePagination.classList.add("datePagination");
                         wepperChat.insertBefore(createWpperDate, messageYouCover);
                       } /* end of if */
-                    } /* end of if */
-
-                    //this section for if found reply message
-                  } else {
-                    //this section for sender message
-                    if (item.sender_id == this.user.id) {
-                      this.displayReplyMessage(item, "sender")
-                      //this section for reciver message
                     } else {
-                      this.displayReplyMessage(item, "reciver")
+                      this.displayReplyMessage(item, myMessageCover)
                     }/* end of if */
-                  }/* end of if  */
 
+                  } /* end of if */
+
+                  // //this section for sender message
+                  // if (item.sender_id == this.user.id) {
+                  //   this.displayReplyMessage(item, "sender")
+                  //   //this section for reciver message
+                  // } else {
+                  //   this.displayReplyMessage(item, "reciver")
+                  // }/* end of if */
                   break;
                 /* end of file */
                 case "image":
@@ -4799,69 +4848,70 @@ export default {
                   break;
                 /* end of image */
                 case "imageWeb":
-                  /* this section for if not found reply message */
-                  if (!item.reply_message) {
-                    if (item.sender_id == this.user.id) {
-                      //create p tag
-                      /* here we will create video element */
-                      img2.classList.add("imgType");
-                      img2.classList.add("flex");
-                      img2.src = this.$store.state.imgPath + item.message;
-                      img2.addEventListener("load", () => {
-                        var isLoaded = img2.complete && img2.naturalHeight !== 0;
-                        if (isLoaded) {
-                          wepperChat.scrollTop = wepperChat.scrollHeight;
-                        } /* end of if */
-                      }); /* end of add event listener */
-                      //create div created
-                      created.classList.add("created");
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      //create my myMessageCover
-                      myMessageCover.classList.add("myMessageCover");
-                      //add p and created into message
-                      rl.appendChild(img2);
-                      rl.target = "_blank";
-                      rl.href = this.$store.state.imgPath + item.message;
-                      message.appendChild(rl);
-                      message.appendChild(created);
-                      switch (item.state) {
-                        case 1:
-                          seen.classList.add("check-dubole");
-                          img.src = check;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 2:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDuboleNotSeen;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 3:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDubole;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        default:
-                          console.log("something wrong...");
-                          break;
-                      } /* end of switch */
-                      message.style.width = "250px";
-                      //add messages div into myMessageCover
-                      myMessageCover.appendChild(message);
+                  if (item.sender_id == this.user.id) {
+                    //create p tag
+                    /* here we will create video element */
+                    img2.classList.add("imgType");
+                    img2.classList.add("flex");
+                    img2.src = this.$store.state.imgPath + item.message;
+                    img2.addEventListener("load", () => {
+                      var isLoaded = img2.complete && img2.naturalHeight !== 0;
+                      if (isLoaded) {
+                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                      } /* end of if */
+                    }); /* end of add event listener */
+                    //create div created
+                    created.classList.add("created");
+
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    //create my myMessageCover
+                    myMessageCover.classList.add("myMessageCover");
+                    //add p and created into message
+                    rl.appendChild(img2);
+                    rl.target = "_blank";
+                    rl.href = this.$store.state.imgPath + item.message;
+                    message.appendChild(rl);
+                    message.appendChild(created);
+                    switch (item.state) {
+                      case 1:
+                        seen.classList.add("check-dubole");
+                        img.src = check;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 2:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDuboleNotSeen;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 3:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDubole;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      default:
+                        console.log("something wrong...");
+                        break;
+                    } /* end of switch */
+                    message.style.width = "250px";
+                    //add messages div into myMessageCover
+                    myMessageCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(myMessageCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4875,40 +4925,46 @@ export default {
                         wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
                     } else {
-                      img.classList.add("imgType");
-                      img.classList.add("flex");
-                      img.src = this.$store.state.imgPath + item.message;
-                      img.addEventListener("load", () => {
-                        var isLoaded = img.complete && img.naturalHeight !== 0;
-                        if (isLoaded) {
-                          wepperChat.scrollTop = wepperChat.scrollHeight;
-                        } /* end of if */
-                      }); /* end of add event listener */
-                      //create div created
-                      created.classList.add("created");
+                      this.displayReplyMessage(item, myMessageCover)
+                    }/* end of if */
 
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      //create div message
-                      message.classList.add("message");
-                      //create my myMessageCover
-                      messageYouCover.classList.add("messageYouCover");
-                      //add p and created into message
-                      img.appendChild(source);
-                      message.appendChild(img);
-                      message.appendChild(img);
-                      message.appendChild(created);
-                      message.style.maxWidth = "250px";
-                      //add messages div into myMessageCover
-                      messageYouCover.appendChild(message);
+                  } else {
+                    img.classList.add("imgType");
+                    img.classList.add("flex");
+                    img.src = this.$store.state.imgPath + item.message;
+                    img.addEventListener("load", () => {
+                      var isLoaded = img.complete && img.naturalHeight !== 0;
+                      if (isLoaded) {
+                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                      } /* end of if */
+                    }); /* end of add event listener */
+                    //create div created
+                    created.classList.add("created");
+
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    //create div message
+                    message.classList.add("message");
+                    //create my myMessageCover
+                    messageYouCover.classList.add("messageYouCover");
+                    //add p and created into message
+                    img.appendChild(source);
+                    message.appendChild(img);
+                    message.appendChild(img);
+                    message.appendChild(created);
+                    message.style.maxWidth = "250px";
+                    //add messages div into myMessageCover
+                    messageYouCover.appendChild(message);
+
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(messageYouCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -4921,84 +4977,84 @@ export default {
                         createDatePagination.classList.add("datePagination");
                         wepperChat.insertBefore(createWpperDate, messageYouCover);
                       } /* end of if */
-                    } /* end of if */
-
-                    //this section for if found reply message
-                  } else {
-                    //this section for sender message
-                    if (item.sender_id == this.user.id) {
-                      this.displayReplyMessage(item, "sender")
-                      //this section for reciver message
                     } else {
-                      this.displayReplyMessage(item, "reciver")
+                      this.displayReplyMessage(item, messageYouCover)
                     }/* end of if */
-                  }/* end of if */
+
+                  } /* end of if */
+
+                  // //this section for sender message
+                  // if (item.sender_id == this.user.id) {
+                  //   this.displayReplyMessage(item, "sender")
+                  //   //this section for reciver message
+                  // } else {
+                  //   this.displayReplyMessage(item, "reciver")
+                  // }/* end of if */
                   break;
                 /* end of image */
                 case "location":
 
-                  /* this section for if not found reply message */
-                  if (!item.reply_message) {
-                    // var loction = item.message.split(",");
-                    if (item.sender_id == this.user.id) {
-                      // aMap.href =
-                      //   "https://www.google.com/maps?q=" +
-                      //   loction[0] +
-                      //   "," +
-                      //   loction[1] +
-                      //   "&z=17&hl=ar";
-                      // aMap.target = "_blank";
+                  // var loction = item.message.split(",");
+                  if (item.sender_id == this.user.id) {
+                    // aMap.href =
+                    //   "https://www.google.com/maps?q=" +
+                    //   loction[0] +
+                    //   "," +
+                    //   loction[1] +
+                    //   "&z=17&hl=ar";
+                    // aMap.target = "_blank";
 
-                      imgMap.src = map;
-                      aMap.style.width = "100%";
-                      aMap.style.height = "200px";
-                      //imgMap.style.width = "100%";
-                      //imgMap.style.height = "200px";
-                      //aMap.appendChild(imgMap);
-                      created.classList.add("created");
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      message.classList.add("message");
-                      myMessageCover.classList.add("myMessageCover");
+                    imgMap.src = map;
+                    aMap.style.width = "100%";
+                    aMap.style.height = "200px";
+                    //imgMap.style.width = "100%";
+                    //imgMap.style.height = "200px";
+                    //aMap.appendChild(imgMap);
+                    created.classList.add("created");
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    message.classList.add("message");
+                    myMessageCover.classList.add("myMessageCover");
 
-                      message.appendChild(aMap);
-                      message.appendChild(created);
+                    message.appendChild(aMap);
+                    message.appendChild(created);
 
-                      message.style.minWidth = "260px"
+                    message.style.minWidth = "260px"
 
-                      switch (item.state) {
-                        case 1:
-                          seen.classList.add("check-dubole");
-                          img.src = check;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 2:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDuboleNotSeen;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        case 3:
-                          seen.classList.add("check-dubole");
-                          img.src = checkDubole;
-                          seen.appendChild(img);
-                          message.appendChild(seen);
-                          break;
-                        default:
-                          console.log("something wrong...");
-                          break;
-                      } /* end of switch */
+                    switch (item.state) {
+                      case 1:
+                        seen.classList.add("check-dubole");
+                        img.src = check;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 2:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDuboleNotSeen;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      case 3:
+                        seen.classList.add("check-dubole");
+                        img.src = checkDubole;
+                        seen.appendChild(img);
+                        message.appendChild(seen);
+                        break;
+                      default:
+                        console.log("something wrong...");
+                        break;
+                    } /* end of switch */
 
-                      myMessageCover.appendChild(message);
+                    myMessageCover.appendChild(message);
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(myMessageCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -5012,48 +5068,54 @@ export default {
                         wepperChat.insertBefore(createWpperDate, myMessageCover);
                       } /* end of if */
 
-                      imgMap.addEventListener("load", () => {
-                        var isLoaded =
-                          imgMap.complete && imgMap.naturalHeight !== 0;
-                        if (isLoaded) {
-                          wepperChat.scrollTop = wepperChat.scrollHeight;
-                        } /* end of if */
-                      }); /* end of add event listener */
                     } else {
-                      // aMap.href =
-                      //   "https://www.google.com/maps?q=" +
-                      //   loction[0] +
-                      //   "," +
-                      //   loction[1] +
-                      //   "&z=17&hl=ar";
-                      // aMap.target = "_blank";
-                      //imgMap.src = map;
-                      aMap.style.width = "100%";
-                      aMap.style.height = "200px";
-                      //imgMap.style.width = "100%";
-                      //imgMap.style.height = "200px";
-                      //aMap.appendChild(imgMap);
-                      created.classList.add("created");
-                      if (cookie.get("lang") == 'ar')
-                        created.textContent = changeNumberFormat.changeNumberFormat(moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT"), true);
-                      else
-                        created.textContent = moment(
-                          new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
-                        ).format("LT");
-                      message.classList.add("message");
-                      messageYouCover.classList.add("messageYouCover");
-                      message.appendChild(aMap);
-                      message.style.display = "flex";
-                      message.style.flexDirection = "column";
-                      message.appendChild(created);
-                      messageYouCover.appendChild(message);
+                      this.displayReplyMessage(item, myMessageCover)
+                    }/* end of if */
 
-                      message.style.minWidth = "260px"
+                    imgMap.addEventListener("load", () => {
+                      var isLoaded =
+                        imgMap.complete && imgMap.naturalHeight !== 0;
+                      if (isLoaded) {
+                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                      } /* end of if */
+                    }); /* end of add event listener */
+                  } else {
+                    // aMap.href =
+                    //   "https://www.google.com/maps?q=" +
+                    //   loction[0] +
+                    //   "," +
+                    //   loction[1] +
+                    //   "&z=17&hl=ar";
+                    // aMap.target = "_blank";
+                    //imgMap.src = map;
+                    aMap.style.width = "100%";
+                    aMap.style.height = "200px";
+                    //imgMap.style.width = "100%";
+                    //imgMap.style.height = "200px";
+                    //aMap.appendChild(imgMap);
+                    created.classList.add("created");
+                    if (cookie.get("lang") == 'ar')
+                      created.textContent = changeNumberFormat.changeNumberFormat(moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT"), true);
+                    else
+                      created.textContent = moment(
+                        new Date(parseInt(item.created_at.substring(0, 10)) * 1000)
+                      ).format("LT");
+                    message.classList.add("message");
+                    messageYouCover.classList.add("messageYouCover");
+                    message.appendChild(aMap);
+                    message.style.display = "flex";
+                    message.style.flexDirection = "column";
+                    message.appendChild(created);
+                    messageYouCover.appendChild(message);
 
+                    message.style.minWidth = "260px"
+
+                    wepperChat.appendChild(messageYouCover);
+                    //this section to check if message is replay message or no
+                    if (!item.reply_message) {
                       wepperChat.appendChild(messageYouCover);
-
                       getDateMessage = this.checkWepperDate(item, true);
                       if (getDateMessage) {
                         createWpperDate = document.createElement("div");
@@ -5066,25 +5128,28 @@ export default {
                         createDatePagination.classList.add("datePagination");
                         wepperChat.insertBefore(createWpperDate, messageYouCover);
                       } /* end of if */
-
-                      imgMap.addEventListener("load", () => {
-                        var isLoaded =
-                          imgMap.complete && imgMap.naturalHeight !== 0;
-                        if (isLoaded) {
-                          wepperChat.scrollTop = wepperChat.scrollHeight;
-                        } /* end of if */
-                      }); /* end of add event listener */
-                    } /* end of if */
-                    this.drawLocation(aMap, item.message)
-                  } else {
-                    //this section for sender message
-                    if (item.sender_id == this.user.id) {
-                      this.displayReplyMessage(item, "sender")
-                      //this section for reciver message
                     } else {
-                      this.displayReplyMessage(item, "reciver")
+                      this.displayReplyMessage(item, messageYouCover)
                     }/* end of if */
-                  }/* end of if */
+
+
+                    imgMap.addEventListener("load", () => {
+                      var isLoaded =
+                        imgMap.complete && imgMap.naturalHeight !== 0;
+                      if (isLoaded) {
+                        wepperChat.scrollTop = wepperChat.scrollHeight;
+                      } /* end of if */
+                    }); /* end of add event listener */
+                  } /* end of if */
+                  this.drawLocation(aMap, item.message)
+
+                  // //this section for sender message
+                  // if (item.sender_id == this.user.id) {
+                  //   this.displayReplyMessage(item, "sender")
+                  //   //this section for reciver message
+                  // } else {
+                  //   this.displayReplyMessage(item, "reciver")
+                  // }/* end of if */
 
                   break;
                 default:
@@ -5117,6 +5182,7 @@ export default {
                   this.getBoundingReact(item.message_id, "rcv", "voice");
                 else this.getBoundingReact(item.message_id, "rcv");
               } /* end of if */
+
 
               if (item.sender_id == this.user.id) {
                 myMessageCover.setAttribute("usr_id", item.sender_id);
@@ -5290,6 +5356,7 @@ export default {
         //var span=document.createElement("span")
 
         var lastMsgs = document.getElementById(x.chat_id);
+
         var lastMsg = lastMsgs.children[0].children[1].children[1];
 
         if (message)

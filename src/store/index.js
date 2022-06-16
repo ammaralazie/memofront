@@ -302,9 +302,6 @@ export default createStore({
           )
             return value;
         }); /* end of filter */
-
-
-        console.log("myContact : ",myContact)
         
         //this for order the list by timstamp
         myContact.sort(function (x, y) {
