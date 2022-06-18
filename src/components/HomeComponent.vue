@@ -2708,6 +2708,7 @@ export default {
       var arrowDown = document.getElementsByClassName("arrow-down")[0]
       var searchInputMsg = document.getElementsByClassName("searchInputMsg")[0]
       var settingChat = document.getElementsByClassName("settingChat")[0]
+      var replayedMessage=document.getElementsByClassName("replayedMessage")
 
 
       if (langs == "ar") {
@@ -2726,7 +2727,9 @@ export default {
         searchInputMsg.style.transform = "translateX(10px)"
         settingChat.style.left = "8px"
 
-
+        // for(var i=0;i<replayedMessage.length;i++){
+        //   replayedMessage[i].style.
+        // }/* end of for loop */
 
       } else if (langs == "en") {
         serachBar.children[0].style.left = "";
@@ -2743,6 +2746,8 @@ export default {
 
         searchInputMsg.style.transform = "translateX(-10px)"
         settingChat.style.left = "-195px"
+
+        //for(var j=0;j<replayedMessage.length;j++){}/* end of for loop */
 
       } /* end of if  */
     } /* /checkLang */,

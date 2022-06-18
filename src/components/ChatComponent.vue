@@ -417,6 +417,8 @@ export default {
       newMsgs: [],
       checkImage: false,
       checkFile: false,
+      checkVideo: false,
+      drowLocation: null
     }; /* /return */
   } /* /data */,
 
@@ -441,10 +443,11 @@ export default {
 
   // },/* /beForceated */
   methods: {
-    //this function used for add new reply message when press on enter
+    //this function used for add new reply message when press on enter , it is only to get object item 
     createItemForReplyMessage(item, replyId, type, message) {
       var reply_message
       var messageCover
+
       reply_message = this.msgs.filter(value => {
         if (value.message_id == replyId)
           return value
@@ -460,6 +463,7 @@ export default {
       //this section when the replay message not exist in msgs array
       else {
 
+        //this newMsgs is new messages added in real time
         reply_message = this.newMsgs.filter(value => {
           if (value.message_id == replyId)
             return value
@@ -467,11 +471,14 @@ export default {
         var sender = null
         var reciver = null
 
+        //if ihave the item iwill retern him
         if (reply_message[0]) {
           item.reply_message = reply_message[0]
-          console.log("item : ", item)
           return item
-        } else {
+        } //end of if
+
+        //this function used when not found any item in my list so here i will added to newMsgs
+        else {
 
           if (cookie.get("sndRcvId").sender_id == cookie.get("user").id) {
             sender = cookie.get("sndRcvId").sender_id
@@ -482,6 +489,8 @@ export default {
           }/* end of if */
 
           var srcImg = null
+          var srcVideo = null
+
           if (type == "imageWeb") {
             messageCover = document.getElementById(replyId)
             if (messageCover)
@@ -491,42 +500,46 @@ export default {
               }/* end of if */
           }/* end of if */
 
-          if (type == "file") {
+          else if (type == "file") {
             messageCover = document.getElementById(replyId)
             if (messageCover)
               for (var i = 0; i < messageCover.children.length; i++) {
-                console.log("messageCover.children[i]  : ", messageCover.children[i])
-                if (messageCover.children[i].classList.contains("fileType") ) {
+                if (messageCover.children[i].classList.contains("fileType")) {
                   var orginalName = messageCover.children[i].children[1].children[0].textContent
                   this.checkFile = true
                 }/* end of if */
               }/* end of for */
           }/* end of if */
 
-
+          else if (type == "video") {
+            messageCover = document.getElementById(replyId)
+            if (messageCover) {
+              if (messageCover.children[0].tagName == "VIDEO") {
+                srcVideo = messageCover.children[0].children[0].src
+                this.checkVideo = true
+              }/* end of if */
+            }/* end of if */
+          }/* end of video */
 
           item.reply_message = {
             sender_id: sender,
             reciver_id: reciver,
             message_type: type,
-            message: message || srcImg,
+            message: message || srcImg || srcVideo,
             message_id: replyId,
             orginalName: orginalName || null
           }/* end of if */
+
           this.newMsgs.push(item)
-          console.log("item : ", item)
           return item
         }/* end of if */
       }/* end of if */
     },/* /createItemForReplyMessage */
 
     //this function used for display reply form in side the chat room
-    displayReplyMessage(item, messageCover) {
-
-      console.log(item, messageCover)
+    async displayReplyMessage(item, messageCover) {
 
       var wepperChat = document.getElementsByClassName("wepper-chat")[0]
-
       var replayCover = document.createElement("div")
       var replayedMessage = document.createElement("div")
       var youUser = document.createElement("div")
@@ -586,7 +599,7 @@ export default {
 
       //this section for image message 
       else if (item.reply_message.message_type == "imageWeb") {
-
+        console.log("messageCover : ",messageCover,item.reply_message.message)
         typeIcon.innerHTML = ""
         typeIcon.innerHTML = `${this._trans("image")} &nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
         // <path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" class=""></path></svg>`
@@ -633,8 +646,43 @@ export default {
         //     </div>
         //     `
 
-      }
+        typeIcon.innerHTML = ""
+        typeIcon.innerHTML = `${this._trans("vedio")} &nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="film" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-film fa-w-16" data-fa-i2svg>
+        // <path fill="currentColor" d="M488 64h-8v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V64H96v20c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12V64h-8C10.7 64 0 74.7 0 88v336c0 13.3 10.7 24 24 24h8v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h320v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h8c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM96 372c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm272 208c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm0-168c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm112 152c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40z" class=""></path></svg>`
+        typeIcon.style.display = "inline-block"
+        /*  typeIcon.textContent = item.reply_message.message */
 
+        if (!this.checkVideo) {
+          item.reply_message.message = this.$store.state.videoPath + item.reply_message.message
+        }/* end of if */
+        this.checkVideo = false
+
+        var video = document.createElement("video")
+        var source = document.createElement("source")
+        source.src = item.reply_message.message
+        video.appendChild(source)
+        video.controls = false
+        console.log("video : ", video)
+        replayedMessage.appendChild(typeIcon)
+        replayedMessage.style.minWidth = "120px"
+        replayCover.appendChild(replayedMessage)
+        replayCover.appendChild(video)
+
+        video.style.width = "50px"
+        video.style.height = "50px"
+        video.style.objectFit = "cover"
+        video.style.borderRadius = "5px"
+
+
+
+
+        messageCover.children[0].prepend(replayCover)
+        wepperChat.appendChild(messageCover)
+        wepperChat.scrollTop = wepperChat.scrollHeight
+
+
+
+      }
 
       //this section for file message
       else if (item.reply_message.message_type == "file") {
@@ -697,6 +745,35 @@ export default {
         //       <!-- /message -->
         //     </div>
         //     `
+
+        typeIcon.innerHTML = ""
+        typeIcon.innerHTML = `${this._trans("location")} &nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="map" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
+        // <path fill="currentColor" d="M0 117.66v346.32c0 11.32 11.43 19.06 21.94 14.86L160 416V32L20.12 87.95A32.006 32.006 0 0 0 0 117.66zM192 416l192 64V96L192 32v384zM554.06 33.16L416 96v384l139.88-55.95A31.996 31.996 0 0 0 576 394.34V48.02c0-11.32-11.43-19.06-21.94-14.86z" class=""></path></svg>`
+        typeIcon.style.display = "inline-block"
+        /*  typeIcon.textContent = item.reply_message.message */
+
+        // if (!this.checkVideo) {
+        //   item.reply_message.message = this.$store.state.videoPath + item.reply_message.message
+        // }/* end of if */
+        // this.checkVideo = false
+
+        // var video = document.createElement("video")
+        // var source = document.createElement("source")
+        // source.src = item.reply_message.message
+        // video.appendChild(source)
+        // video.controls = false
+        // console.log("video : ", video)
+        replayedMessage.appendChild(typeIcon)
+        replayedMessage.style.minWidth = "120px"
+        replayCover.appendChild(replayedMessage)
+       
+
+        this.drowLocation = null
+
+        messageCover.children[0].prepend(replayCover)
+        wepperChat.appendChild(messageCover)
+        wepperChat.scrollTop = wepperChat.scrollHeight
+
 
       }/* end of if */
 
@@ -763,6 +840,15 @@ export default {
                 textMessageReply.innerHTML = `${this._trans("voiceFile")} &nbsp;&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="microphone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-microphone fa-w-11" data-fa-i2svg>
   <path fill="currentColor" d="M176 352c53.02 0 96-42.98 96-96V96c0-53.02-42.98-96-96-96S80 42.98 80 96v160c0 53.02 42.98 96 96 96zm160-160h-16c-8.84 0-16 7.16-16 16v48c0 74.8-64.49 134.82-140.79 127.38C96.71 376.89 48 317.11 48 250.3V208c0-8.84-7.16-16-16-16H16c-8.84 0-16 7.16-16 16v40.16c0 89.64 63.97 169.55 152 181.69V464H96c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16h-56v-33.77C285.71 418.47 352 344.9 352 256v-48c0-8.84-7.16-16-16-16z" class=""></path></svg>`
                 coverTextReply.style.width = "auto"
+              }/* end of if */
+              else if (replyedMessage.children[i].classList.contains("imgType")) {
+                imageReply.src = replyedMessage.children[i].getAttribute("src")
+                text.innerHTML = `${this._trans("image")} &nbsp;&nbsp;&nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
+  <path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" class=""></path></svg>`
+                contentReplyedMessage.appendChild(imageReply)
+                textMessageReply.appendChild(text)
+                coverTextReply.style.width = "70px"
+                break;
               }/* end of if */
               //this section for image message and location message
               else if (replyedMessage.children[i].children[0]) {
@@ -1672,7 +1758,7 @@ export default {
     } /* /sendLocation */,
 
     //drawing the location 
-    drawLocation(aMap, msg) {
+    drawLocation(aMap, msg, draw) {
 
       var divv = document.createElement("div")
       divv.classList.add("loction")
@@ -1712,7 +1798,11 @@ export default {
         });
         console.log("poly : ", poly)
       });
-      aMap.appendChild(divv)
+
+      if (draw)
+        return divv
+      else
+        aMap.appendChild(divv)
       //divv.children[2].style.display="none"
       divv.style.width = "100%"
       divv.style.height = "200px"
@@ -2382,20 +2472,34 @@ export default {
             //this section to check this message is reply for other message or no
             if (!replyId) {
               wepperChat.appendChild(myMessageCover);
-            } else {
+            }//end of if
+            //this when i have reply message so i will create cover for reply message
+            else {
               var messageCover = document.getElementById(replyId)
               if (messageCover) {
                 for (var i = 0; i < messageCover.children.length; i++) {
                   if (messageCover.children[i].tagName == "P") {
                     this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "text", this.inputMsg), myMessageCover)
-                  } else if (messageCover.children[i].tagName == "AUDIO") {
+                  }//end of if
+                  else if (messageCover.children[i].tagName == "AUDIO") {
                     this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "voice", null), myMessageCover)
-                  } else if (messageCover.children[i].classList.contains("fileType")) {
+                  } //end of if
+                  else if (messageCover.children[i].classList.contains("fileType")) {
                     this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "file", null), myMessageCover)
-                  } else {
+                  }//end of if
+                  else if (messageCover.children[i].tagName == "IMG" && messageCover.children[i].classList.contains("imgType")) {
+                        this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "imageWeb", null), myMessageCover)
+                  }//end of if
+                  else if (messageCover.children[i].tagName == "VIDEO") {
+                    this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "video", null), myMessageCover)
+                  }//end of if
+                  else {
                     if (messageCover.children[i].children[0]) {
                       if (messageCover.children[i].children[0].tagName == "IMG" && messageCover.children[i].children[0].classList.contains("imgType")) {
                         this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "imageWeb", null), myMessageCover)
+                      } else if (messageCover.children[i].children[0].classList.contains("loction")) {
+                        this.drowLocation = messageCover.children[i].children[0]
+                        this.displayReplyMessage(this.createItemForReplyMessage(item, replyId, "location", null), myMessageCover)
                       }/* end of if */
                     }/* end of if */
                   }/* end of if */
@@ -2406,6 +2510,7 @@ export default {
             this.getBoundingReact(message.getAttribute("id"), "");
 
             myMessageCover.setAttribute("cover_id", snd_id);
+            item.reply_message = null
 
             //here you can use socket to send and receave data
             this.io.emit("new message", item); /* end of new message emit */
