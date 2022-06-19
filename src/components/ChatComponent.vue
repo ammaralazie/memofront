@@ -559,6 +559,13 @@ export default {
         replayedMessage.style.display = "block"
         replayedMessage.style.alignItems = "unset"
       } /* end of if */
+      
+      //this section for green section 
+      if(cookie.get("lang")=="en"){
+        replayedMessage.style.boxShadow="-3px 0px 0px #3cab44"
+      }else if(cookie.get("lang")=="ar"){
+        replayedMessage.style.boxShadow="3px 0px 0px #3cab44"
+      }/* end of if */
 
       //this for text section as sender
       if (item.reply_message.message_type == "text") {
@@ -599,7 +606,6 @@ export default {
 
       //this section for image message 
       else if (item.reply_message.message_type == "imageWeb") {
-        console.log("messageCover : ",messageCover,item.reply_message.message)
         typeIcon.innerHTML = ""
         typeIcon.innerHTML = `${this._trans("image")} &nbsp;<svg aria-hidden="true" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-image fa-w-16" data-fa-i2svg>
         // <path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" class=""></path></svg>`
@@ -662,7 +668,6 @@ export default {
         source.src = item.reply_message.message
         video.appendChild(source)
         video.controls = false
-        console.log("video : ", video)
         replayedMessage.appendChild(typeIcon)
         replayedMessage.style.minWidth = "120px"
         replayCover.appendChild(replayedMessage)
@@ -3191,8 +3196,11 @@ export default {
               } else {
                 senderId = cookie.get("sndRcvId").sender_id
               }//end of if
-
-            if ((senderId == data.sender_id) && (data.state != 3)) {
+            if(cookie.get("sndRcvId")){
+              if ((senderId != data.sender_id && cookie.get("sndRcvId").chat_id !=data.chat_id) && (data.state != 3)) {
+              myItem[0].num_msg += 1
+            }/* end of if */
+            }else if(senderId != data.sender_id){
               myItem[0].num_msg += 1
             }/* end of if */
           }/* end of if  */
@@ -3446,6 +3454,7 @@ export default {
             var aMap = document.createElement("div");
             //var imgMap = document.createElement("img");
 
+            console.log("data : ",data)
             switch (data.message_type) {
               case "text":
                 if (this.checkUrlInMessage(data.message)) {

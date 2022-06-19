@@ -295,6 +295,12 @@ export default createStore({
         .catch((err) => console.log(err));
       if (resulte) {
         var myContact = [];
+
+        /* this commit when get waring from xampp , only in test step */
+
+        // console.log("resulte.data.data : ",resulte.data.datas)
+        // resulte.data.data=resulte.data.data.replace(/<\/?[^>]+(>|$)/g, "")
+        
         myContact = resulte.data.data.filter((value) => {
           if (
             (value.state == null || value.state != cookie.get("user").id) &&

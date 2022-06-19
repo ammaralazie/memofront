@@ -49,11 +49,11 @@ function changeNumberFormat(date, msg) {
 
 //this funcion only for convert  normal number 1,2,3,4,5,6,...
 function changeFomat(data) {
-  var StringNumber = String(data);
-  var newFormatNumber = [];
 
-  for (var i = 0; i < StringNumber.length; i++) {
-    if (currentLang == "ar") {
+  if (currentLang == "ar") {
+    var StringNumber = String(data);
+    var newFormatNumber = [];
+    for (var i = 0; i < StringNumber.length; i++) {
       if ("1" == StringNumber[i]) newFormatNumber.push("۱");
       else if ("2" == StringNumber[i]) newFormatNumber.push("۲");
       else if ("3" == StringNumber[i]) newFormatNumber.push("۳");
@@ -64,20 +64,11 @@ function changeFomat(data) {
       else if ("8" == StringNumber[i]) newFormatNumber.push("۸");
       else if ("9" == StringNumber[i]) newFormatNumber.push("۹");
       else if ("0" == StringNumber[i]) newFormatNumber.push("۰");
-    } else {
-      if ("۱" == StringNumber[i]) newFormatNumber.push("1");
-      else if ("۲" == StringNumber[i]) newFormatNumber.push("2");
-      else if ("۳" == StringNumber[i]) newFormatNumber.push("3");
-      else if ("٤" == StringNumber[i]) newFormatNumber.push("4");
-      else if ("۵" == StringNumber[i]) newFormatNumber.push("5");
-      else if ("٦" == StringNumber[i]) newFormatNumber.push("6");
-      else if ("۷" == StringNumber[i]) newFormatNumber.push("7");
-      else if ("۸" == StringNumber[i]) newFormatNumber.push("8");
-      else if ("۹" == StringNumber[i]) newFormatNumber.push("9");
-      else if ("۰" == StringNumber[i]) newFormatNumber.push("0");
-    } /* end of if */
-  } /* end of for loop */
-  return newFormatNumber.join()
+    } /* end of for loop */
+    return newFormatNumber.join()
+  }else{
+    return data
+  }/* end of if */
 } /* /changeFomatNumber */
 
 export default {

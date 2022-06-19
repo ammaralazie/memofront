@@ -370,7 +370,7 @@
                     </div>
                     <!-- /aroow -->
 
-                    <div class="notSeenState" v-if="item.num_msg > 0" v-text="convertFormatNumber(item.num_msg)"></div>
+                    <div class="notSeenState" v-if="item.num_msg > 0">{{convertFormatNumber(item.num_msg) }}</div>
                     <!-- /notSeenState -->
                   </div>
                   <!-- /dateAndOptions -->
@@ -2449,7 +2449,7 @@ export default {
           root.style.setProperty("--youBeplayBgColor", "#f4f4f4");
         } /* end of if */
       }); /* end of addEventListener */
-    } /* /listItemProfile */,
+    } /* /darkMode */,
 
     checkMode() {
       cookie.remove("sndRcvId");
@@ -2708,7 +2708,6 @@ export default {
       var arrowDown = document.getElementsByClassName("arrow-down")[0]
       var searchInputMsg = document.getElementsByClassName("searchInputMsg")[0]
       var settingChat = document.getElementsByClassName("settingChat")[0]
-      var replayedMessage=document.getElementsByClassName("replayedMessage")
 
 
       if (langs == "ar") {
